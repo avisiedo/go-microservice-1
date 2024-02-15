@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "bridge-to-kubernetes.resource",
+			"type": "bridge-to-kubernetes.resource",
+			"resource": "idmsvc-backend-service",
+			"resourceType": "service",
+			"ports": [
+				8000
+			],
+			"targetCluster": "api-crc-eph-r9lp-p1-openshiftapps-com:6443",
+			"targetNamespace": "ephemeral-hyellt",
+			"useKubernetesServiceEnvironmentVariables": false
+		}
+	]
+}

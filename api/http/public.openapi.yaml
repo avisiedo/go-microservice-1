@@ -1,0 +1,174 @@
+openapi: 3.0.0
+info:
+  title: ToDo API
+  description: API for managing ToDo items
+  version: "1.0"
+  license:
+    name: Apache
+  tags:
+    - name: todo
+      description: Todo resource
+paths:
+  /todos:
+    get:
+      summary: Retrieve all ToDo items
+      tags:
+        - todo
+      operationId: getAllTodos
+      responses:
+        '200':
+          description: A list of ToDo items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ToDo'
+    post:
+      summary: Create a new ToDo item
+      tags:
+        - todo
+      operationId: createTodo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToDoInput'
+      responses:
+        '201':
+          description: The created ToDo item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToDo'
+  /todos/{todoId}:
+    put:
+      summary: Substitute an existing ToDo item
+      tags:
+        - todo
+      operationId: updateTodo
+      parameters:
+        - name: todoId
+          in: path
+          required: true
+          description: ID of the item to Retrieve
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToDoInput'
+      responses:
+        '200':
+          description: The created ToDo item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToDo'
+    patch:
+      summary: Patch an existing ToDo item
+      tags:
+        - todo
+      operationId: patchTodo
+      parameters:
+        - name: todoId
+          in: path
+          required: true
+          description: ID of the item to Retrieve
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToDoInputPatch'
+      responses:
+        '200':
+          description: The created ToDo item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToDo'
+    delete:
+      summary: Remove item by ID
+      tags:
+        - todo
+      operationId: deleteTodo
+      parameters:
+        - name: todoId
+          in: path
+          required: true
+          description: ID of the item to Retrieve
+          schema:
+            type: string
+            format: uuid
+    get:
+      summary: Get item by ID
+      tags:
+        - todo
+      operationId: getTodo
+      parameters:
+        - name: todoId
+          in: path
+          required: true
+          description: ID of the item to Retrieve
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: The ToDo item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToDo'
+      
+components:
+  schemas:
+    ToDo:
+      type: object
+      properties:
+        todo_id:
+          type: string
+          format: uuid
+          optional: false
+        title:
+          type: string
+        description:
+          type: string
+        due_date:
+          type: string
+          format: date
+      required:
+        - title
+    ToDoInput:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        due_date:
+          type: string
+          format: date
+      required:
+        - title
+    ToDoInputPatch:
+      type: object
+      properties:
+        title:
+          type: string
+          optional: true
+        description:
+          type: string
+          optional: true
+        due_date:
+          type: string
+          format: date
+          optional: true

@@ -1,0 +1,41 @@
+# https://vektra.github.io/mockery/v2.38/features/#packages-configuration
+---
+with-expecter: True
+packages:
+  github.com/avisiedo/go-microservice-1/internal/interface:
+    interfaces:
+      TypesPackage:
+      RequesterVariadic:
+        config:
+          with-expecter: False 
+        configs:
+          - mockname: MockRequesterVariadicOneArgument
+            unroll-variadic: False
+          - mockname: MockRequesterVariadic
+  github.com/avisiedo/go-microservice-1/internal/infrastructure:
+    interfaces:
+      TypesPackage:
+      RequesterVariadic:
+        config:
+          with-expecter: False
+        configs:
+          - mockname: MockRequesterVariadicOneArgument
+            unroll-variadic: False
+          - mockname: MockRequesterVariadic
+  github.com/avisiedo/go-microservice-1/internal/api:
+    interfaces:
+      TypesPackage:
+      RequesterVariadic:
+        config:
+          with-expecter: False 
+        configs:
+          - mockname: MockRequesterVariadicOneArgument
+            unroll-variadic: False
+          - mockname: MockRequesterVariadic
+  # io:
+  #   config:
+  #     all: True 
+  #   interfaces:
+  #     Writer:
+  #       config:
+  #         with-expecter: False 

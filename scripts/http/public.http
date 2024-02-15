@@ -1,0 +1,116 @@
+# https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+@schema = http
+@hostname = localhost
+@port = 8000
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@basepath = /api/todos/v1
+
+### Get api specification
+
+# @name GetOpenapiSpecification
+
+# Request for localhost
+#   ./test/scripts/local-get-openapi.sh
+#
+# Request for ephemeral:
+#   ./test/scripts/ephe-get-openapi.sh
+GET {{schema}}://{{host}}{{basepath}}/openapi.json
+Request-Id: get_openapi
+Content-Type: {{contentType}}
+
+### Create todo
+
+# @name createTodo
+
+# Request for localhost
+#   ./test/scripts/local-todos-create.sh
+#
+# Request for ephemeral:
+#   ./test/scripts/ephe-todos-create.sh
+
+POST {{schema}}://{{host}}{{basepath}}/todos
+Request-Id: post_todos
+Content-Type: {{contentType}}
+
+<@ ../../test/data/http/todos-create.json
+
+### Get All todos
+
+# @name listTodos
+
+# Request for localhost
+#   ./test/scripts/local-todos-list.sh
+#
+# Request for ephemeral
+#   ./test/scripts/ephe-todos-list.sh
+
+GET http://{{host}}{{basepath}}/todos?offset=0&limit=10
+Request-Id: get_todos
+Content-Type: {{contentType}}
+
+### Get last created Todo
+
+# @name getTodo
+
+# Request for localhost
+#   UUID=""
+#   ./test/scripts/local-todos-read.sh $UUID
+#
+# Request for ephemeral
+#   UUID=""
+#   ./test/scripts/ephe-todos-read.sh $UUID
+
+GET  http://{{host}}{{basepath}}/todos/{{createTodo.response.body.uuid}}
+Request-Id: get_todos_uuid
+Content-Type: {{contentType}}
+
+### Update rhel-idm domain information
+
+# @name updateTodo
+
+# Request for localhost
+#   UUID=""
+#   ./test/scripts/local-todos-update.sh "$UUID"
+#
+# Request for ephemeral
+#   UUID=""
+#   ./test/scripts/ephe-todos-update.sh "$UUID"
+
+PUT http://{{host}}{{basepath}}/todos/{{createTodo.response.body.uuid}}
+Request-Id: put_todos_register
+Content-Type: {{contentType}}
+
+<@ ../../test/data/http/todo-update.json
+
+### Partial Update Todo
+
+# @name patchTodo
+
+# Request for localhost
+#   UUID=""
+#   ./test/scripts/local-todos-patch.sh "$UUID"
+#
+# Request for ephemeral
+#   UUID=""
+#   ./test/scripts/ephe-todos-patch.sh "$UUID"
+
+PATCH http://{{host}}{{basepath}}/todos/{{createTodo.response.body.uuid}}
+Request-Id: patch_todos_register
+Content-Type: {{contentType}}
+
+<@ ../../test/data/http/todo-patch.json
+
+### Delete Todo
+
+# Request for localhost
+#   UUID=""
+#   ./test/scripts/local-todos-delete.sh "$UUID"
+#
+# Request for ephemeral
+#   UUID=""
+#   ./test/scripts/ephe-todos-delete.sh "$UUID"
+
+DELETE http://{{host}}{{basepath}}/todos/{{createTodo.response.body.uuid}}
+Request-Id: delete_todos
+Content-Type: {{contentType}}

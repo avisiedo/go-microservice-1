@@ -1,0 +1,63 @@
+---
+logging:
+  # level: warn should be the level in production
+  # level: trace - Will display the sql statements, usefult for development
+  level: warn
+  # Set to false to get a json output for the log
+  console: true
+  # Set to true to get source code locations printed
+  location: false
+
+web:
+  port: 8000
+
+database:
+  host: localhost
+  port: 5432
+  user: db-user
+  password: db-secret
+  name: db-name
+
+kafka:
+  auto:
+    offset:
+      reset: latest
+    commit:
+      interval:
+        ms: 5000
+  bootstrap:
+    servers: localhost:9092
+  group:
+    id: todo
+  message:
+    send:
+      max:
+        retries: 15
+  request:
+    timeout:
+      ms: 30000
+    required:
+      acks: -1
+  retry:
+    backoff:
+      ms: 100
+  timeout: 10000
+  topics:
+    - platform.todo.create
+  # sasl:
+  #   username: someusername
+  #   passowrd: somepassword
+  #   mechanism: somemechanism
+  #   protocol: someprotocol
+
+metrics:
+  path: "/metrics"
+  port: 9000
+
+# TODO Set up configuration with third parties
+clients:
+  service-1:
+    base_url: http://localhost:8010/api/inventory/
+
+# TODO Add here the application configuration
+app: {}

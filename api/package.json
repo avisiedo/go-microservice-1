@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "vacuum": "vacuum",
+    "vacuum:lint": "vacuum lint -d"
+  },
+  "dependencies": {
+    "@quobix/vacuum": "^0.2.5"
+  }
+}
