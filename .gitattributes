@@ -1,0 +1,5 @@
+# mark auto-generated files
+# don't show diff for spec, it's base64 encoded schema
+internal/api/http/public/*.gen.go -diff linguist-generated=true
+internal/api/event/public/*.gen.go -diff linguist-generated=true
+internal/test/mock/**/*.go -diff linguist-generated=true

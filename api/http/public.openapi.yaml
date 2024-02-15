@@ -1,0 +1,1142 @@
+---
+openapi: 3.0.2
+info:
+    title: idmsvc-backend
+    description: Backend API for Directory & Domain Services
+    contact: {}
+    version: 1.0.0
+servers:
+    - description: Production
+      url: /api/idmsvc/v1
+    - description: Beta
+      url: /beta/api/idmsvc/v1
+    - description: Preview
+      url: /preview/api/idmsvc/v1
+paths:
+    /domains:
+        description: It store the necessary information about a domain that will let manage them
+        summary: Domain resource
+        parameters:
+            - $ref: '#/components/parameters/XRhInsightsRequestIdHeader'
+        get:
+            description: |-
+                For the current organization, list all the domains that
+                are being managed from console.dot
+            summary: List domains in the organization
+            parameters:
+                - name: offset
+                  description: pagination offset
+                  required: false
+                  schema:
+                      type: integer
+                  examples:
+                      Default offset:
+                          value: 0
+                      Page 2 for pages of 10 items:
+                          value: 10
+                  in: query
+                - name: limit
+                  description: Number of items per page
+                  required: false
+                  schema:
+                      type: integer
+                  examples:
+                      15 items per page:
+                          value: 15
+                      Default value:
+                          value: 10
+                  in: query
+            operationId: listDomains
+            responses:
+                '200':
+                    $ref: '#/components/responses/ListDomainsResponse'
+                '400':
+                    $ref: '#/components/responses/ErrorResponse'
+                '404':
+                    $ref: '#/components/responses/ErrorResponse'
+            security:
+                - x-rh-identity:
+                      - Type:User
+            tags:
+                - resources
+        post:
+            description: Register a domain in the current organization.
+            summary: Register a domain.
+            parameters:
+                - $ref: '#/components/parameters/XRhIdmRegistrationTokenHeader'
+                - $ref: '#/components/parameters/XRhIdmVersionHeader'
+            operationId: RegisterDomain
+            requestBody:
+                description: Domain object to be registered.
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/RegisterDomainRequest'
+            responses:
+                '201':
+                    $ref: '#/components/responses/RegisterDomainResponse'
+                '400':
+                    $ref: '#/components/responses/ErrorResponse'
+                '404':
+                    $ref: '#/components/responses/ErrorResponse'
+            security:
+                - x-rh-identity:
+                      - Type:System
+                - x-rh-idm-registration-token: []
+            tags:
+                - resources
+    /domains/token:
+        description: Request a domain registration token
+        summary: Domain registration token
+        parameters:
+            - $ref: '#/components/parameters/XRhInsightsRequestIdHeader'
+        post:
+            description: Request a domain registration token
+            summary: Domain registration token request
+            operationId: createDomainToken
+            requestBody:
+                description: Domain registration request
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DomainRegTokenRequest'
+            responses:
+                '201':
+                    $ref: '#/components/responses/DomainRegTokenResponse'
+                '400':
+                    $ref: '#/components/responses/ErrorResponse'
+                '404':
+                    $ref: '#/components/responses/ErrorResponse'
+            security:
+                - x-rh-identity:
+                      - Type:User
+            tags:
+                - resources
+    /domains/{uuid}:
+        description: Specific operations on an existing domain to read, update or delete it.
+        summary: Operations on a specific domain
+        parameters:
+            - $ref: '#/components/parameters/XRhInsightsRequestIdHeader'
+            - $ref: '#/components/parameters/DomainIdParam'
+        delete:
+            description: Delete an existing domain from the current organization.
+            summary: Delete domain.
+            operationId: deleteDomain
+            responses:
+                '204':
+                    description: Returned when the resource was deleted.
+                '400':
+                    $ref: '#/components/responses/ErrorResponse'
+                '404':
+                    $ref: '#/components/responses/ErrorResponse'
+            security:
+                - x-rh-identity:
+                      - Type:User
+            tags:
+                - resources
+        get:
+            description: Request the information for a specific domain of our organization.
+            summary: Read a domain.
+            operationId: readDomain
+            responses:
+                '200':
+                    $ref: '#/components/responses/ReadDomainResponse'
+                '400':
+                    $ref: '#/components/responses/ErrorResponse'
+                '404':
+                    $ref: '#/components/responses/ErrorResponse'
+            security:
+                - x-rh-identity:
+                      - Type:User
+            tags:
+                - resources
+        patch:
+            description: Update the rhel-idm domain information.
+            summary: Update domain information by user.
+            operationId: updateDomainUser
+            requestBody:
+                description: Information for an IPA domain so it is updated from the ipa-hcc agent.
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateDomainUserRequest'
+            responses:
+                '200':
+                    $ref: '#/components/responses/UpdateDomainUserResponse'
+                '400':
+                    $ref: '#/components/responses/ErrorResponse'
+                '403':
+                    $ref: '#/components/responses/ErrorResponse'
+                '404':
+                    $ref: '#/components/responses/ErrorResponse'
+            security:
+                - x-rh-identity:
+                      - Type:User
+            tags:
+                - resources
+        put:
+            description: Update the rhel-idm domain information.
+            summary: Update domain information by ipa-hcc agent.
+            parameters:
+                - $ref: '#/components/parameters/XRhIdmVersionHeader'
+            operationId: updateDomainAgent
+            requestBody:
+                description: Information for an IPA domain so it is updated from the ipa-hcc agent.
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateDomainAgentRequest'
+            responses:
+                '200':
+                    $ref: '#/components/responses/UpdateDomainAgentResponse'
+                '400':
+                    $ref: '#/components/responses/ErrorResponse'
+                '403':
+                    $ref: '#/components/responses/ErrorResponse'
+                '404':
+                    $ref: '#/components/responses/ErrorResponse'
+            security:
+                - x-rh-identity:
+                      - Type:System:domain
+            tags:
+                - actions
+    /host-conf/{inventory_id}/{fqdn}:
+        description: Endpoint used by host vm for auto-enrollment.
+        summary: Autoenroll host vm endpoint.
+        parameters:
+            - $ref: '#/components/parameters/XRhInsightsRequestIdHeader'
+            - name: inventory_id
+              description: A Host-Based Inventory ID of the host.
+              required: true
+              schema:
+                  $ref: '#/components/schemas/HostId'
+              in: path
+            - name: fqdn
+              description: The full qualified domain name of the host.
+              required: true
+              schema:
+                  $ref: '#/components/schemas/Fqdn'
+              in: path
+        post:
+            description: Action to retrieve the host information for the host vm being enrolled.
+            summary: Get host vm information.
+            operationId: hostConf
+            requestBody:
+                description: Required information to take the action.
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/HostConf'
+                        examples:
+                            demo request:
+                                value:
+                                    fqdn: host1.domain.example
+                                    subscription_manager_id: c3ac4b91-27cc-422c-a283-42aadfe730af
+            responses:
+                '200':
+                    $ref: '#/components/responses/HostConfResponse'
+            security:
+                - x-rh-identity:
+                      - Type:System:domain
+            tags:
+                - actions
+    /signing_keys:
+        description: Signing keys and revokation information for host conf JWKs
+        summary: Signing keys
+        parameters:
+            - $ref: '#/components/parameters/XRhInsightsRequestIdHeader'
+        get:
+            description: |-
+                Get signing keys and revokation information
+            summary: Signing keys
+            operationId: getSigningKeys
+            responses:
+                '200':
+                    $ref: '#/components/responses/ReadKeysResponse'
+                '400':
+                    $ref: '#/components/responses/ErrorResponse'
+                '404':
+                    $ref: '#/components/responses/ErrorResponse'
+            security:
+                - x-rh-identity:
+                      - Type:System
+                      - Type:User
+            tags:
+                - resources
+components:
+    parameters:
+        DomainIdParam:
+            name: uuid
+            description: The uuid that identify the domain.
+            required: true
+            schema:
+                $ref: '#/components/schemas/DomainId'
+            examples:
+                a random uuid generated by 'uuid' command:
+                    value: '"2e8ce5a6-b370-11ed-9330-482ae3863d30"'
+            in: path
+        XRhIdmRegistrationTokenHeader:
+            name: X-Rh-Idm-Registration-Token
+            description: One-time password to authenticate domain registration with ipa-hcc command.
+            required: true
+            schema:
+                type: string
+            in: header
+        XRhIdmVersionHeader:
+            name: X-Rh-Idm-Version
+            description: ipa-hcc agent version
+            required: true
+            schema:
+                type: string
+            in: header
+        XRhInsightsRequestIdHeader:
+            name: X-Rh-Insights-Request-Id
+            description: Request id for distributed tracing.
+            required: false
+            schema:
+                type: string
+            in: header
+    responses:
+        DomainRegTokenResponse:
+            description: Response with domain registration token
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/DomainRegToken'
+        ErrorResponse:
+            description: Error response for some operation.
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/Errors'
+        HostConfResponse:
+            description: Response for the HostConf action.
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/HostConfResponseSchema'
+        ListDomainsResponse:
+            description: It represent the response for a list of domains query.
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/ListDomainsResponseSchema'
+        ReadDomainResponse:
+            description: This represent the response for a specific domain.
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/DomainResponse'
+        ReadKeysResponse:
+            description: Response for get keys operation by system or user.
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/SigningKeysResponse'
+        RegisterDomainResponse:
+            description: Response for the domain register operation.
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/DomainRegisterResponse'
+        UpdateDomainAgentResponse:
+            description: Response for the domain update operation by ipa-hcc agent.
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/DomainUpdateResponse'
+        UpdateDomainUserResponse:
+            description: Response for the domain update operation by user.
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/DomainResponse'
+    schemas:
+        CaCertBundle:
+            title: A bundle of CA certificates
+            description: A string of concatenated, PEM-encoded X.509 certificates
+            type: string
+            x-rh-ipa-hcc:
+                type: defs
+        Certificate:
+            type: object
+            required:
+                - issuer
+                - nickname
+                - not_after
+                - not_before
+                - pem
+                - serial_number
+                - subject
+            additionalProperties: false
+            properties:
+                issuer:
+                    title: Issuer name (RFC 4514 string)
+                    type: string
+                    format: cert-issuer
+                    example: O=DOMAIN.EXAMPLE, CN=Certificate Authority
+                nickname:
+                    title: Internal nick name in LDAP (RDN cn)
+                    type: string
+                    example: DOMAIN.EXAMPLE CA
+                not_after:
+                    title: Not valid after timestamp (UTC)
+                    type: string
+                    format: date-time
+                    example: '2043-03-21T05:38:09+00:00'
+                not_before:
+                    title: Not valid before timestamp (UTC)
+                    type: string
+                    format: date-time
+                    example: '2023-03-21T05:38:09+00:00'
+                pem:
+                    title: PEM encoded X.509 certificate
+                    type: string
+                    format: cert-pem
+                    example: '-----BEGIN CERTIFICATE-----\nMII...\n-----END CERTIFICATE-----\n'
+                serial_number:
+                    title: Serial number (base 10)
+                    type: string
+                    pattern: ^[1-9][0-9]*$
+                    example: '1'
+                subject:
+                    title: Subject name (RFC 4514 string)
+                    type: string
+                    format: cert-subject
+                    example: O=DOMAIN.EXAMPLE, CN=Certificate Authority
+            x-rh-ipa-hcc:
+                type: defs
+            x-rh-rdn-value: nickname
+        Domain:
+            title: Base type for domain objects
+            description: A domain resource
+            type: object
+            required:
+                - domain_name
+                - domain_type
+            additionalProperties: false
+            properties:
+                title:
+                    description: Title to describe the domain.
+                    type: string
+                    format: domain-title
+                description:
+                    description: Human readable description abou the domain.
+                    type: string
+                    format: domain-description
+                auto_enrollment_enabled:
+                    description: Enable or disable host vm auto-enrollment for this domain
+                    type: boolean
+                    example: 'true'
+                domain_id:
+                    $ref: '#/components/schemas/DomainId'
+                domain_name:
+                    $ref: '#/components/schemas/DomainName'
+                domain_type:
+                    $ref: '#/components/schemas/DomainType'
+                rhel-idm:
+                    $ref: '#/components/schemas/DomainIpa'
+            x-rh-ipa-hcc:
+                type: defs
+            x-rh-rdn-value: domain_name
+            example:
+                description: My awesome domain description.
+                auto_enrollment_enabled: true
+                domain_id: 1aa15eae-a88b-11ed-a2cb-482ae3863d30
+                domain_name: mydomain.example
+                domain_type: rhel-idm
+                rhel-idm:
+                    servers:
+                        - fqdn: server1.mydomain.example
+                        - fqdn: server2.mydomain.example
+                    ca_certs: []
+                    realm_name: IPA.EXAMPLE
+        DomainId:
+            title: domain id
+            description: A domain id
+            type: string
+            format: uuid
+            maxLength: 36
+            minLength: 36
+            x-rh-ipa-hcc:
+                type: defs
+            example: 772e9618-d0f8-4bf8-bfed-d2831f63c619
+        DomainIpa:
+            title: Root Type for ResponseIpaObject
+            description: Options for ipa domains
+            type: object
+            required:
+                - ca_certs
+                - locations
+                - realm_domains
+                - realm_name
+                - servers
+            additionalProperties: false
+            properties:
+                servers:
+                    description: List of auto-enrollment enabled servers for this domain.
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/DomainIpaServer'
+                automount_locations:
+                    description: List of automount locations for AutoFS
+                    type: array
+                    items:
+                        type: string
+                        minLength: 1
+                    minItems: 0
+                    example: '["default"]'
+                ca_certs:
+                    description: A base64 representation of all the list of chain of certificates, including the server ca.
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Certificate'
+                    example: >-
+                        [
+                          {
+                            "nickname": "MYDOMAIN.EXAMPLE IPA CA",
+                            "issuer": "CN=Certificate Authority,O=MYDOMAIN.EXAMPLE",
+                            "subject": "CN=Certificate Authority,O=MYDOMAIN.EXAMPLE",
+                            "serial_number": "1",
+                            "not_before": "2023-01-31T13:23:36Z",
+                            "not_after": "2023-01-31T13:23:36Z"
+                            "pem": "-----BEGIN CERTIFICATE-----\nMIIE...\n-----END CERTIFICATE-----\n",
+                          }
+                        ]
+                locations:
+                    description: List of DNS locations
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Location'
+                    minItems: 0
+                    example: >-
+                        [{"name":"boston","description":"Boston data center"}]
+                realm_domains:
+                    description: List of realm associated to the IPA domain.
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/DomainName'
+                    format: ipa-realm-domains
+                    minItems: 1
+                realm_name:
+                    $ref: '#/components/schemas/RealmName'
+            x-rh-ipa-hcc:
+                name: RhelIdmDomain
+                type: defs
+        DomainIpaServer:
+            title: Root Type for CreateDomainIpaServer
+            description: Server schema for an entry into the Ipa domain type.
+            type: object
+            required:
+                - ca_server
+                - fqdn
+                - hcc_enrollment_server
+                - hcc_update_server
+                - pkinit_server
+            additionalProperties: false
+            properties:
+                ca_server:
+                    type: boolean
+                    example: 'true'
+                fqdn:
+                    $ref: '#/components/schemas/Fqdn'
+                hcc_enrollment_server:
+                    type: boolean
+                    example: 'true'
+                hcc_update_server:
+                    type: boolean
+                    example: 'true'
+                location:
+                    $ref: '#/components/schemas/LocationName'
+                pkinit_server:
+                    type: boolean
+                    example: 'true'
+                subscription_manager_id:
+                    $ref: '#/components/schemas/SubscriptionManagerId'
+            x-rh-ipa-hcc:
+                name: IPAServer
+                type: defs
+            x-rh-rdn-value: fqdn
+            example:
+                ca_server: true
+                fqdn: ipaserver.mydomain.example
+                hcc_enrollment_server: true
+                hcc_update_server: true
+                location: europe
+                pkinit_server: true
+                subscription_manager_id: 03965a2c-bd24-11ed-968d-482ae3863d30
+        DomainName:
+            title: Fully qualified domain name
+            description: >
+                A name of a domain (all lower-case). The domain name can only
+                be set during initial registration and not be modified by
+                updates.
+            type: string
+            format: idn-hostname
+            maxLength: 253
+            minLength: 3
+            x-rh-ipa-hcc:
+                type: defs
+            example: domain.example
+        DomainRegToken:
+            title: Root Type for domain registration token response
+            description: A domain registration response
+            type: object
+            required:
+                - domain_id
+                - domain_token
+                - domain_type
+                - expiration
+            additionalProperties: false
+            properties:
+                domain_id:
+                    $ref: '#/components/schemas/DomainId'
+                domain_token:
+                    description: A domain registration token string
+                    type: string
+                domain_type:
+                    $ref: '#/components/schemas/DomainType'
+                expiration:
+                    description: Expiration time stamp (Unix timestamp)
+                    type: integer
+            x-rh-ipa-hcc:
+                name: DomainRegTokenResponse
+                type: response
+            example:
+                domain_id: 681abfd7-18ce-51b3-a9cc-10d386c8dc35
+                domain_token: F3kVxQP4sIs.cjbtH-GB8JuszfqrQnnudLoLzJH3zkw5jnhmTgKP_HU
+                domain_type: rhel-idm
+                expiration: 1691407070
+        DomainRegTokenRequest:
+            title: Root Type for domain registration token request
+            description: A domain registration request
+            type: object
+            required:
+                - domain_type
+            additionalProperties: false
+            properties:
+                domain_type:
+                    $ref: '#/components/schemas/DomainType'
+            x-rh-ipa-hcc:
+                name: DomainRegTokenRequest
+                type: request
+            example:
+                domain_type: rhel-idm
+        DomainRegisterResponse:
+            title: Response type for domain registration
+            description: TODO
+            type: object
+            required:
+                - domain_id
+            allOf:
+                - $ref: '#/components/schemas/Domain'
+            x-rh-ipa-hcc:
+                name: IPADomainRegisterResponse
+                type: response
+        DomainResponse:
+            title: Root Type for DomainResponse
+            description: A domain resource
+            required:
+                - auto_enrollment_enabled
+                - domain_id
+            allOf:
+                - $ref: '#/components/schemas/Domain'
+            x-rh-ipa-hcc:
+                name: IPADomainGetResponse
+                type: response
+        DomainType:
+            title: Domain Type
+            description: Type of domain (currently only rhel-idm)
+            type: string
+            enum:
+                - rhel-idm
+            x-rh-ipa-hcc:
+                type: defs
+            example: rhel-idm
+        DomainUpdateResponse:
+            title: Response type for domain update
+            description: TODO
+            type: object
+            required:
+                - auto_enrollment_enabled
+            allOf:
+                - $ref: '#/components/schemas/Domain'
+            x-rh-ipa-hcc:
+                name: IPADomainUpdateResponse
+                type: response
+        ErrorInfo:
+            title: Error information
+            type: object
+            required:
+                - id
+                - status
+                - title
+            additionalProperties: false
+            properties:
+                title:
+                    title: HTTP status text
+                    description: The human-readable HTTP status text for the error.
+                    type: string
+                    example: Not Found
+                code:
+                    description: an application-specific error code
+                    type: string
+                detail:
+                    title: Detail
+                    description: A detailed explanation of the error, e.g. traceback.
+                    type: string
+                    example: Resource not found
+                id:
+                    title: Error identifier
+                    description: a unique identifier for this particular occurrence of the problem.
+                    type: string
+                    example: 27c19744-29f2-42a0-8669-8fa050f8ffdf
+                status:
+                    title: HTTP status code
+                    description: The HTTP status code for the error.
+                    type: string
+                    format: http-status
+                    maxLength: 3
+                    minLength: 3
+                    pattern: ^[1-5][0-9][0-9]$
+                    example: '404'
+            x-rh-ipa-hcc:
+                type: defs
+        Errors:
+            title: Root Type for ErrorResponse
+            description: General error response returned by the idmsvc API
+            type: object
+            required:
+                - errors
+            additionalProperties: false
+            properties:
+                errors:
+                    description: Error objects provide additional information about problems encountered while performing an operation.
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ErrorInfo'
+                    minItems: 1
+                    readOnly: true
+                    example: >
+                        [
+                          {
+                            "id": "${X-RH-INSIGHTS-REQUEST-ID}",
+                            "status": "400",
+                            "title": "Bad Request",
+                            "detail": "additional details: more additional details"
+                          }
+                        ]
+            x-rh-ipa-hcc:
+                type: response
+            example:
+                errors:
+                    - detail: 'Bad request: additional details: more additional details'
+                      id: ${X-RH-INSIGHTS-REQUEST-ID}
+                      status: '400'
+        Fqdn:
+            title: FQDN
+            description: A host's Fully Qualified Domain Name (all lower-case).
+            type: string
+            format: idn-hostname
+            maxLength: 253
+            minLength: 3
+            x-rh-ipa-hcc:
+                type: defs
+            example: host.domain.example
+        HostConf:
+            title: Root Type for HostConf
+            description: Represent the request payload for the /host-conf/:inventory_id/:fqdn endpoint.
+            type: object
+            additionalProperties: false
+            properties:
+                domain_id:
+                    $ref: '#/components/schemas/DomainId'
+                domain_name:
+                    $ref: '#/components/schemas/DomainName'
+                domain_type:
+                    $ref: '#/components/schemas/DomainType'
+            x-rh-ipa-hcc:
+                name: HostConfRequest
+                type: request
+            example:
+                fqdn: host1.domain.example
+                subscription_manager_id: c3ac4b91-27cc-422c-a283-42aadfe730af
+        HostConfIpa:
+            title: Root Type for ResponseIpaObject
+            description: Options for ipa domains
+            type: object
+            required:
+                - cabundle
+                - enrollment_servers
+                - realm_name
+            additionalProperties: false
+            properties:
+                automount_location:
+                    description: Automount location name for ipa-client-automount
+                    type: string
+                    minLength: 1
+                    example: default
+                cabundle:
+                    $ref: '#/components/schemas/CaCertBundle'
+                enrollment_servers:
+                    description: List of auto-enrollment enabled servers for this domain.
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/HostConfIpaServer'
+                    example: '[{"fqdn": "server1.mydomain.example"}, {"fqdn": "server2.mydomain.example"}]'
+                ipa_client_install_args:
+                    description: List of additional arguments for ipa-client-install
+                    type: array
+                    items:
+                        type: string
+                    example: '["--enable-dns-updates"]'
+                realm_name:
+                    $ref: '#/components/schemas/RealmName'
+            x-rh-ipa-hcc:
+                type: defs
+            example:
+                cabundle: base64
+                realm_name: IPA.EXAMPLE
+                server_list:
+                    - fqdn: server1.mydomain.example
+                    - fqdn: server2.mydomain.example
+        HostConfIpaServer:
+            description: Auto-enrollment enabled server for this domain.
+            type: object
+            required:
+                - fqdn
+            additionalProperties: false
+            properties:
+                fqdn:
+                    $ref: '#/components/schemas/Fqdn'
+                location:
+                    $ref: '#/components/schemas/LocationName'
+            x-rh-ipa-hcc:
+                type: defs
+            example: '{"fqdn": "server1.mydomain.example"}'
+        HostConfResponseSchema:
+            title: Root Type for HostConfResponse
+            description: >-
+                The response for the action to retrieve the host vm information when it is being enrolled. This action is taken from the host vm.
+            type: object
+            required:
+                - auto_enrollment_enabled
+                - domain_id
+                - domain_name
+                - domain_type
+                - rhel-idm
+            additionalProperties: false
+            properties:
+                auto_enrollment_enabled:
+                    description: Enable or disable host vm auto-enrollment for this domain
+                    type: boolean
+                    example: 'true'
+                domain_id:
+                    $ref: '#/components/schemas/DomainId'
+                domain_name:
+                    $ref: '#/components/schemas/DomainName'
+                domain_type:
+                    $ref: '#/components/schemas/DomainType'
+                rhel-idm:
+                    $ref: '#/components/schemas/HostConfIpa'
+                token:
+                    $ref: '#/components/schemas/HostToken'
+            x-rh-ipa-hcc:
+                name: HostConfResponse
+                type: response
+            example:
+                domain_name: domain.example
+                domain_type: rhel-idm
+                rhel-idm:
+                    ca_cert: |
+                        -----BEGIN CERTIFICATE-----
+                        MII...
+                        -----END CERTIFICATE-----
+                    realm_name: DOMAIN.EXAMPLE
+                    server_list:
+                        - ipaserver.domain.example
+        HostId:
+            title: host id
+            description: A Host-Based Inventory ID of a host.
+            type: string
+            format: uuid
+            maxLength: 36
+            minLength: 36
+            x-rh-ipa-hcc:
+                type: defs
+            example: f0468001-7632-4d3f-afd2-770c93825adf
+        HostToken:
+            title: Host Token
+            description: A serialized JWS token or JWT to authenticate a host registration request.
+            type: string
+            x-rh-ipa-hcc:
+                type: defs
+        ListDomainsData:
+            title: Root Type for ListDomainsData
+            description: The data listed for the domains.
+            type: object
+            required:
+                - auto_enrollment_enabled
+                - description
+                - domain_id
+                - domain_name
+                - domain_type
+                - title
+            additionalProperties: false
+            properties:
+                title:
+                    description: Human-friendly title for the domain entry.
+                    type: string
+                description:
+                    description: Human-readable description of the domain entry.
+                    type: string
+                auto_enrollment_enabled:
+                    type: boolean
+                domain_id:
+                    $ref: '#/components/schemas/DomainId'
+                domain_name:
+                    $ref: '#/components/schemas/DomainName'
+                domain_type:
+                    $ref: '#/components/schemas/DomainType'
+            example:
+                auto_enrollment_enabled: true
+                domain_id: 1aa15eae-a88b-11ed-a2cb-482ae3863d30
+                domain_name: mydomain.example
+                domain_type: rhel-idm
+        ListDomainsResponseSchema:
+            title: Root Type for ListDomains
+            description: Represent a paginated result for a list of domains
+            type: object
+            required:
+                - data
+                - links
+                - meta
+            additionalProperties: false
+            properties:
+                data:
+                    description: The content for this page.
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ListDomainsData'
+                links:
+                    $ref: '#/components/schemas/PaginationLinks'
+                meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+            example:
+                data:
+                    - auto_enrollment_enabled: true
+                      domain_id: 1aa15eae-a88b-11ed-a2cb-482ae3863d30
+                      domain_name: mydomain.example
+                      domain_type: rhel-idm
+                links:
+                    first: /api/idm/v1/domains?limit=10&offset=0
+                    last: /api/idm/v1/domains?limit=10&offset=10
+                    next: /api/idm/v1/domains?limit=10&offset=10
+                    previous: /api/idm/v1/domains?limit=10&offset=0
+                meta:
+                    count: 1
+        Location:
+            title: Location record
+            description: RHEL IdM server location
+            type: object
+            required:
+                - name
+            additionalProperties: false
+            properties:
+                name:
+                    $ref: '#/components/schemas/LocationName'
+                description:
+                    type: string
+            x-rh-ipa-hcc:
+                type: defs
+            x-rh-rdn-value: name
+        LocationName:
+            title: Location identifier (IPA location, AD site)
+            description: A location identifier (lower-case DNS label)
+            type: string
+            maxLength: 63
+            minLength: 1
+            pattern: ^[a-z][a-z0-9\-]*$
+            x-rh-ipa-hcc:
+                type: defs
+            example: alpha
+        PaginationLinks:
+            title: Root Type for PaginationLinks
+            description: Represent the navigation links for the data paginated.
+            type: object
+            additionalProperties: false
+            properties:
+                first:
+                    description: Reference to the first page of the request.
+                    type: string
+                    format: pagination-ref
+                    pattern: ^(\/\w+){4}\?(offset|limit)=(0|[1-9]\d*)\&(offset|limit)=(0|[1-9]\d*)$
+                last:
+                    description: Reference to the last page of the request.
+                    type: string
+                    format: pagination-ref
+                    pattern: ^(\/\w+){4}\?(offset|limit)=(0|[1-9]\d*)\&(offset|limit)=(0|[1-9]\d*)$
+                next:
+                    description: Reference to the next page of the request.
+                    type: string
+                    format: pagination-ref
+                    pattern: ^(\/\w+){4}\?(offset|limit)=(0|[1-9]\d*)\&(offset|limit)=(0|[1-9]\d*)$
+                previous:
+                    description: Reference to the previous page of the request.
+                    type: string
+                    format: pagination-ref
+                    pattern: ^(\/\w+){4}\?(offset|limit)=(0|[1-9]\d*)\&(offset|limit)=(0|[1-9]\d*)$
+            example:
+                first: /api/idm/v1/domains?limit=10&offset=0
+                last: /api/idm/v1/domains?limit=10&offset=10
+                next: /api/idm/v1/domains?limit=10&offset=10
+                previous: /api/idm/v1/domains?limit=10&offset=0
+        PaginationMeta:
+            title: Root Type for PaginationMeta
+            description: Metadata for the paginated responses.
+            type: object
+            required:
+                - count
+                - limit
+                - offset
+            additionalProperties: false
+            properties:
+                count:
+                    description: total records in the collection.
+                    type: integer
+                    format: int64
+                    readOnly: false
+                    example: '1'
+                limit:
+                    description: Number of items per page.
+                    type: integer
+                    readOnly: false
+                offset:
+                    description: Initial record of the page.
+                    type: integer
+                    readOnly: false
+            example:
+                count: 1
+                limit: 10
+                offset: 0
+        RealmName:
+            title: Kerberos realm name
+            description: >
+                A Kerberos realm name (usually all upper-case domain name).
+                The realm can only be set during initial registration and not
+                be modified by updates.
+            type: string
+            format: realm
+            maxLength: 253
+            minLength: 3
+            pattern: ^[A-Z0-9\.\-]+$
+            x-rh-ipa-hcc:
+                type: defs
+            example: DOMAIN.EXAMPLE
+        RegisterDomainRequest:
+            title: Root Type for DomainRequest
+            description: A domain resource
+            allOf:
+                - $ref: '#/components/schemas/Domain'
+            x-rh-ipa-hcc:
+                name: IPADomainRegisterRequest
+                type: request
+        SigningKeysResponse:
+            title: Signing keys
+            description: Serialized JWKs with revocation information
+            type: object
+            required:
+                - keys
+            additionalProperties: false
+            properties:
+                keys:
+                    description: An array of serialized JSON Web Keys (JWK strings)
+                    type: array
+                    items:
+                        type: string
+                    minItems: 0
+                    x-comment: 'TODO: Set "minItems: 1" after backend has implemented keys'
+                revoked_kids:
+                    description: An array of revoked key identifiers (JWK kid)
+                    type: array
+                    items:
+                        type: string
+                    minItems: 1
+            x-rh-ipa-hcc:
+                name: SigningKeysResponse
+                type: response
+        SubscriptionManagerId:
+            title: Subscription manager id
+            description: A Red Hat Subcription Manager ID of a RHEL host.
+            type: string
+            format: uuid
+            maxLength: 36
+            minLength: 36
+            x-rh-ipa-hcc:
+                type: defs
+            example: e658e3eb-148c-46a6-b48a-099f9593191a
+        UpdateDomainAgentRequest:
+            title: Root Type for DomainRequest
+            description: A domain resource
+            type: object
+            required:
+                - domain_name
+                - domain_type
+                - rhel-idm
+            additionalProperties: false
+            properties:
+                domain_name:
+                    $ref: '#/components/schemas/DomainName'
+                domain_type:
+                    $ref: '#/components/schemas/DomainType'
+                rhel-idm:
+                    $ref: '#/components/schemas/DomainIpa'
+            x-rh-ipa-hcc:
+                name: IPADomainUpdateRequest
+                type: request
+        UpdateDomainUserRequest:
+            title: Root Type for DomainRequest
+            description: A domain resource
+            additionalProperties: false
+            properties:
+                title:
+                    description: Title to describe the domain.
+                    type: string
+                    format: domain-title
+                description:
+                    description: Human readable description abou the domain.
+                    type: string
+                    format: domain-description
+                auto_enrollment_enabled:
+                    description: Enable or disable host vm auto-enrollment for this domain
+                    type: boolean
+                    example: 'true'
+    securitySchemes:
+        x-rh-identity:
+            name: X-Rh-Identity
+            description: |
+                Base64-encoded JSON identity header provided by 3Scale API gateway.
+                The JSON object contains type (System, User), org_id, and either username or certificate CN.
+                Scopes:
+                - 'Type:User' for user access
+                - 'Type:System': for system access (hosts with RHSM mTLS auth)
+                - 'Type:System:domain' for system access, limited to host's domain
+            type: apiKey
+            in: header
+        x-rh-idm-registration-token:
+            name: X-Rh-Idm-Registration-Token
+            description: One-time Domain Registration Token to authenticate domain registration with ipa-hcc command.
+            type: apiKey
+            in: header
+security:
+    - x-rh-identity: []
+tags:
+    - name: resources
+      description: CRUD operation on defined resources
+    - name: actions
+      description: Endpoints no directly related with resources but model actions with the API

@@ -1,0 +1,16 @@
+---
+stages:
+  - validate
+
+validate:
+  tags:
+    - shared
+  image: registry.access.redhat.com/ubi9/python-311:latest
+  stage: validate
+  needs: []
+  before_script:
+    - git config --global --add safe.directory "$PWD"
+  script:
+    - make validate
+    - make openapi-sort && git diff --exit-code
+    - make generate-json && git diff --exit-code
