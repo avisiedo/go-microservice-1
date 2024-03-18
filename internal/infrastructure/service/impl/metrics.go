@@ -8,7 +8,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/podengo-project/idmsvc-backend/internal/config"
-	"github.com/podengo-project/idmsvc-backend/internal/handler"
+	handler "github.com/podengo-project/idmsvc-backend/internal/handler/http"
 	"github.com/podengo-project/idmsvc-backend/internal/infrastructure/router"
 	"github.com/podengo-project/idmsvc-backend/internal/infrastructure/service"
 	"golang.org/x/exp/slog"

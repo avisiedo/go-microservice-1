@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/podengo-project/idmsvc-backend/internal/handler"
+	"github.com/podengo-project/idmsvc-backend/internal/config"
+	handler "github.com/podengo-project/idmsvc-backend/internal/handler/http"
 	"github.com/podengo-project/idmsvc-backend/internal/infrastructure/logger"
 	"github.com/podengo-project/idmsvc-backend/internal/metrics"
 )
@@ -22,30 +24,16 @@ type RouterConfig struct {
 	Metrics            *metrics.Metrics
 }
 
+const (
+	privatePath    = "/internal"
+	basepublicPath = "/api/todo/v1"
+)
+
 func getMajorVersion(version string) string {
 	if version == "" {
 		return ""
 	}
 	return strings.Split(version, ".")[0]
-}
-
-func checkRouterConfig(c RouterConfig) error {
-	if c.PublicPath == "" {
-		return fmt.Errorf("PublicPath cannot be empty")
-	}
-	if c.PrivatePath == "" {
-		return fmt.Errorf("PrivatePath cannot be empty")
-	}
-	if c.PublicPath == c.PrivatePath {
-		return fmt.Errorf("PublicPath and PrivatePath cannot be equal")
-	}
-	if c.Version == "" {
-		return fmt.Errorf("Version cannot be empty")
-	}
-	if c.Metrics == nil {
-		return fmt.Errorf("Metrics is nil")
-	}
-	return nil
 }
 
 func loggerSkipperWithPaths(paths ...string) middleware.Skipper {
@@ -60,32 +48,36 @@ func loggerSkipperWithPaths(paths ...string) middleware.Skipper {
 	}
 }
 
-func configCommonMiddlewares(e *echo.Echo, c RouterConfig) {
+func configCommonMiddlewares(e *echo.Echo, cfg *config.Config) {
 	e.Pre(middleware.RemoveTrailingSlash())
 
 	skipperPaths := []string{
-		c.PrivatePath + "/readyz",
-		c.PrivatePath + "/livez",
-		c.MetricsPath,
+		privatePath + "/readyz",
+		privatePath + "/livez",
+		cfg.Metrics.Path,
 	}
 
-	e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
-		// Request logger values for middleware.RequestLoggerValues
-		LogError:  true,
-		LogMethod: true,
-		LogStatus: true,
-		LogURI:    true,
+	middlewares := make([]echo.MiddlewareFunc, 10)
+	middlewares = append(middlewares,
+		middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
+			// Request logger values for middleware.RequestLoggerValues
+			LogError:  true,
+			LogMethod: true,
+			LogStatus: true,
+			LogURI:    true,
 
-		// Forwards error to the global error handler, so it can decide
-		// appropriate status code.
-		HandleError: true,
+			// Forwards error to the global error handler, so it can decide
+			// appropriate status code.
+			HandleError: true,
 
-		Skipper: loggerSkipperWithPaths(skipperPaths...),
+			Skipper: loggerSkipperWithPaths(skipperPaths...),
 
-		LogValuesFunc: logger.MiddlewareLogValues,
-	}))
+			LogValuesFunc: logger.MiddlewareLogValues,
+		}),
+	)
+	middlewares = append(middlewares, middleware.Recover())
 
-	e.Use(middleware.Recover())
+	e.Use(middlewares...)
 }
 
 // NewRouterWithConfig fill the router configuration for the given echo instance,
@@ -95,19 +87,22 @@ func configCommonMiddlewares(e *echo.Echo, c RouterConfig) {
 // c is the router configuration.
 // metrics is the reference to the metrics storage.
 // Return the echo instance set up; is something fails it panics.
-func NewRouterWithConfig(e *echo.Echo, c RouterConfig) *echo.Echo {
+func NewRouterWithConfig(e *echo.Echo, cfg *config.Config, public *openapi3.T) *echo.Echo {
 	if e == nil {
 		panic("'e' is nil")
 	}
-	if err := checkRouterConfig(c); err != nil {
-		panic(err.Error())
+	if cfg == nil {
+		panic("'cfg' is nil")
+	}
+	if public == nil {
+		panic("'public' is nil")
 	}
 
-	configCommonMiddlewares(e, c)
+	configCommonMiddlewares(e, cfg)
 
-	newGroupPrivate(e.Group(c.PrivatePath), c)
-	newGroupPublic(e.Group(c.PublicPath+"/v"+c.Version), c)
-	newGroupPublic(e.Group(c.PublicPath+"/v"+getMajorVersion(c.Version)), c)
+	newGroupPrivate(e.Group(privatePath), cfg)
+	newGroupPublic(e.Group(basepublicPath+"/v"+public.Info.Version), cfg)
+	newGroupPublic(e.Group(basepublicPath+"/v"+getMajorVersion(c.Version)), c)
 	return e
 }
 
@@ -116,7 +111,7 @@ func NewRouterWithConfig(e *echo.Echo, c RouterConfig) *echo.Echo {
 // c is the router configuration
 // Return the echo instance configured for the metrics for success execution,
 // else raise any panic.
-func NewRouterForMetrics(e *echo.Echo, c RouterConfig) *echo.Echo {
+func NewRouterForMetrics(e *echo.Echo, cfg *config.Config, handlers metrics.ServiceInterface) *echo.Echo {
 	if e == nil {
 		panic("'e' is nil")
 	}
@@ -124,8 +119,8 @@ func NewRouterForMetrics(e *echo.Echo, c RouterConfig) *echo.Echo {
 		panic(fmt.Errorf("MetricsPath cannot be an empty string"))
 	}
 
-	configCommonMiddlewares(e, c)
+	configCommonMiddlewares(e, cfg)
 
 	// Register handlers
-	return newGroupMetrics(e, c)
+	return newGroupMetrics(e, cfg)
 }

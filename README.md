@@ -175,3 +175,4 @@ Validate API
 [apicurio_site]: https://www.apicur.io/apicurito/
 [apicurio_github]: https://www.apicur.io/apicurito/
 [apicurio_images]: https://hub.docker.com/search?q=apicurio%2Fapicurito&type=image
+

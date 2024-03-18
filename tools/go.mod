@@ -5,7 +5,9 @@ module github.com/podengo-project/idmsvc-backend/tools
 // When updating go version, update the below too:
 //   .github/workflows/main.yml
 //   build/package/Dockerfile
-go 1.20
+go 1.21
+
+toolchain go1.22.0
 
 require (
 	github.com/achiku/planter v0.0.0-20230118102009-4847a8211e35
