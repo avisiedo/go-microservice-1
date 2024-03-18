@@ -6,7 +6,7 @@ import (
 
 	api_event "github.com/podengo-project/idmsvc-backend/internal/api/event"
 	"github.com/podengo-project/idmsvc-backend/internal/config"
-	"github.com/podengo-project/idmsvc-backend/internal/handler/impl"
+	impl "github.com/podengo-project/idmsvc-backend/internal/handler/http/impl"
 	"github.com/podengo-project/idmsvc-backend/internal/infrastructure/event"
 	event_handler "github.com/podengo-project/idmsvc-backend/internal/infrastructure/event/handler"
 	"github.com/podengo-project/idmsvc-backend/internal/infrastructure/service"

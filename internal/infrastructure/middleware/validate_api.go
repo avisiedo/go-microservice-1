@@ -15,7 +15,7 @@ import (
 	"github.com/getkin/kin-openapi/routers/gorillamux"
 	"github.com/labstack/echo/v4"
 	echo_middleware "github.com/labstack/echo/v4/middleware"
-	public_api "github.com/podengo-project/idmsvc-backend/internal/api/public"
+	public_api "github.com/podengo-project/idmsvc-backend/internal/api/http/public"
 	internal_errors "github.com/podengo-project/idmsvc-backend/internal/errors"
 	"github.com/redhatinsights/platform-go-middlewares/identity"
 )

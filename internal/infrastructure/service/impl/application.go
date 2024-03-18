@@ -5,9 +5,9 @@ import (
 	"sync"
 
 	"github.com/podengo-project/idmsvc-backend/internal/config"
-	handler_impl "github.com/podengo-project/idmsvc-backend/internal/handler/impl"
+	handler_impl "github.com/podengo-project/idmsvc-backend/internal/handler/http/impl"
 	"github.com/podengo-project/idmsvc-backend/internal/infrastructure/service"
-	"github.com/podengo-project/idmsvc-backend/internal/interface/client"
+	"github.com/podengo-project/idmsvc-backend/internal/interface/repository/client"
 	"github.com/podengo-project/idmsvc-backend/internal/metrics"
 	"github.com/prometheus/client_golang/prometheus"
 	"gorm.io/gorm"

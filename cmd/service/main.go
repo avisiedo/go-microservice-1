@@ -11,7 +11,7 @@ import (
 	"github.com/podengo-project/idmsvc-backend/internal/infrastructure/datastore"
 	"github.com/podengo-project/idmsvc-backend/internal/infrastructure/logger"
 	impl_service "github.com/podengo-project/idmsvc-backend/internal/infrastructure/service/impl"
-	"github.com/podengo-project/idmsvc-backend/internal/usecase/client"
+	"github.com/podengo-project/idmsvc-backend/internal/usecase/repository/client"
 )
 
 func startSignalHandler(c context.Context) (context.Context, context.CancelFunc) {

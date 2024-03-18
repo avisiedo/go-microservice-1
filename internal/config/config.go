@@ -195,7 +195,7 @@ func setDefaults(v *viper.Viper) {
 	// Kafka
 	addEventConfigDefaults(v)
 
-	// Clowdwatch
+	// Cloudwatch
 
 	// Miscelanea
 	v.SetDefault("logging.level", "info")
