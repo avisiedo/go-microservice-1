@@ -304,7 +304,8 @@ func (s *SuiteBase) RunTestCases(testCases []TestCase) {
 // DefaultPublicBaseURL retrieve the public base endpoint URL.
 // Return for the URL for the current configuration.
 func (s *SuiteBase) DefaultPublicBaseURL() string {
-	return fmt.Sprintf("http://localhost:%d/api/idmsvc/v1", s.cfg.Web.Port)
+	// TODO Update this base URL
+	return fmt.Sprintf("http://localhost:%d/api/todo/v1", s.cfg.Web.Port)
 }
 
 // DefaultPrivateBaseURL retrieve the private base endpoint URL.
