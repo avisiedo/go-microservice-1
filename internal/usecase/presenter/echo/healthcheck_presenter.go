@@ -21,7 +21,7 @@ func NewHealthcheck(i interactor.HealthcheckInteractor) presenter.Healthcheck {
 // Liveness kubernetes probe endpoint
 // (GET /livez)
 func (p *healthcheckPresenter) GetLivez(ctx echo.Context) error {
-	if err := p.GetLivez(ctx); err != nil {
+	if err := p.interactor.IsLive(); err != nil {
 		return ctx.JSON(http.StatusForbidden, err.Error())
 	}
 	return ctx.JSON(http.StatusOK, "Livez")
@@ -30,7 +30,7 @@ func (p *healthcheckPresenter) GetLivez(ctx echo.Context) error {
 // Readiness kubernetes probe endpoint
 // (GET /readyz)
 func (p *healthcheckPresenter) GetReadyz(ctx echo.Context) error {
-	if err := p.GetReadyz(ctx); err != nil {
+	if err := p.interactor.IsReady(); err != nil {
 		return ctx.JSON(http.StatusForbidden, err.Error())
 	}
 	return ctx.JSON(http.StatusOK, "Readyz")
