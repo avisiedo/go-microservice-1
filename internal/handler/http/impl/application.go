@@ -22,6 +22,10 @@ type application struct {
 }
 
 func NewHandler(cfg *config.Config, db *gorm.DB, m *metrics.Metrics) handler_http.Application {
+	return newHandler(cfg, db, m)
+}
+
+func newHandler(cfg *config.Config, db *gorm.DB, m *metrics.Metrics) *application {
 	if cfg == nil {
 		panic("config is nil")
 	}
@@ -36,6 +40,7 @@ func NewHandler(cfg *config.Config, db *gorm.DB, m *metrics.Metrics) handler_htt
 	todoPresenter := presenter.NewTodo(cfg, interactor.NewTodo(repository.NewTodo(cfg)), db)
 	openAPIPresenter := presenter.NewOpenAPI()
 	instrumentationPresenter := presenter.NewInstrumentation(m)
+	healthcheckPresenter := presenter.NewHealthcheck(interactor.NewHealthcheck(cfg))
 
 	// Instantiate application
 	return &application{
@@ -45,5 +50,6 @@ func NewHandler(cfg *config.Config, db *gorm.DB, m *metrics.Metrics) handler_htt
 		Todo:            todoPresenter,
 		OpenAPI:         openAPIPresenter,
 		Instrumentation: instrumentationPresenter,
+		Healthcheck:     healthcheckPresenter,
 	}
 }
