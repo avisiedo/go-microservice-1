@@ -8,6 +8,7 @@ import (
 	"github.com/avisiedo/go-microservice-1/internal/api/http/public"
 	"github.com/avisiedo/go-microservice-1/internal/config"
 	"github.com/avisiedo/go-microservice-1/internal/domain/model"
+	"github.com/avisiedo/go-microservice-1/internal/infrastructure/logger/slogctx"
 	"github.com/avisiedo/go-microservice-1/internal/interface/interactor"
 	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/echo"
 	"github.com/avisiedo/go-microservice-1/internal/usecase/presenter/echo/input"
@@ -36,41 +37,36 @@ func NewTodo(cfg *config.Config, i interactor.Todo, db *gorm.DB) presenter.Todo 
 
 // Retrieve all ToDo items
 // (GET /todos)
-func (p *todoPresenter) GetAllTodos(ctx echo.Context) error {
+func (p *todoPresenter) GetAllTodos(c echo.Context) error {
 	var (
 		todos  []model.Todo
 		output []public.ToDo
 		err    error
 	)
-	l, ok := ctx.Get("log").(*slog.Logger)
-	if !ok || l == nil {
-		return errors.New("'log' is undefined in the echo context")
-	}
-	if err = p.input.GetAll(ctx); err != nil {
-		l.ErrorContext(ctx.Request().Context(), "presenter input adapter error at GetAll(): %s", err.Error())
+	ctx := c.Request().Context()
+	l := slogctx.FromCtx(ctx)
+	// l := slog.Default()
+	if err = p.input.GetAll(c); err != nil {
+		l.ErrorContext(ctx, "presenter input adapter error at GetAll(): %s", err.Error())
 		return err
 	}
 	if err = p.db.Transaction(func(tx *gorm.DB) error {
 		var err error
-		c := context.WithValue(
-			context.WithValue(
-				ctx.Request().Context(), "db", tx),
-			"log", l,
-		)
+		c := context.WithValue(ctx, "db", tx)
 		if todos, err = p.interactor.GetAll(c); err != nil {
-			l.ErrorContext(ctx.Request().Context(), "presenter error at GetAll(): %s", err.Error())
+			l.ErrorContext(ctx, "presenter error at GetAll(): %s", err.Error())
 			return err
 		}
 		return nil
 	}); err != nil {
-		l.ErrorContext(ctx.Request().Context(), "transaction error at GetAll(): %s", err.Error())
+		l.ErrorContext(ctx, "transaction error at GetAll(): %s", err.Error())
 		return err
 	}
-	if output, err = p.output.GetAll(ctx, todos); err != nil {
-		l.ErrorContext(ctx.Request().Context(), "presenter output adapter error at GetAll(): %s", err.Error())
+	if output, err = p.output.GetAll(c, todos); err != nil {
+		l.ErrorContext(ctx, "presenter output adapter error at GetAll(): %s", err.Error())
 		return err
 	}
-	return ctx.JSON(http.StatusOK, output)
+	return c.JSON(http.StatusOK, output)
 }
 
 // Create a new ToDo item

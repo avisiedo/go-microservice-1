@@ -1,8 +1,6 @@
 package logger
 
 import (
-	"context"
-
 	"github.com/avisiedo/go-microservice-1/internal/api/header"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -18,7 +16,7 @@ import (
 // LogURI:    true,
 func MiddlewareLogValues(c echo.Context, v middleware.RequestLoggerValues) error {
 	var logLevel slog.Level
-	var logAttr []slog.Attr = make([]slog.Attr, 5)
+	logAttr := []slog.Attr{}
 
 	req := c.Request()
 	res := c.Response()
@@ -42,9 +40,9 @@ func MiddlewareLogValues(c echo.Context, v middleware.RequestLoggerValues) error
 	}
 
 	slog.LogAttrs(
-		context.Background(),
+		req.Context(),
 		logLevel,
-		"http_request",
+		"log request",
 		logAttr...,
 	)
 

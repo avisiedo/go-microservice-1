@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"strings"
 
+	"golang.org/x/exp/slog"
+
 	metrics_handler "github.com/avisiedo/go-microservice-1/internal/api/http/metrics"
 	"github.com/avisiedo/go-microservice-1/internal/config"
 	handler "github.com/avisiedo/go-microservice-1/internal/handler/http"
-	"github.com/avisiedo/go-microservice-1/internal/infrastructure/logger"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
+	app_middleware "github.com/avisiedo/go-microservice-1/internal/infrastructure/middleware"
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -59,22 +61,28 @@ func configCommonMiddlewares(e *echo.Echo, cfg *config.Config) {
 
 	middlewares := []echo.MiddlewareFunc{}
 	middlewares = append(middlewares,
-		middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
-			// Request logger values for middleware.RequestLoggerValues
-			LogError:  true,
-			LogMethod: true,
-			LogStatus: true,
-			LogURI:    true,
-
-			// Forwards error to the global error handler, so it can decide
-			// appropriate status code.
-			HandleError: true,
-
+		app_middleware.SLogMiddlewareWithConfig(&app_middleware.SLogMiddlewareConfig{
 			Skipper: loggerSkipperWithPaths(skipperPaths...),
-
-			LogValuesFunc: logger.MiddlewareLogValues,
+			Log:     slog.Default(),
 		}),
 	)
+	// middlewares = append(middlewares,
+	// 	middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
+	// 		// Request logger values for middleware.RequestLoggerValues
+	// 		LogError:  true,
+	// 		LogMethod: true,
+	// 		LogStatus: true,
+	// 		LogURI:    true,
+
+	// 		// Forwards error to the global error handler, so it can decide
+	// 		// appropriate status code.
+	// 		HandleError: true,
+
+	// 		Skipper: loggerSkipperWithPaths(skipperPaths...),
+
+	// 		LogValuesFunc: logger.MiddlewareLogValues,
+	// 	}),
+	// )
 	middlewares = append(middlewares, middleware.Recover())
 
 	e.Use(middlewares...)
