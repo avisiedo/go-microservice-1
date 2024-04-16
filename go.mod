@@ -23,7 +23,7 @@ require (
 	github.com/pioz/faker v1.7.3
 	github.com/prometheus/client_golang v1.19.0
 	github.com/spf13/viper v1.18.2
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa
 	gorm.io/driver/postgres v1.5.7
 	gorm.io/gorm v1.25.9
@@ -75,7 +75,7 @@ require (
 	github.com/spf13/afero v1.11.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/stretchr/objx v0.5.1 // indirect
+	github.com/stretchr/objx v0.5.2 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
