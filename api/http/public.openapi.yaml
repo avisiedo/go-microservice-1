@@ -1,165 +1,282 @@
----
 openapi: 3.0.0
 info:
-  title: ToDo API
-  version: '1.0'
-  description: API for managing ToDo items
-  license:
-    name: Apache
-  tags:
-    - name: todo
-      description: Todo resource
+    title: ToDo API
+    version: '1.0'
+    description: API for managing ToDo items
+    license:
+        name: Apache
+    tags:
+        -
+            name: todo
+            description: Todo resource
 paths:
-  /todos:
-    get:
-      tags: [todo]
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ToDo'
-          description: A list of ToDo items
-      operationId: getAllTodos
-      summary: Retrieve all ToDo items
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ToDoInput'
-        required: true
-      tags: [todo]
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ToDo'
-          description: The created ToDo item
-      operationId: createTodo
-      summary: Create a new ToDo item
-  /todos/{todoId}:
-    get:
-      tags: [todo]
-      parameters:
-        - name: todoId
-          description: ID of the item to Retrieve
-          schema:
-            format: uuid
-            type: string
-          in: path
-          required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ToDo'
-          description: The ToDo item
-      operationId: getTodo
-      summary: Get item by ID
-    put:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ToDoInput'
-        required: true
-      tags: [todo]
-      parameters:
-        - name: todoId
-          description: ID of the item to Retrieve
-          schema:
-            format: uuid
-            type: string
-          in: path
-          required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ToDo'
-          description: The created ToDo item
-      operationId: updateTodo
-      summary: Substitute an existing ToDo item
-    delete:
-      tags: [todo]
-      parameters:
-        - name: todoId
-          description: ID of the item to Retrieve
-          schema:
-            format: uuid
-            type: string
-          in: path
-          required: true
-      operationId: deleteTodo
-      summary: Remove item by ID
-    patch:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ToDoInputPatch'
-        required: true
-      tags: [todo]
-      parameters:
-        - name: todoId
-          description: ID of the item to Retrieve
-          schema:
-            format: uuid
-            type: string
-          in: path
-          required: true
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ToDo'
-          description: The created ToDo item
-      operationId: patchTodo
-      summary: Patch an existing ToDo item
+    /todos:
+        get:
+            tags:
+                - todo
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ToDo'
+                    description: A list of ToDo items
+            operationId: getAllTodos
+            summary: Retrieve all ToDo items
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ToDoInput'
+                required: true
+            tags:
+                - todo
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ToDo'
+                    description: The created ToDo item
+            operationId: createTodo
+            summary: Create a new ToDo item
+    '/todos/{todoId}':
+        get:
+            tags:
+                - todo
+            parameters:
+                -
+                    name: todoId
+                    description: ID of the item to Retrieve
+                    schema:
+                        format: uuid
+                        type: string
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ToDo'
+                    description: The ToDo item
+            operationId: getTodo
+            summary: Get item by ID
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ToDoInput'
+                required: true
+            tags:
+                - todo
+            parameters:
+                -
+                    name: todoId
+                    description: ID of the item to Retrieve
+                    schema:
+                        format: uuid
+                        type: string
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ToDo'
+                    description: The created ToDo item
+            operationId: updateTodo
+            summary: Substitute an existing ToDo item
+        delete:
+            tags:
+                - todo
+            parameters:
+                -
+                    name: todoId
+                    description: ID of the item to Retrieve
+                    schema:
+                        format: uuid
+                        type: string
+                    in: path
+                    required: true
+            operationId: deleteTodo
+            summary: Remove item by ID
+        patch:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ToDoInputPatch'
+                required: true
+            tags:
+                - todo
+            parameters:
+                -
+                    name: todoId
+                    description: ID of the item to Retrieve
+                    schema:
+                        format: uuid
+                        type: string
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ToDo'
+                    description: The created ToDo item
+            operationId: patchTodo
+            summary: Patch an existing ToDo item
+    /events:
+        summary: Path used to manage the list of events.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `Events` entities.  This path contains
+            a `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Events'
+                    description: Successful response - returns an array of `Events` entities.
+            operationId: getEvents
+            summary: List All events
+            description: Gets a list of all `Events` entities.
+        post:
+            requestBody:
+                description: A new `Events` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Events'
+                required: true
+            responses:
+                '201':
+                    description: Successful response.
+            operationId: createEvent
+            summary: Create a Events
+            description: Creates a new instance of a `Events`.
+    '/events/{eventsId}':
+        summary: Path used to manage a single Events.
+        description: >-
+            The REST endpoint/path used to get, update, and delete single instances of an `Events`.  This path
+            contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete tasks,
+            respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Events'
+                    description: Successful response - returns a single `Events`.
+            operationId: getEventByID
+            summary: Get a Events
+            description: Gets the details of a single instance of a `Events`.
+        put:
+            requestBody:
+                description: Updated `Events` information.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Events'
+                required: true
+            responses:
+                '202':
+                    description: Successful response.
+            operationId: updateEvent
+            summary: Update a Events
+            description: Updates an existing `Events`.
+        delete:
+            responses:
+                '204':
+                    description: Successful response.
+            operationId: deleteEvent
+            summary: Delete a Events
+            description: Deletes an existing `Events`.
+        parameters:
+            -
+                name: eventsId
+                description: A unique identifier for a `Events`.
+                schema:
+                    type: string
+                in: path
+                required: true
 components:
-  schemas:
-    ToDo:
-      required: [title, description]
-      type: object
-      properties:
-        todo_id:
-          format: uuid
-          type: string
-        title:
-          type: string
-        description:
-          type: string
-        due_date:
-          format: date-time
-          type: string
-    ToDoInput:
-      required: [title]
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        due_date:
-          format: date
-          type: string
-    ToDoInputPatch:
-      type: object
-      properties:
-        title:
-          type: string
-          optional: true
-        description:
-          type: string
-          optional: true
-        due_date:
-          format: date
-          type: string
-          optional: true
+    schemas:
+        ToDo:
+            required:
+                - title
+                - description
+            type: object
+            properties:
+                todo_id:
+                    format: uuid
+                    type: string
+                title:
+                    type: string
+                description:
+                    type: string
+                due_date:
+                    format: date-time
+                    type: string
+        ToDoInput:
+            required:
+                - title
+            type: object
+            properties:
+                title:
+                    type: string
+                description:
+                    type: string
+                due_date:
+                    format: date
+                    type: string
+        ToDoInputPatch:
+            type: object
+            properties:
+                title:
+                    type: string
+                    optional: true
+                description:
+                    type: string
+                    optional: true
+                due_date:
+                    format: date
+                    type: string
+                    optional: true
+        Events:
+            title: Root Type for Events
+            description: Represent event resources
+            type: object
+            properties:
+                event_id:
+                    type: string
+                title:
+                    type: string
+                location:
+                    type: string
+                start:
+                    format: date-time
+                    type: string
+                end:
+                    format: date-time
+                    type: string
+                all_day:
+                    type: boolean
+            example:
+                event_id: 416f3861-cf15-42fb-a2f9-2002e6c72438
+                title: My event
+                location: location
+                start: '2024-04-13T08:30:00Z'
+                end: '2024-04-13T09:30:00Z'
+                all_day: false
