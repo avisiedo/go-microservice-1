@@ -20,7 +20,7 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.17.1
 	github.com/google/uuid v1.6.0
 	github.com/labstack/echo/v4 v4.12.0
-	github.com/magiconair/properties v1.8.7
+	github.com/magiconair/properties v1.8.9
 	github.com/oapi-codegen/runtime v1.1.1
 	github.com/openlyinc/pointy v1.2.1
 	github.com/pioz/faker v1.7.3
