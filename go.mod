@@ -26,7 +26,7 @@ require (
 	github.com/pioz/faker v1.7.3
 	github.com/prometheus/client_golang v1.20.5
 	github.com/spf13/viper v1.19.0
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 	gorm.io/driver/postgres v1.5.11
 	gorm.io/gorm v1.25.12
 	k8s.io/utils v0.0.0-20240310230437-4693a0247e57
