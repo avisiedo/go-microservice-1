@@ -6,8 +6,7 @@ module github.com/avisiedo/go-microservice-1/tools
 //   .github/workflows/main.yml
 //   build/package/Dockerfile
 go 1.22
-
-toolchain go1.22.9
+toolchain go1.23.5
 
 require (
 	github.com/achiku/planter v0.0.0-20230118102009-4847a8211e35
@@ -16,7 +15,7 @@ require (
 	github.com/golangci/golangci-lint v1.59.1
 	github.com/loov/goda v0.5.11
 	github.com/mikefarah/yq/v4 v4.44.5
-	github.com/vektra/mockery/v2 v2.38.0
+	github.com/vektra/mockery/v2 v2.52.1
 )
 
 require (
@@ -57,7 +56,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/charithe/durationcheck v0.0.10 // indirect
 	github.com/chavacava/garif v0.1.0 // indirect
-	github.com/chigopher/pathlib v0.15.0 // indirect
+	github.com/chigopher/pathlib v0.19.1 // indirect
 	github.com/ckaznocha/intrange v0.1.2 // indirect
 	github.com/curioswitch/go-reassign v0.2.0 // indirect
 	github.com/daixiang0/gci v0.13.4 // indirect
@@ -166,7 +165,7 @@ require (
 	github.com/quasilyte/regex/syntax v0.0.0-20210819130434-b3f0c404a727 // indirect
 	github.com/quasilyte/stdinfo v0.0.0-20220114132959-f7386bf02567 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
-	github.com/rs/zerolog v1.31.0 // indirect
+	github.com/rs/zerolog v1.33.0 // indirect
 	github.com/ryancurrah/gomodguard v1.3.2 // indirect
 	github.com/ryanrolds/sqlclosecheck v0.5.1 // indirect
 	github.com/sagikazarmark/locafero v0.3.0 // indirect
