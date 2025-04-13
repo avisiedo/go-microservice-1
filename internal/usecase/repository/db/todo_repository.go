@@ -72,6 +72,9 @@ func (r *todoRepository) GetByUUID(ctx context.Context, id uuid.UUID) (*model.To
 
 func (r *todoRepository) GetAll(ctx context.Context) ([]model.Todo, error) {
 	// TODO refactor to support paginated results
+	//      results must be ordered
+	//      results must be limited
+	//      results should start on an initial item
 	var (
 		db    *gorm.DB
 		err   error
