@@ -74,3 +74,7 @@ func NewHandler(status int, response any, err error) echo.HandlerFunc {
 		return c.JSON(status, response)
 	}
 }
+
+func NewDummyContext(e *echo.Echo) echo.Context {
+	return NewContextWithContext(context.Background(), e, http.MethodGet, "/", http.Header{}, nil)
+}

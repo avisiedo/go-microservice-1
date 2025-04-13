@@ -2,7 +2,7 @@ package echo
 
 import (
 	infra_metrics "github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
-	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/echo"
+	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/sync/echo"
 	"github.com/labstack/echo/v4"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )

@@ -8,9 +8,7 @@ import (
 	"github.com/avisiedo/go-microservice-1/internal/domain/model"
 	app_context "github.com/avisiedo/go-microservice-1/internal/infrastructure/context"
 	"github.com/avisiedo/go-microservice-1/internal/interface/interactor"
-	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/echo"
-	"github.com/avisiedo/go-microservice-1/internal/usecase/presenter/echo/input"
-	"github.com/avisiedo/go-microservice-1/internal/usecase/presenter/echo/output"
+	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/sync/echo"
 	"github.com/labstack/echo/v4"
 	openapi_types "github.com/oapi-codegen/runtime/types"
 	"gorm.io/gorm"
@@ -19,11 +17,15 @@ import (
 type todoPresenter struct {
 	db         *gorm.DB
 	interactor interactor.Todo
-	input      input.TodoInput
-	output     output.TodoOutput
+	input      presenter.TodoInput
+	output     presenter.TodoOutput
 }
 
 func NewTodo(cfg *config.Config, i interactor.Todo, db *gorm.DB) presenter.Todo {
+	return newTodo(cfg, NewTodoInput(), NewTodoOutput(), i, db)
+}
+
+func newTodo(cfg *config.Config, input presenter.TodoInput, output presenter.TodoOutput, i interactor.Todo, db *gorm.DB) *todoPresenter {
 	if cfg == nil {
 		panic("'cfg' is nil")
 	}
@@ -36,6 +38,8 @@ func NewTodo(cfg *config.Config, i interactor.Todo, db *gorm.DB) presenter.Todo 
 	return &todoPresenter{
 		db:         db,
 		interactor: i,
+		input:      input,
+		output:     output,
 	}
 }
 

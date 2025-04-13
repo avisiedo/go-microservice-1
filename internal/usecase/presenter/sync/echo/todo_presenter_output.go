@@ -1,17 +1,22 @@
-package output
+package echo
 
 import (
 	"errors"
 
 	"github.com/avisiedo/go-microservice-1/internal/api/http/public"
 	"github.com/avisiedo/go-microservice-1/internal/domain/model"
+	. "github.com/avisiedo/go-microservice-1/internal/interface/presenter/sync/echo"
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
 
-type TodoOutput struct{}
+type todoOutput struct{}
 
-func (o TodoOutput) createGuards(ctx echo.Context, data *model.Todo) error {
+func NewTodoOutput() TodoOutput {
+	return &todoOutput{}
+}
+
+func (o *todoOutput) createGuards(ctx echo.Context, data *model.Todo) error {
 	if ctx == nil {
 		return errors.New("ctx is nil")
 	}
@@ -21,7 +26,7 @@ func (o TodoOutput) createGuards(ctx echo.Context, data *model.Todo) error {
 	return nil
 }
 
-func (o TodoOutput) Create(ctx echo.Context, data *model.Todo) (*public.ToDo, error) {
+func (o *todoOutput) Create(ctx echo.Context, data *model.Todo) (*public.ToDo, error) {
 	if err := o.createGuards(ctx, data); err != nil {
 		return nil, err
 	}
@@ -35,7 +40,7 @@ func (o TodoOutput) Create(ctx echo.Context, data *model.Todo) (*public.ToDo, er
 	return output, nil
 }
 
-func (o TodoOutput) getAllGuards(ctx echo.Context, data []model.Todo) error {
+func (o *todoOutput) getAllGuards(ctx echo.Context, data []model.Todo) error {
 	if ctx == nil {
 		return errors.New("ctx is nil")
 	}
@@ -45,9 +50,9 @@ func (o TodoOutput) getAllGuards(ctx echo.Context, data []model.Todo) error {
 	return nil
 }
 
-func (o TodoOutput) GetAll(ctx echo.Context, data []model.Todo) ([]public.ToDo, error) {
+func (o *todoOutput) GetAll(ctx echo.Context, data []model.Todo) ([]public.ToDo, error) {
 	if err := o.getAllGuards(ctx, data); err != nil {
-		return []public.ToDo{}, err
+		return nil, err
 	}
 	output := make([]public.ToDo, len(data))
 	for i := range data {
@@ -59,7 +64,7 @@ func (o TodoOutput) GetAll(ctx echo.Context, data []model.Todo) ([]public.ToDo, 
 	return output, nil
 }
 
-func (o TodoOutput) getGuards(ctx echo.Context, data *model.Todo) error {
+func (o *todoOutput) getGuards(ctx echo.Context, data *model.Todo) error {
 	if ctx == nil {
 		return errors.New("'ctx' is nil")
 	}
@@ -72,7 +77,7 @@ func (o TodoOutput) getGuards(ctx echo.Context, data *model.Todo) error {
 	return nil
 }
 
-func (o TodoOutput) Get(ctx echo.Context, data *model.Todo) (*public.ToDo, error) {
+func (o *todoOutput) Get(ctx echo.Context, data *model.Todo) (*public.ToDo, error) {
 	if err := o.getGuards(ctx, data); err != nil {
 		return nil, err
 	}

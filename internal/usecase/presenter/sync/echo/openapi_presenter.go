@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/avisiedo/go-microservice-1/internal/api/http/public"
-	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/echo"
+	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/sync/echo"
 	"github.com/labstack/echo/v4"
 )
 

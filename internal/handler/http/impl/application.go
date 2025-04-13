@@ -4,9 +4,9 @@ import (
 	"github.com/avisiedo/go-microservice-1/internal/config"
 	handler_http "github.com/avisiedo/go-microservice-1/internal/handler/http"
 	metrics "github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
-	presenter_interface "github.com/avisiedo/go-microservice-1/internal/interface/presenter/echo"
+	presenter_interface "github.com/avisiedo/go-microservice-1/internal/interface/presenter/sync/echo"
 	"github.com/avisiedo/go-microservice-1/internal/usecase/interactor"
-	presenter "github.com/avisiedo/go-microservice-1/internal/usecase/presenter/echo"
+	presenter "github.com/avisiedo/go-microservice-1/internal/usecase/presenter/sync/echo"
 	repository "github.com/avisiedo/go-microservice-1/internal/usecase/repository/db"
 	"gorm.io/gorm"
 )

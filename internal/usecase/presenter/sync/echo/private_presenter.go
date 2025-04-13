@@ -2,7 +2,7 @@ package echo
 
 import (
 	"github.com/avisiedo/go-microservice-1/internal/interface/interactor"
-	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/echo"
+	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/sync/echo"
 )
 
 type private struct {

@@ -7,7 +7,7 @@ import (
 	api_healthcheck "github.com/avisiedo/go-microservice-1/internal/api/http/healthcheck"
 	app_context "github.com/avisiedo/go-microservice-1/internal/infrastructure/context"
 	interactor "github.com/avisiedo/go-microservice-1/internal/interface/interactor"
-	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/echo"
+	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/sync/echo"
 	"github.com/labstack/echo/v4"
 )
 
