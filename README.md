@@ -13,37 +13,13 @@ started golang microservice which use a design first
 approach and provide a productive way to create
 resources for the API.
 
-## Getting started
+## Contributing and get started
 
-- **Pre-requisites** on Fedora 41
+If you are willing to run this repo or contribute, please check contributing
+guidelines and you will find how to get started, and information for
+contributing.
 
-```sh
-# Install required packages
-$ sudo dnf install git golang make podman podman-compose delve
-
-# Create and edit the file confis/config.yaml
-$ cp -vf configs/config.example.yaml configs/config.yaml
-
-# Install local tools
-$ make tidy
-$ make install-tools
-
-# Build all the requirements and start the local infra
-$ make compose-build compose-clean clean build compose-up
-```
-
-Day to day:
-
-- Start the service: `make run`
-- Run some test request by: `./test/sripts/todos-list.sh`
-- Run tests by: `make test` or `make test-unit` or `make test-integration`
-
-- Open apicurio to load, edit and save the openapi specification
-  by: `make apicurio-start`
-
-If you want to use TDD, then start implementing some tests to fail, and
-cover every small change. Run tests by `test`, `test-unit` or `test-integration`
-make rules and add the necessary code.
+See: [Contributing](docs/CONTRIBUTING.md)
 
 ## Repository layout
 
