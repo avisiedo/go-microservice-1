@@ -6,6 +6,7 @@ import (
 	"github.com/avisiedo/go-microservice-1/internal/api/http/public"
 	"github.com/avisiedo/go-microservice-1/internal/config"
 	"github.com/avisiedo/go-microservice-1/internal/domain/model"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	app_context "github.com/avisiedo/go-microservice-1/internal/infrastructure/context"
 	"github.com/avisiedo/go-microservice-1/internal/interface/interactor"
 	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/sync/echo"
@@ -27,13 +28,13 @@ func NewTodo(cfg *config.Config, i interactor.Todo, db *gorm.DB) presenter.Todo 
 
 func newTodo(cfg *config.Config, input presenter.TodoInput, output presenter.TodoOutput, i interactor.Todo, db *gorm.DB) *todoPresenter {
 	if cfg == nil {
-		panic("'cfg' is nil")
+		panic(common_err.ErrNil("cfg"))
 	}
 	if i == nil {
-		panic("interactor is nil")
+		panic(common_err.ErrNil("interactor"))
 	}
 	if db == nil {
-		panic("'db' is nil")
+		panic(common_err.ErrNil("db"))
 	}
 	return &todoPresenter{
 		db:         db,
@@ -89,16 +90,7 @@ func (p *todoPresenter) CreateTodo(ctx echo.Context) error {
 	)
 
 	if data, err = p.input.Create(ctx); err != nil {
-		return err
-	}
-	if data == nil {
-		return echo.NewHTTPError(http.StatusBadRequest, "empty todo data")
-	}
-	if data.Title == "" {
-		return echo.NewHTTPError(http.StatusBadRequest, "title is an empty string")
-	}
-	if data.Description == "" {
-		return echo.NewHTTPError(http.StatusBadRequest, "description is an empty string")
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	if err = p.db.Transaction(func(tx *gorm.DB) error {
 		c := app_context.WithDB(ctx.Request().Context(), tx)
@@ -109,13 +101,13 @@ func (p *todoPresenter) CreateTodo(ctx echo.Context) error {
 		}
 		return nil
 	}); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 	if output, err = p.output.Create(ctx, data); err != nil {
 		c := ctx.Request().Context()
 		app_context.LogFromContext(c).
 			ErrorContext(c, err.Error())
-		return err
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 	return ctx.JSON(http.StatusCreated, output)
 }

@@ -44,6 +44,7 @@ func TestGetURL(t *testing.T) {
 
 // This test require the infrastructure to be started
 func TestNewDB(t *testing.T) {
+	t.Skip("require a database up and running for unit testing")
 	assert.PanicsWithValue(t, "'cfg' is nil", func() {
 		_ = NewDB(nil, slog.Default())
 	})

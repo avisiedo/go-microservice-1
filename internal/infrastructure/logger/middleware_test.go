@@ -20,7 +20,7 @@ func TestMiddlewareLogValues(t *testing.T) {
 	b := bytes.NewBufferString("")
 	slog.SetDefault(slog.New(slog.NewTextHandler(b, &slog.HandlerOptions{})))
 	e := echo.New()
-	ctx := test_echo.NewContext(e, http.MethodGet, "/api/todos/v1/todo", nil, nil)
+	ctx := test_echo.NewContext(e, http.MethodGet, "/api/todos/v1/todo", nil, nil, slogDefault)
 	err := MiddlewareLogValues(ctx, middleware.RequestLoggerValues{
 		Method:    http.MethodGet,
 		URIPath:   "/api/todos/v1/todo",
@@ -40,7 +40,7 @@ func TestMiddlewareLogValuesError(t *testing.T) {
 	b := bytes.NewBufferString("")
 	slog.SetDefault(slog.New(slog.NewTextHandler(b, &slog.HandlerOptions{})))
 	e := echo.New()
-	ctx := test_echo.NewContext(e, http.MethodGet, "/api/todos/v1/todo", nil, nil)
+	ctx := test_echo.NewContext(e, http.MethodGet, "/api/todos/v1/todo", nil, nil, slogDefault)
 	err := MiddlewareLogValues(ctx, middleware.RequestLoggerValues{
 		Method:    http.MethodGet,
 		URIPath:   "/api/todos/v1/todo",

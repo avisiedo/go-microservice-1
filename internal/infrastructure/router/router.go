@@ -1,13 +1,13 @@
 package router
 
 import (
-	"fmt"
 	"log/slog"
 	"strings"
 
 	"github.com/avisiedo/go-microservice-1/internal/api/http/healthcheck"
 	metrics_handler "github.com/avisiedo/go-microservice-1/internal/api/http/metrics"
 	"github.com/avisiedo/go-microservice-1/internal/config"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	handler "github.com/avisiedo/go-microservice-1/internal/handler/http"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
 	app_middleware "github.com/avisiedo/go-microservice-1/internal/infrastructure/middleware"
@@ -89,15 +89,19 @@ func configCommonMiddlewares(e *echo.Echo, cfg *config.Config) {
 	e.Use(middlewares...)
 }
 
-func newRouterWithConfigGuards(e *echo.Echo, cfg *config.Config, public *openapi3.T) {
+func newRouterWithConfigCommonGuards(e *echo.Echo, cfg *config.Config) {
 	if e == nil {
-		panic("'e' echo server is nil")
+		panic(common_err.ErrNil("e"))
 	}
 	if cfg == nil {
-		panic("'cfg' is nil")
+		panic(common_err.ErrNil("cfg"))
 	}
+}
+
+func newRouterWithConfigGuards(e *echo.Echo, cfg *config.Config, public *openapi3.T) {
+	newRouterWithConfigCommonGuards(e, cfg)
 	if public == nil {
-		panic("'public' is nil")
+		panic(common_err.ErrNil("public"))
 	}
 }
 
@@ -127,14 +131,12 @@ func NewRouterWithConfig(e *echo.Echo, cfg *config.Config, public *openapi3.T, h
 // Return the echo instance configured for the metrics for success execution,
 // else raise any panic.
 func NewMetricsRouter(e *echo.Echo, cfg *config.Config, h metrics_handler.ServerInterface) *echo.Echo {
-	if e == nil {
-		panic("'e' is nil")
-	}
+	newRouterWithConfigCommonGuards(e, cfg)
 	if cfg.Metrics.Path == "" {
-		panic(fmt.Errorf("'cfg.Metrics.Path' is an empty string"))
+		panic(common_err.ErrEmpty("cfg.Metrics.Path"))
 	}
 	if h == nil {
-		panic(fmt.Errorf("'h' is nil"))
+		panic(common_err.ErrNil("h"))
 	}
 
 	configCommonMiddlewares(e, cfg)

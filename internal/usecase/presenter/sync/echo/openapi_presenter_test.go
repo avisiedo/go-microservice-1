@@ -1,6 +1,7 @@
 package echo
 
 import (
+	"log/slog"
 	"net/http"
 	"testing"
 
@@ -21,7 +22,7 @@ func TestGetOpenapi(t *testing.T) {
 	require.NotNil(t, p)
 
 	e := echo.New()
-	ctx := helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil)
+	ctx := helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil, slog.Default())
 	err := p.GetOpenapi(ctx)
 	require.NoError(t, err)
 }

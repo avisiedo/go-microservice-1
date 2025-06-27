@@ -1,6 +1,7 @@
 package echo
 
 import (
+	"log/slog"
 	"net/http"
 	"testing"
 
@@ -25,6 +26,7 @@ func TestNewHealthcheck(t *testing.T) {
 func TestGetLivez(t *testing.T) {
 	const path = "/livez"
 	const interactorMethod = "IsLive"
+	var ctx echo.Context
 	i := interactor.NewHealthcheckInteractor(t)
 	p := NewHealthcheck(i)
 	require.NotNil(t, p)
@@ -33,7 +35,7 @@ func TestGetLivez(t *testing.T) {
 	err := p.GetLivez(nil)
 	require.EqualError(t, err, echo.ErrInternalServerError.Error())
 
-	ctx := helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil)
+	ctx = helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil, slog.Default())
 	require.NotNil(t, ctx)
 	i.On(interactorMethod).Return(nil)
 	err = p.GetLivez(ctx)
@@ -41,7 +43,7 @@ func TestGetLivez(t *testing.T) {
 	require.Equal(t, http.StatusOK, ctx.Response().Status)
 	i.AssertExpectations(t)
 
-	ctx = helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil)
+	ctx = helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil, slog.Default())
 	i = interactor.NewHealthcheckInteractor(t)
 	require.NotNil(t, ctx)
 	i.On(interactorMethod).Return(echo.ErrServiceUnavailable)
@@ -63,7 +65,7 @@ func TestReadyz(t *testing.T) {
 	err := p.GetReadyz(nil)
 	require.EqualError(t, err, echo.ErrInternalServerError.Error())
 
-	ctx := helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil)
+	ctx := helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil, slog.Default())
 	require.NotNil(t, ctx)
 	i = interactor.NewHealthcheckInteractor(t)
 	i.On(interactorMethod).Return(nil)
@@ -72,7 +74,7 @@ func TestReadyz(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, http.StatusOK, ctx.Response().Status)
 
-	ctx = helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil)
+	ctx = helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil, slog.Default())
 	i = interactor.NewHealthcheckInteractor(t)
 	require.NotNil(t, ctx)
 	i.On(interactorMethod).Return(echo.ErrServiceUnavailable)

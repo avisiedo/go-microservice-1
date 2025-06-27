@@ -1,6 +1,7 @@
 package metrics
 
 import (
+	"log/slog"
 	"net/http"
 	"testing"
 
@@ -19,7 +20,7 @@ func TestGetMetricsWithNoError(t *testing.T) {
 	}
 
 	e := echo.New()
-	ctx := echo_helper.NewContext(e, http.MethodGet, "/metrics", nil, nil)
+	ctx := echo_helper.NewContext(e, http.MethodGet, "/metrics", nil, nil, slog.Default())
 	handlerMock.On("GetMetrics", ctx).Return(nil)
 	assert.NoError(t, wrapper.GetMetrics(ctx))
 }
@@ -31,7 +32,7 @@ func TestGetMetricsWithError(t *testing.T) {
 	}
 
 	e := echo.New()
-	ctx := echo_helper.NewContext(e, http.MethodGet, "/metrics", nil, nil)
+	ctx := echo_helper.NewContext(e, http.MethodGet, "/metrics", nil, nil, slog.Default())
 	handlerMock.On("GetMetrics", ctx).Return(echo.NewHTTPError(http.StatusBadRequest, "Bad Request"))
 	err := wrapper.GetMetrics(ctx)
 	assert.EqualError(t, err, "code=400, message=Bad Request")

@@ -5,6 +5,7 @@ import (
 
 	"github.com/avisiedo/go-microservice-1/internal/api/http/public"
 	"github.com/avisiedo/go-microservice-1/internal/domain/model"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	builder "github.com/avisiedo/go-microservice-1/internal/test/builder/model"
 	helper_echo "github.com/avisiedo/go-microservice-1/internal/test/helper/http/echo"
 	"github.com/google/uuid"
@@ -26,10 +27,10 @@ func TestOutputCreateGuards(t *testing.T) {
 	require.NotNil(t, e)
 
 	err = sut.createGuards(nil, nil)
-	require.EqualError(t, err, "ctx is nil")
+	require.EqualError(t, err, common_err.ErrNil("ctx").Error())
 
 	err = sut.createGuards(helper_echo.NewDummyContext(e), nil)
-	require.EqualError(t, err, "dataOutput is nil")
+	require.EqualError(t, err, common_err.ErrNil("data").Error())
 
 	err = sut.createGuards(helper_echo.NewDummyContext(e), &model.Todo{})
 	require.NoError(t, err)
@@ -46,7 +47,7 @@ func TestOutputCreate(t *testing.T) {
 	e := echo.New()
 
 	data, err = sut.Create(helper_echo.NewDummyContext(e), nil)
-	require.EqualError(t, err, "dataOutput is nil")
+	require.EqualError(t, err, common_err.ErrNil("data").Error())
 	assert.Nil(t, data)
 
 	data, err = sut.Create(
@@ -70,10 +71,10 @@ func TestOutputGetAllGuards(t *testing.T) {
 	require.NotNil(t, e)
 
 	err = sut.getAllGuards(nil, nil)
-	require.EqualError(t, err, "ctx is nil")
+	require.EqualError(t, err, common_err.ErrNil("ctx").Error())
 
 	err = sut.getAllGuards(helper_echo.NewDummyContext(e), nil)
-	require.EqualError(t, err, "dataOutput is nil")
+	require.EqualError(t, err, common_err.ErrNil("data").Error())
 
 	err = sut.getAllGuards(helper_echo.NewDummyContext(e), []model.Todo{*builder.NewTodo().Build()})
 	require.NoError(t, err)
@@ -91,7 +92,7 @@ func TestOutputGetAll(t *testing.T) {
 	require.NotNil(t, e)
 
 	output, err = sut.GetAll(nil, nil)
-	require.EqualError(t, err, "ctx is nil")
+	require.EqualError(t, err, common_err.ErrNil("ctx").Error())
 	assert.Nil(t, output)
 
 	input := []model.Todo{*builder.NewTodo().Build()}

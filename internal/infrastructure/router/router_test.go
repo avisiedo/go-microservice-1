@@ -7,6 +7,7 @@ import (
 
 	"github.com/avisiedo/go-microservice-1/internal/api/http/public"
 	"github.com/avisiedo/go-microservice-1/internal/config"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	handler_impl "github.com/avisiedo/go-microservice-1/internal/handler/http/impl"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
 	"github.com/avisiedo/go-microservice-1/internal/test"
@@ -21,8 +22,8 @@ import (
 
 func TestGetMajorVersion(t *testing.T) {
 	assert.Equal(t, "", getMajorVersion(""))
-	assert.Equal(t, "1", getMajorVersion("1.0"))
-	assert.Equal(t, "1", getMajorVersion("1.0.3"))
+	assert.Equal(t, "1", getMajorVersion("1.2"))
+	assert.Equal(t, "1", getMajorVersion("1.2.3"))
 	assert.Equal(t, "1", getMajorVersion("1."))
 	assert.Equal(t, "a", getMajorVersion("a.b.c"))
 }
@@ -77,10 +78,28 @@ func TestConfigCommonMiddlewares(t *testing.T) {
 	configCommonMiddlewares(e, cfg)
 }
 
+func TestNewRouterWithConfigCommonGuards(t *testing.T) {
+	assert.PanicsWithError(t, common_err.ErrNil("e").Error(), func() {
+		newRouterWithConfigCommonGuards(nil, nil)
+	})
+	assert.PanicsWithError(t, common_err.ErrNil("cfg").Error(), func() {
+		e := echo.New()
+		newRouterWithConfigCommonGuards(e, nil)
+	})
+}
+
+func TestNewRouterWithConfigGuards(t *testing.T) {
+	assert.PanicsWithError(t, common_err.ErrNil("public").Error(), func() {
+		e := echo.New()
+		cfg := &config.Config{}
+		newRouterWithConfigGuards(e, cfg, nil)
+	})
+}
+
 func TestNewRouterWithConfig(t *testing.T) {
 	assert.Panics(t, func() {
 		NewRouterWithConfig(nil, nil, nil, nil, nil)
-	}, "'e' is nil")
+	}, common_err.ErrNil("e"))
 
 	e := echo.New()
 	assert.Panics(t, func() {
@@ -102,25 +121,23 @@ func TestNewRouterWithConfig(t *testing.T) {
 	})
 }
 
-func TestNewRouterForMetrics(t *testing.T) {
+func TestNewMetricsRouter(t *testing.T) {
 	presenterMetrics := presenter.NewServerInterface(t)
-	assert.Panics(t, func() {
-		NewMetricsRouter(nil, nil, nil)
-	})
-
 	e := echo.New()
-	assert.Panics(t, func() {
-		NewMetricsRouter(e, nil, nil)
-	})
-
 	cfg := &config.Config{}
 	_ = config.Load(cfg)
+	cfg.Metrics.Path = ""
+	assert.PanicsWithError(t, common_err.ErrEmpty("cfg.Metrics.Path").Error(), func() {
+		NewMetricsRouter(e, cfg, nil)
+	})
 
-	assert.Panics(t, func() {
+	cfg.Metrics.Path = "/metrics"
+
+	assert.PanicsWithError(t, common_err.ErrNil("h").Error(), func() {
 		_ = NewMetricsRouter(e, cfg, nil)
-	}, "'e' is nil")
+	})
 
 	assert.NotPanics(t, func() {
 		e = NewMetricsRouter(e, cfg, presenterMetrics)
-	}, "MetricsPath cannot be an empty string")
+	})
 }

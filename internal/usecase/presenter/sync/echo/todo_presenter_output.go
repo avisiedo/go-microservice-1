@@ -12,18 +12,28 @@ import (
 
 type todoOutput struct{}
 
+const (
+	ErrCtxIsNil        = "'ctx' is nil"
+	ErrDataIsNil       = "'data' is nil"
+	ErrDataUUIDIsEmpty = "'data.UUID' is empty"
+)
+
+func todoCommonGuards(ctx echo.Context, data *model.Todo) error {
+	if ctx == nil {
+		return errors.New(ErrCtxIsNil)
+	}
+	if data == nil {
+		return errors.New(ErrDataIsNil)
+	}
+	return nil
+}
+
 func NewTodoOutput() TodoOutput {
 	return &todoOutput{}
 }
 
 func (o *todoOutput) createGuards(ctx echo.Context, data *model.Todo) error {
-	if ctx == nil {
-		return errors.New("ctx is nil")
-	}
-	if data == nil {
-		return errors.New("dataOutput is nil")
-	}
-	return nil
+	return todoCommonGuards(ctx, data)
 }
 
 func (o *todoOutput) Create(ctx echo.Context, data *model.Todo) (*public.ToDo, error) {
@@ -42,10 +52,10 @@ func (o *todoOutput) Create(ctx echo.Context, data *model.Todo) (*public.ToDo, e
 
 func (o *todoOutput) getAllGuards(ctx echo.Context, data []model.Todo) error {
 	if ctx == nil {
-		return errors.New("ctx is nil")
+		return errors.New(ErrCtxIsNil)
 	}
 	if data == nil {
-		return errors.New("dataOutput is nil")
+		return errors.New(ErrDataIsNil)
 	}
 	return nil
 }
@@ -65,14 +75,11 @@ func (o *todoOutput) GetAll(ctx echo.Context, data []model.Todo) ([]public.ToDo,
 }
 
 func (o *todoOutput) getGuards(ctx echo.Context, data *model.Todo) error {
-	if ctx == nil {
-		return errors.New("'ctx' is nil")
-	}
-	if data == nil {
-		return errors.New("'data' is nil")
+	if err := todoCommonGuards(ctx, data); err != nil {
+		return err
 	}
 	if (data.UUID == uuid.UUID{}) {
-		return errors.New("'data.UUID' is empty")
+		return errors.New(ErrDataUUIDIsEmpty)
 	}
 	return nil
 }

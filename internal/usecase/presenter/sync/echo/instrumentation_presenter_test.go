@@ -1,6 +1,7 @@
 package echo
 
 import (
+	"log/slog"
 	"net/http"
 	"testing"
 
@@ -29,7 +30,7 @@ func TestGetMetrics(t *testing.T) {
 	m := infra_metrics.NewMetrics(reg)
 	p := NewInstrumentation(m)
 	e := echo.New()
-	ctx := helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil)
+	ctx := helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil, slog.Default())
 	err := p.GetMetrics(ctx)
 	require.NoError(t, err)
 	require.Equal(t, http.StatusOK, ctx.Response().Status)

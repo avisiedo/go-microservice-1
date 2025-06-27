@@ -2,20 +2,22 @@ package common
 
 import "fmt"
 
-// NewNil create an error for a nil value at the presenter
-// component level.
-func NewNil(fieldName string) error {
+func checkEmptyFieldName(fieldName string) {
 	if fieldName == "" {
-		panic("'fieldName' is empty")
+		panic(ErrEmpty("fieldName"))
 	}
+}
+
+// ErrNil create an error for a nil value at the presenter
+// component level.
+func ErrNil(fieldName string) error {
+	checkEmptyFieldName(fieldName)
 	return fmt.Errorf("'%s' is nil", fieldName)
 }
 
-// NewEmpty create an error for an empty value at the
+// ErrEmpty create an error for an empty value at the
 // presenter level.
-func NewEmpty(fieldName string) error {
-	if fieldName == "" {
-		panic("'fieldName' is empty")
-	}
+func ErrEmpty(fieldName string) error {
+	checkEmptyFieldName(fieldName)
 	return fmt.Errorf("'%s' is empty", fieldName)
 }
