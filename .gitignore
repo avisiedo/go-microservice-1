@@ -1,17 +1,83 @@
-.DS_Store
-.venv
-.envrc
-/bin
-/tools/bin
+# Ignore by default
+**/*
 
-/coverage.out
-/coverage.tmp.out
+# Base directory
+!README.md
+!DEVELOPMENT.md
+!LICENSE
+!go.mod
+!go.sum
+!Makefile
+!requirements-dev.txt
+!requirements.txt
+!SECURITY.md
+!toolbox.sh
 
-/configs/config.yaml
+# Hidden files
+!.dockerignore
+!.editorconfig
+!.gitattributes
+!.gitignore
+!.gitlab-ci.yml
+!.golangci.yaml
+!.pre-commit-config.yaml
+!.yamllint.yaml
 
+# .github
+!.github
+!.github/**
+!.github/**/*
 
-# Secrets
-/secrets
-.docker
-.podman
-.kube
+# .vscode
+!.vscode
+!.vscode/**
+!.vscode/**/*
+
+# api
+!api
+!api/**
+!api/**/*
+
+# build
+!build
+!build/**
+!build/**/*
+
+# cmd
+!cmd
+!cmd/**
+!cmd/**/*
+
+# configs
+!configs
+!configs/**
+!configs/**/*
+
+# deploy
+!deploy
+!deploy/**
+!deploy/**/*
+
+# internal
+!internal
+!internal/**
+!internal/**/*
+
+# scripts
+!scripts
+!scripts/**
+!scripts/**/*
+
+# test
+!test
+!test/**
+!test/**/*
+
+# tools
+!tools
+!tools/**
+!tools/**/*
+tools/bin
+
+configs/config.yaml
+
