@@ -15,7 +15,7 @@ resources for the API.
 
 ## Getting started
 
-- **Pre-requisites**
+- **Pre-requisites** on Fedora 41
 
 ```sh
 # Install required packages
@@ -67,13 +67,19 @@ make rules and add the necessary code.
       business logic independent code; every
       http handler and middleware has a
       presenter that wrap the interactor.
+      /echo
+      /gin
+      ...
+        **/<resource-name>
     /repository
       Data input/output of the system.
       /client
-        /http
-        /event
+        /http (this can be self-generated from the openapi.specification).
+        /event (producer could be possible to generate code based on json
+        schema).
       /db
       /s3
+      /cache (redis)
     /interactor
       Free form layout to represent the business
       logic; this is framework independent.
@@ -92,9 +98,18 @@ make rules and add the necessary code.
     /event
   /scripts
   /http
-
-    
 ```
+
+TODO
+
+- Add workload tests by using
+  [locust](https://docs.locust.io/en/stable/what-is-locust.html).
+- Add end2end tests by using
+  [playwright](https://playwright.dev/).
+- Refactor better separability.
+- Add a redis sample of caching data from an external system.
+- Add a S3 sample for uploading, downloading, and browsing the bucket
+  primitives.
 
 ## Acknowledgements
 
