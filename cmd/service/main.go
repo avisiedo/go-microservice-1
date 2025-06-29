@@ -14,6 +14,13 @@ import (
 	impl_service "github.com/avisiedo/go-microservice-1/internal/infrastructure/service/impl"
 )
 
+func closeStdin() {
+	err := os.Stdin.Close()
+	if err != nil {
+		panic(err)
+	}
+}
+
 func startSignalHandler(c context.Context) (context.Context, context.CancelFunc) {
 	if c == nil {
 		c = context.Background()
@@ -29,6 +36,7 @@ func startSignalHandler(c context.Context) (context.Context, context.CancelFunc)
 }
 
 func main() {
+	closeStdin()
 	wg := &sync.WaitGroup{}
 	logger.LogBuildInfo("idmscv-backend")
 	cfg := config.Get()
