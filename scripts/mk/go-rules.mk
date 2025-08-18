@@ -121,7 +121,8 @@ test-ci: ## Run tests for ci
 
 .PHONY: test-integration
 test-integration:  ## Run integration tests
-	CONFIG_PATH="$(PROJECT_DIR)/configs" go test -parallel 1 ./internal/test/integration/... -test.failfast -test.v
+	$(MAKE) .compose-wait-db
+	TEST=integration CONFIG_PATH="$(PROJECT_DIR)/configs" go test -parallel 1 ./internal/test/integration/... -test.failfast -test.v
 
 # Add dependencies from binaries to all the the sources
 # so any change is detected for the build rule
