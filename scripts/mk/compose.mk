@@ -62,7 +62,7 @@ compose-up: ## Start local infrastructure
 .PHONY: .compose-wait-db
 .compose-wait-db:
 	@printf "Waiting database"; \
-	while [ "$$( $(CONTAINER_ENGINE) container inspect --format '{{$(CONTAINER_HEALTH_PATH)}}' "$(CONTAINER_DATABASE_NAME)" )" != "healthy" ]; \
+	while [ "$$( $(CONTAINER_ENGINE) container inspect --format '{{$(CONTAINER_HEALTH_PATH)}}' "$(CONTAINER_DATABASE_NAME)" 2>/dev/null )" != "healthy" ]; \
 	do sleep 1; printf "."; \
 	done; \
 	printf "\n"
