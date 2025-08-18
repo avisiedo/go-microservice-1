@@ -352,3 +352,15 @@ func StartSignalHandler(c context.Context) (context.Context, context.CancelFunc)
 func TearDownSignalHandler() {
 	signal.Reset(syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
 }
+
+func TestSuite(t *testing.T) {
+	if value, exist := os.LookupEnv("TEST"); !exist || value != "integration" {
+		t.Skip("This TestSuite require to start infrastructure: make compose-up && make test-integration TEST=integration")
+	}
+	// TODO Add here your test suites
+	suite.Run(t, new(SuiteTodosCreate))
+	suite.Run(t, new(SuiteTodosRead))
+	// suite.Run(t, new(SuiteTodosDelete))
+	// suite.Run(t, new(SuiteTodosUpdate))
+	// suite.Run(t, new(SuiteTodosList))
+}
