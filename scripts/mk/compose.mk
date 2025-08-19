@@ -62,8 +62,12 @@ compose-up: ## Start local infrastructure
 .PHONY: .compose-wait-db
 .compose-wait-db:
 	@printf "Waiting database"; \
-	while [ "$$( $(CONTAINER_ENGINE) container inspect --format '{{$(CONTAINER_HEALTH_PATH)}}' "$(CONTAINER_DATABASE_NAME)" 2>/dev/null )" != "healthy" ]; \
-	do sleep 1; printf "."; \
+	export CONTAINER_TIMEOUT=10; \
+	  while [ "$$( $(CONTAINER_ENGINE) container inspect --format '{{$(CONTAINER_HEALTH_PATH)}}' "$(CONTAINER_DATABASE_NAME)" 2>/dev/null )" != "healthy" ]; \
+	    do sleep 1; \
+		CONTAINER_TIMEOUT=$$((CONTAINER_TIMEOUT - 1)); \
+		[ "$${CONTAINER_TIMEOUT}" -gt 0 ] || { echo "error: timeout waiting for container"; exit 1; }; \
+		printf "."; \
 	done; \
 	printf "\n"
 
