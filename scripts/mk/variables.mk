@@ -68,6 +68,11 @@ DATABASE_USER ?= database-user
 DATABASE_PASSWORD ?= database-secret
 endif
 
+#
+# Minio Service (S3 storage)
+#
+MINIO_USER ?= minio
+MINIO_PASSWORD ?= minio
 
 #
 # Kafka configuration variables
