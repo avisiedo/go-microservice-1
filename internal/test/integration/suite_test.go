@@ -355,7 +355,7 @@ func TearDownSignalHandler() {
 
 func TestSuite(t *testing.T) {
 	if value, exist := os.LookupEnv("TEST"); !exist || value != "integration" {
-		t.Skip("This TestSuite require to start infrastructure: make compose-up && make test-integration TEST=integration")
+		t.Skip("This TestSuite needs to start infrastructure: Enforce by TEST=integration if it is up: make compose-up && make test-integration TEST=integration")
 	}
 	// TODO Add here your test suites
 	suite.Run(t, new(SuiteTodosCreate))
