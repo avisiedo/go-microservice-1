@@ -20,12 +20,11 @@ services:
   #   #   - ../test/mock/inventory/config:/config:ro,z
 
   database:
-    # image: quay.io/cloudservices/postgresql-rds:15
     # environment:
     #   - POSTGRESQL_DATABASE=${DATABASE_NAME:-todo-db}
     #   - POSTGRESQL_USER=${DATABASE_USER:-todo-user}
     #   - POSTGRESQL_PASSWORD=${DATABASE_PASSWORD:-todo-secret}
-    image: docker.io/postgres:15
+    image: docker.io/library/postgres:16
     environment:
       - POSTGRES_DB=${DATABASE_NAME:-todo-db}
       - POSTGRES_USER=${DATABASE_USER:-todo-user}
