@@ -105,7 +105,7 @@ TEST_GREP_FILTER := -v \
 
 
 .PHONY: test
-test: test-unit test-integration  ## Run unit tests and integration tests
+test: test-unit test-integration  ## Run unit tests and integration tests; Could need 'make ... TEST=integration'
 
 .PHONY: test-unit
 test-unit: ## Run unit tests
