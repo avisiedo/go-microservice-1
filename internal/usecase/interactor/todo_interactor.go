@@ -2,9 +2,9 @@ package interactor
 
 import (
 	"context"
-	"errors"
 
 	"github.com/avisiedo/go-microservice-1/internal/domain/model"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	"github.com/avisiedo/go-microservice-1/internal/interface/interactor"
 	db "github.com/avisiedo/go-microservice-1/internal/interface/repository/db"
 	"github.com/google/uuid"
@@ -14,43 +14,76 @@ type todoInteractor struct {
 	todoDB db.TodoRepository
 }
 
-var ErrNotImplemented = errors.New("not implemented")
-
-func NewTodo(repo db.TodoRepository) interactor.Todo {
+func newTodo(repo db.TodoRepository) *todoInteractor {
+	if repo == nil {
+		panic(common_err.ErrNil("repo"))
+	}
 	return &todoInteractor{
 		todoDB: repo,
 	}
 }
 
-func (i *todoInteractor) Create(ctx context.Context, todo *model.Todo) (*model.Todo, error) {
+// NewTodo instantiate a new Todo interactor
+// repo is a not nil instance that implement db.TodoRepository.
+// Return an instance that accomplish the interactor.Todo interface.
+func NewTodo(repo db.TodoRepository) interactor.Todo {
+	return newTodo(repo)
+}
+
+func (i *todoInteractor) checkCtx(ctx context.Context) error {
 	if ctx == nil {
-		return nil, errors.New("'ctx' is nil")
+		return common_err.ErrNil("ctx")
+	}
+	return nil
+}
+
+func (i *todoInteractor) checkCtxAndTodo(ctx context.Context, todo *model.Todo) error {
+	if err := i.checkCtx(ctx); err != nil {
+		return err
 	}
 	if todo == nil {
-		return nil, errors.New("'todo' is nil")
+		return common_err.ErrNil("todo")
+	}
+	return nil
+}
+
+func (i *todoInteractor) checkCtxAndId(ctx context.Context, id uuid.UUID) error {
+	if err := i.checkCtx(ctx); err != nil {
+		return err
+	}
+	if (id == uuid.UUID{}) {
+		return common_err.ErrEmpty("id")
+	}
+	return nil
+}
+
+func (i *todoInteractor) checkCreateTodo(ctx context.Context, todo *model.Todo) error {
+	if err := i.checkCtxAndTodo(ctx, todo); err != nil {
+		return err
 	}
 	if todo.Description == "" {
-		return nil, errors.New("'description' is an empty string")
+		return common_err.ErrEmpty("todo.Description")
+	}
+	return nil
+}
+
+func (i *todoInteractor) Create(ctx context.Context, todo *model.Todo) (*model.Todo, error) {
+	if err := i.checkCreateTodo(ctx, todo); err != nil {
+		return nil, err
 	}
 	return i.todoDB.Create(ctx, todo)
 }
 
 func (i *todoInteractor) Update(ctx context.Context, todo *model.Todo) (*model.Todo, error) {
-	if ctx == nil {
-		return nil, errors.New("'ctx' is nil")
+	if err := i.checkCtxAndTodo(ctx, todo); err != nil {
+		return nil, err
 	}
-	if todo == nil {
-		return nil, errors.New("'todo' is nil")
-	}
-	return i.todoDB.Create(ctx, todo)
+	return i.todoDB.Update(ctx, todo)
 }
 
 func (i *todoInteractor) GetByUUID(ctx context.Context, id uuid.UUID) (*model.Todo, error) {
-	if ctx == nil {
-		return nil, errors.New("'ctx' is nil")
-	}
-	if (id == uuid.UUID{}) {
-		return nil, errors.New("'uuid' is empty")
+	if err := i.checkCtxAndId(ctx, id); err != nil {
+		return nil, err
 	}
 	return i.todoDB.GetByUUID(ctx, id)
 }
@@ -60,8 +93,8 @@ func (i *todoInteractor) GetAll(ctx context.Context) ([]model.Todo, error) {
 		err    error
 		result []model.Todo
 	)
-	if ctx == nil {
-		return nil, errors.New("'ctx' is nil")
+	if err = i.checkCtx(ctx); err != nil {
+		return nil, err
 	}
 	if result, err = i.todoDB.GetAll(ctx); err != nil {
 		return nil, err
@@ -70,13 +103,10 @@ func (i *todoInteractor) GetAll(ctx context.Context) ([]model.Todo, error) {
 }
 
 func (i *todoInteractor) DeleteByUUID(ctx context.Context, id uuid.UUID) error {
-	if ctx == nil {
-		return errors.New("'ctx' is nil")
+	if err := i.checkCtxAndId(ctx, id); err != nil {
+		return err
 	}
-	if (id == uuid.UUID{}) {
-		return errors.New("'id' is nil")
-	}
-	return nil
+	return i.todoDB.DeleteByUUID(ctx, id)
 }
 
 func (i *todoInteractor) Patch(ctx context.Context, todo *model.Todo) (*model.Todo, error) {
@@ -84,6 +114,9 @@ func (i *todoInteractor) Patch(ctx context.Context, todo *model.Todo) (*model.To
 		newTodo *model.Todo
 		err     error
 	)
+	if err = i.checkCtxAndTodo(ctx, todo); err != nil {
+		return nil, err
+	}
 	if newTodo, err = i.GetByUUID(ctx, todo.UUID); err != nil {
 		return nil, err
 	}

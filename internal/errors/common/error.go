@@ -1,6 +1,11 @@
 package common
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
+
+var ErrNotImplemented = errors.New("not implemented")
 
 func checkEmptyFieldName(fieldName string) {
 	if fieldName == "" {
