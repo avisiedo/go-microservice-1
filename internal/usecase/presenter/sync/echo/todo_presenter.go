@@ -117,7 +117,7 @@ func (p *todoPresenter) CreateTodo(ctx echo.Context) error {
 func (p *todoPresenter) DeleteTodo(c echo.Context, todoId openapi_types.UUID) error {
 	ctx := c.Request().Context()
 	app_context.LogFromContext(ctx).
-		ErrorContext(ctx, "not implemented")
+		ErrorContext(ctx, common_err.ErrNotImplemented.Error())
 	return echo.ErrNotImplemented
 }
 
@@ -157,7 +157,7 @@ func (p *todoPresenter) GetTodo(c echo.Context, todoId openapi_types.UUID) error
 func (p *todoPresenter) PatchTodo(c echo.Context, todoId openapi_types.UUID) error {
 	ctx := c.Request().Context()
 	app_context.LogFromContext(ctx).
-		ErrorContext(ctx, "not implemented")
+		ErrorContext(ctx, common_err.ErrNotImplemented.Error())
 	return echo.ErrNotImplemented
 }
 
@@ -166,6 +166,6 @@ func (p *todoPresenter) PatchTodo(c echo.Context, todoId openapi_types.UUID) err
 func (p *todoPresenter) UpdateTodo(c echo.Context, todoId openapi_types.UUID) error {
 	ctx := c.Request().Context()
 	app_context.LogFromContext(ctx).
-		ErrorContext(ctx, "not implemented")
+		ErrorContext(ctx, common_err.ErrNotImplemented.Error())
 	return echo.ErrNotImplemented
 }
