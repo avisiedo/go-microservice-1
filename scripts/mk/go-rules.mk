@@ -7,6 +7,9 @@
 GOVERSION := 1.22
 export GOVERSION
 
+GOSUMDB := sum.golang.org
+export GOSUMDB
+
 ifeq (,$(shell ls -1d vendor 2>/dev/null))
 MOD_VENDOR :=
 else
