@@ -8,8 +8,8 @@ import (
 	"github.com/avisiedo/go-microservice-1/internal/errors/common"
 	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	app_context "github.com/avisiedo/go-microservice-1/internal/infrastructure/context"
-	interactor "github.com/avisiedo/go-microservice-1/internal/interface/interactor"
-	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/sync/echo"
+	interactor "github.com/avisiedo/go-microservice-1/internal/interfaces/interactor"
+	presenter "github.com/avisiedo/go-microservice-1/internal/interfaces/presenter/sync/echo"
 	"github.com/labstack/echo/v4"
 )
 

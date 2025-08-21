@@ -2,8 +2,8 @@ package echo
 
 import (
 	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
-	"github.com/avisiedo/go-microservice-1/internal/interface/interactor"
-	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/sync/echo"
+	"github.com/avisiedo/go-microservice-1/internal/interfaces/interactor"
+	presenter "github.com/avisiedo/go-microservice-1/internal/interfaces/presenter/sync/echo"
 )
 
 type private struct {

@@ -5,8 +5,8 @@ import (
 
 	"github.com/avisiedo/go-microservice-1/internal/domain/model"
 	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
-	"github.com/avisiedo/go-microservice-1/internal/interface/interactor"
-	db "github.com/avisiedo/go-microservice-1/internal/interface/repository/db"
+	"github.com/avisiedo/go-microservice-1/internal/interfaces/interactor"
+	db "github.com/avisiedo/go-microservice-1/internal/interfaces/repository/db"
 	"github.com/google/uuid"
 )
 

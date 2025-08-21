@@ -7,7 +7,7 @@ import (
 
 	"github.com/avisiedo/go-microservice-1/internal/domain/model"
 	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
-	. "github.com/avisiedo/go-microservice-1/internal/interface/presenter/sync/echo"
+	. "github.com/avisiedo/go-microservice-1/internal/interfaces/presenter/sync/echo"
 	builder "github.com/avisiedo/go-microservice-1/internal/test/builder/model"
 	helper_echo "github.com/avisiedo/go-microservice-1/internal/test/helper/http/echo"
 	"github.com/labstack/echo/v4"
