@@ -5,6 +5,8 @@ import (
 	"net/http"
 
 	api_healthcheck "github.com/avisiedo/go-microservice-1/internal/api/http/healthcheck"
+	"github.com/avisiedo/go-microservice-1/internal/errors/common"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	app_context "github.com/avisiedo/go-microservice-1/internal/infrastructure/context"
 	interactor "github.com/avisiedo/go-microservice-1/internal/interface/interactor"
 	presenter "github.com/avisiedo/go-microservice-1/internal/interface/presenter/sync/echo"
@@ -17,7 +19,7 @@ type healthcheckPresenter struct {
 
 func NewHealthcheck(i interactor.HealthcheckInteractor) presenter.Healthcheck {
 	if i == nil {
-		panic("the interactor is nil")
+		panic(common_err.ErrNil("i"))
 	}
 	return &healthcheckPresenter{
 		interactor: i,
@@ -26,38 +28,38 @@ func NewHealthcheck(i interactor.HealthcheckInteractor) presenter.Healthcheck {
 
 // Liveness kubernetes probe endpoint
 // (GET /livez)
-func (p *healthcheckPresenter) GetLivez(c echo.Context) error {
-	if c == nil {
-		slog.Error("echo context is nil")
+func (p *healthcheckPresenter) GetLivez(ctx echo.Context) error {
+	if ctx == nil {
+		slog.Error(common_err.ErrNil("ctx").Error())
 		return echo.ErrInternalServerError
 	}
 	if err := p.interactor.IsLive(); err != nil {
-		ctx := c.Request().Context()
-		app_context.LogFromContext(ctx).
-			ErrorContext(ctx, err.Error())
-		if err2 := c.String(http.StatusServiceUnavailable, api_healthcheck.NotHealthy); err2 != nil {
-			slog.ErrorContext(ctx, err2.Error())
+		newCtx := ctx.Request().Context()
+		app_context.LogFromContext(newCtx).
+			ErrorContext(newCtx, err.Error())
+		if err2 := ctx.String(http.StatusServiceUnavailable, api_healthcheck.NotHealthy); err2 != nil {
+			slog.ErrorContext(newCtx, err2.Error())
 		}
 		return echo.ErrServiceUnavailable
 	}
-	return c.String(http.StatusOK, api_healthcheck.Healthy)
+	return ctx.String(http.StatusOK, api_healthcheck.Healthy)
 }
 
 // Readiness kubernetes probe endpoint
 // (GET /readyz)
-func (p *healthcheckPresenter) GetReadyz(c echo.Context) error {
-	if c == nil {
-		slog.Error("echo context is nil")
+func (p *healthcheckPresenter) GetReadyz(ctx echo.Context) error {
+	if ctx == nil {
+		slog.Default().Error(common.ErrNil("ctx").Error())
 		return echo.ErrInternalServerError
 	}
 	if err := p.interactor.IsReady(); err != nil {
-		ctx := c.Request().Context()
-		app_context.LogFromContext(ctx).
-			ErrorContext(ctx, err.Error())
-		if err2 := c.String(http.StatusServiceUnavailable, api_healthcheck.NotReady); err2 != nil {
-			slog.ErrorContext(ctx, err2.Error())
+		newCtx := ctx.Request().Context()
+		app_context.LogFromContext(newCtx).
+			ErrorContext(newCtx, err.Error())
+		if err2 := ctx.String(http.StatusServiceUnavailable, api_healthcheck.NotReady); err2 != nil {
+			slog.ErrorContext(newCtx, err2.Error())
 		}
 		return echo.ErrServiceUnavailable
 	}
-	return c.String(http.StatusOK, api_healthcheck.Ready)
+	return ctx.String(http.StatusOK, api_healthcheck.Ready)
 }

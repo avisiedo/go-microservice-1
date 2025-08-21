@@ -7,6 +7,7 @@ import (
 	"log/slog"
 
 	"github.com/avisiedo/go-microservice-1/internal/config"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/logger"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database"
@@ -54,7 +55,7 @@ func getURL(config *config.Config) string {
 // panic on invalid input arguments.
 func NewDB(cfg *config.Config, sl *slog.Logger) (db *gorm.DB) {
 	if cfg == nil {
-		panic("'cfg' is nil")
+		panic(common_err.ErrNil("cfg"))
 	}
 	if sl == nil {
 		sl = slog.Default()

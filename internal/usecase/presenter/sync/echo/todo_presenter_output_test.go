@@ -114,13 +114,13 @@ func TestOutputGetGuards(t *testing.T) {
 	require.NotNil(t, e)
 
 	err = sut.getGuards(nil, nil)
-	require.EqualError(t, err, "'ctx' is nil")
+	require.EqualError(t, err, common_err.ErrNil("ctx").Error())
 
 	err = sut.getGuards(helper_echo.NewDummyContext(e), nil)
-	require.EqualError(t, err, "'data' is nil")
+	require.EqualError(t, err, common_err.ErrNil("data").Error())
 
 	err = sut.getGuards(helper_echo.NewDummyContext(e), builder.NewTodo().WithID(uuid.UUID{}).Build())
-	require.EqualError(t, err, "'data.UUID' is empty")
+	require.EqualError(t, err, common_err.ErrEmpty("data.UUID").Error())
 
 	err = sut.getGuards(helper_echo.NewDummyContext(e), builder.NewTodo().Build())
 	require.NoError(t, err)
@@ -138,7 +138,7 @@ func TestOutputGet(t *testing.T) {
 	require.NotNil(t, e)
 
 	output, err = sut.Get(nil, nil)
-	require.EqualError(t, err, "'ctx' is nil")
+	require.EqualError(t, err, common_err.ErrNil("ctx").Error())
 	assert.Nil(t, output)
 
 	input := builder.NewTodo().Build()

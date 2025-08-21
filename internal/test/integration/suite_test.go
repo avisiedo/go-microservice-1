@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"github.com/avisiedo/go-microservice-1/internal/config"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/datastore"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/logger"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/service"
@@ -100,7 +101,7 @@ func (s *Suite) TearDownTest() {
 func (s *Suite) WaitReady(cfg *config.Config) {
 	t := s.T()
 	if cfg == nil {
-		panic("cfg is nil")
+		panic(common_err.ErrNil("cfg"))
 	}
 	header := http.Header{}
 	path := s.DefaultHealthcheckBaseURL() + "/readyz"

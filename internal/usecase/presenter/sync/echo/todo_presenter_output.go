@@ -1,10 +1,9 @@
 package echo
 
 import (
-	"errors"
-
 	"github.com/avisiedo/go-microservice-1/internal/api/http/public"
 	"github.com/avisiedo/go-microservice-1/internal/domain/model"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	. "github.com/avisiedo/go-microservice-1/internal/interface/presenter/sync/echo"
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
@@ -12,18 +11,12 @@ import (
 
 type todoOutput struct{}
 
-const (
-	ErrCtxIsNil        = "'ctx' is nil"
-	ErrDataIsNil       = "'data' is nil"
-	ErrDataUUIDIsEmpty = "'data.UUID' is empty"
-)
-
 func todoCommonGuards(ctx echo.Context, data *model.Todo) error {
 	if ctx == nil {
-		return errors.New(ErrCtxIsNil)
+		return common_err.ErrNil("ctx")
 	}
 	if data == nil {
-		return errors.New(ErrDataIsNil)
+		return common_err.ErrNil("data")
 	}
 	return nil
 }
@@ -52,10 +45,10 @@ func (o *todoOutput) Create(ctx echo.Context, data *model.Todo) (*public.ToDo, e
 
 func (o *todoOutput) getAllGuards(ctx echo.Context, data []model.Todo) error {
 	if ctx == nil {
-		return errors.New(ErrCtxIsNil)
+		return common_err.ErrNil("ctx")
 	}
 	if data == nil {
-		return errors.New(ErrDataIsNil)
+		return common_err.ErrNil("data")
 	}
 	return nil
 }
@@ -79,7 +72,7 @@ func (o *todoOutput) getGuards(ctx echo.Context, data *model.Todo) error {
 		return err
 	}
 	if (data.UUID == uuid.UUID{}) {
-		return errors.New(ErrDataUUIDIsEmpty)
+		return common_err.ErrEmpty("data.UUID")
 	}
 	return nil
 }

@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	"github.com/labstack/echo/v4"
 )
 
@@ -61,7 +62,7 @@ func checkHttpMethod(value string) {
 // NewContextWithContext create an echo.Context related with go context.Context.
 func NewContextWithContext(ctx context.Context, e *echo.Echo, method, path string, headers http.Header, body any) ExtendedContext {
 	if e == nil {
-		panic("echo instance is nil")
+		panic(common_err.ErrNil("e"))
 	}
 	checkHttpMethod(method)
 	var bodyReader io.Reader = nil

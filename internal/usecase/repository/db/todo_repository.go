@@ -2,10 +2,10 @@ package db
 
 import (
 	"context"
-	"errors"
 
 	"github.com/avisiedo/go-microservice-1/internal/config"
 	"github.com/avisiedo/go-microservice-1/internal/domain/model"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	app_context "github.com/avisiedo/go-microservice-1/internal/infrastructure/context"
 	repository "github.com/avisiedo/go-microservice-1/internal/interface/repository/db"
 	"github.com/google/uuid"
@@ -27,7 +27,7 @@ func (r *todoRepository) Create(ctx context.Context, todo *model.Todo) (*model.T
 		return nil, err
 	}
 	if todo == nil {
-		return nil, errors.New("'todo' is nil")
+		return nil, common_err.ErrNil("todo")
 	}
 	if (todo.UUID == uuid.UUID{}) {
 		todo.UUID = uuid.New()
@@ -61,7 +61,7 @@ func (r *todoRepository) GetByUUID(ctx context.Context, id uuid.UUID) (*model.To
 		return nil, err
 	}
 	if (id == uuid.UUID{}) {
-		return nil, errors.New("'id' is empty")
+		return nil, common_err.ErrEmpty("id")
 	}
 	result := &model.Todo{}
 	if err := db.First(result, "uuid = ?", id).Error; err != nil {
@@ -103,7 +103,7 @@ func (r *todoRepository) DeleteByUUID(ctx context.Context, todo_uuid uuid.UUID) 
 		return err
 	}
 	if (todo_uuid == uuid.UUID{}) {
-		return errors.New("'todo_uuid' is empty")
+		return common_err.ErrEmpty("todo_uuid")
 	}
 	return db.Unscoped().Delete(&model.Todo{}, "uuid = ?", todo_uuid).Error
 }

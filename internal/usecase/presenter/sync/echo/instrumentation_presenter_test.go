@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"testing"
 
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	infra_metrics "github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
 	helper_http_echo "github.com/avisiedo/go-microservice-1/internal/test/helper/http/echo"
 	"github.com/labstack/echo/v4"
@@ -14,7 +15,7 @@ import (
 )
 
 func TestNewInstrumentation(t *testing.T) {
-	assert.PanicsWithValue(t, "'metrics' is nil", func() {
+	assert.PanicsWithError(t, common_err.ErrNil("metrics").Error(), func() {
 		_ = NewInstrumentation(nil)
 	})
 

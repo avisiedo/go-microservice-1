@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/avisiedo/go-microservice-1/internal/config"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	"github.com/avisiedo/go-microservice-1/internal/test"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -45,7 +46,7 @@ func TestGetURL(t *testing.T) {
 // This test require the infrastructure to be started
 func TestNewDB(t *testing.T) {
 	t.Skip("require a database up and running for unit testing")
-	assert.PanicsWithValue(t, "'cfg' is nil", func() {
+	assert.PanicsWithValue(t, common_err.ErrNil("cfg").Error(), func() {
 		_ = NewDB(nil, slog.Default())
 	})
 

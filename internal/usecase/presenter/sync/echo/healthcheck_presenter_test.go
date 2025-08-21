@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"testing"
 
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	helper_http_echo "github.com/avisiedo/go-microservice-1/internal/test/helper/http/echo"
 	"github.com/avisiedo/go-microservice-1/internal/test/mock/interface/interactor"
 	"github.com/labstack/echo/v4"
@@ -13,7 +14,7 @@ import (
 )
 
 func TestNewHealthcheck(t *testing.T) {
-	assert.PanicsWithValue(t, "the interactor is nil", func() {
+	assert.PanicsWithError(t, common_err.ErrNil("i").Error(), func() {
 		NewHealthcheck(nil)
 	})
 
