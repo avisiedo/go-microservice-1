@@ -76,6 +76,11 @@ jobs:
           make db-migrate-up
           make test
 
+      - name: Build executables
+        run: |
+          make tidy
+          make build
+
       - name: Process coverage report
         run: |
           go get github.com/boumenot/gocover-cobertura
@@ -86,6 +91,3 @@ jobs:
         uses: "actions/upload-artifact@v4"
         with:
           path: coverage.xml
-
-      - name: Build executables
-        run: make build
