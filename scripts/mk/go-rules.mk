@@ -117,7 +117,7 @@ test-ci: ## Run tests for ci
 
 .PHONY: test-integration
 test-integration:  ## Run integration tests
-	$(MAKE) .compose-wait-db
+	if [ "$${CI}" != "true" ] && [ "$${TEST}" == "integration" ]; then $(MAKE) .compose-wait-db || exit 1; fi
 	TEST=integration CONFIG_PATH="$(PROJECT_DIR)/configs" go test -parallel 1 ./internal/test/integration/... -test.failfast -test.v
 
 # Add dependencies from binaries to all the the sources
