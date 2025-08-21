@@ -10,5 +10,5 @@ import (
 	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
 	_ "github.com/loov/goda"
 	_ "github.com/mikefarah/yq/v4"
-	_ "github.com/vektra/mockery/v2"
+	_ "github.com/vektra/mockery/v3"
 )

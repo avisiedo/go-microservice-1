@@ -22,6 +22,7 @@
 !.golangci.yaml
 !.pre-commit-config.yaml
 !.yamllint.yaml
+!.mockery.yml
 
 # .github
 !.github

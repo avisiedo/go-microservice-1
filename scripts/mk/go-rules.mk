@@ -172,35 +172,9 @@ $(EVENT_SCHEMA_DIR)/%.event.json: $(EVENT_MESSAGE_DIR)/%.event.yaml
 	@[ -e "$(EVENT_MESSAGE_DIR)" ] || mkdir -p "$(EVENT_MESSAGE_DIR)"
 	yaml2json "$<" "$@"
 
-# Mockery support
-MOCK_DIRS := internal/api/http/private \
-	internal/api/http/public \
-	internal/api/http/openapi \
-	internal/api/http/metrics \
-	internal/api/http/healthcheck \
-	internal/interface/presenter/echo \
-	internal/interface/interactor \
-	internal/interface/repository/event \
-	internal/interface/repository/client \
-	internal/interface/repository/db \
-	internal/handler/http \
-	internal/infrastructure/event \
-	internal/infrastructure/service \
-	internal/infrastructure/middleware \
-
 .PHONY: generate-mock
 generate-mock: $(MOCKERY)  ## Generate mock by using mockery tool
-	for item in $(MOCK_DIRS); do \
-	  PKG="$${item##*/}"; \
-	  DEST_DIR="internal/test/mock/$${item#*/}"; \
-	  [ -e "$${DEST_DIR}" ] || mkdir -p "$${DEST_DIR}"; \
-	  $(MOCKERY) \
-	    --all \
-	    --outpkg "$${PKG}" \
-	    --dir "$${item}" \
-		--output "$${DEST_DIR}" \
-		--case underscore || exit 1; \
-	done
+	$(MOCKERY)
 
 .PHONY: generate-deps
 generate-deps: $(GODA)
