@@ -7,7 +7,7 @@ import (
 
 	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	helper_http_echo "github.com/avisiedo/go-microservice-1/internal/test/helper/http/echo"
-	"github.com/avisiedo/go-microservice-1/internal/test/mock/interface/interactor"
+	"github.com/avisiedo/go-microservice-1/internal/test/mock/interfaces/interactor"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

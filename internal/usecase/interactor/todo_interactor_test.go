@@ -8,7 +8,7 @@ import (
 
 	"github.com/avisiedo/go-microservice-1/internal/domain/model"
 	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
-	db "github.com/avisiedo/go-microservice-1/internal/test/mock/interface/repository/db"
+	db "github.com/avisiedo/go-microservice-1/internal/test/mock/interfaces/repository/db"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

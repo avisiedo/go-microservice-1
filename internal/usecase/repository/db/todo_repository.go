@@ -7,7 +7,7 @@ import (
 	"github.com/avisiedo/go-microservice-1/internal/domain/model"
 	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	app_context "github.com/avisiedo/go-microservice-1/internal/infrastructure/context"
-	repository "github.com/avisiedo/go-microservice-1/internal/interface/repository/db"
+	repository "github.com/avisiedo/go-microservice-1/internal/interfaces/repository/db"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
