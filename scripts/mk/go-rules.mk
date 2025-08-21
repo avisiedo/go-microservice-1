@@ -4,7 +4,7 @@
 # the generated binaries.
 ##
 
-GOVERSION := 1.23.0
+GOVERSION := 1.23.7
 export GOVERSION
 
 GOSUMDB := sum.golang.org

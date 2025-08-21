@@ -8,7 +8,9 @@ module github.com/avisiedo/go-microservice-1
 //  .golangci.yaml
 //    => linters-settings.gofumpt.lang-version
 //    => run.go
-go 1.23.0
+go 1.23.7
+
+toolchain go1.24.6
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.2
