@@ -18,7 +18,7 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.17.1
 	github.com/google/uuid v1.6.0
 	github.com/labstack/echo/v4 v4.12.0
-	github.com/oapi-codegen/runtime v1.1.1
+	github.com/oapi-codegen/runtime v1.1.2
 	github.com/openlyinc/pointy v1.2.1
 	github.com/pioz/faker v1.7.3
 	github.com/prometheus/client_golang v1.20.5
