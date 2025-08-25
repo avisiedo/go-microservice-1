@@ -13,7 +13,7 @@ import (
 
 func helperNewGroupMetrics(t *testing.T) (*echo.Echo, *config.Config, metrics.ServerInterface) {
 	e, cfg := helperNewEchoRouteConfig(t)
-	presenterMetrics := presenter.NewServerInterface(t)
+	presenterMetrics := presenter.NewMockServerInterface(t)
 	return e, cfg, presenterMetrics
 }
 
