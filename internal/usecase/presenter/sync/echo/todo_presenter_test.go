@@ -18,7 +18,7 @@ import (
 	model_builder "github.com/avisiedo/go-microservice-1/internal/test/builder/model"
 	echo_helper "github.com/avisiedo/go-microservice-1/internal/test/helper/http/echo"
 	interactor_mock "github.com/avisiedo/go-microservice-1/internal/test/mock/interfaces/interactor"
-	presenter_mock "github.com/avisiedo/go-microservice-1/internal/test/mock/interfaces/presenter/echo"
+	presenter_mock "github.com/avisiedo/go-microservice-1/internal/test/mock/interfaces/presenter/sync/echo"
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 	openapi_types "github.com/oapi-codegen/runtime/types"
@@ -28,7 +28,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func helperNewTodo(t *testing.T) (*config.Config, *presenter_mock.TodoInput, *presenter_mock.TodoOutput, *interactor_mock.Todo, sqlmock.Sqlmock, *gorm.DB) {
+func helperNewTodo(t *testing.T) (*config.Config, *presenter_mock.MockTodoInput, *presenter_mock.MockTodoOutput, *interactor_mock.Todo, sqlmock.Sqlmock, *gorm.DB) {
 	var (
 		sqlMock sqlmock.Sqlmock
 		db      *gorm.DB
@@ -37,15 +37,15 @@ func helperNewTodo(t *testing.T) (*config.Config, *presenter_mock.TodoInput, *pr
 	cfg := &config.Config{}
 	_ = config.Load(cfg)
 	i := interactor_mock.NewTodo(t)
-	inputMock := presenter_mock.NewTodoInput(t)
-	outputMock := presenter_mock.NewTodoOutput(t)
+	inputMock := presenter_mock.NewMockTodoInput(t)
+	outputMock := presenter_mock.NewMockTodoOutput(t)
 	if sqlMock, db, err = test.NewSqlMock(&gorm.Session{}); err != nil {
 		require.NoError(t, err)
 	}
 	return cfg, inputMock, outputMock, i, sqlMock, db
 }
 
-func helperNewTodoAndContext(t *testing.T, method, path string, headers http.Header, body any, logger *slog.Logger) (echo.Context, *config.Config, *presenter_mock.TodoInput, *presenter_mock.TodoOutput, *interactor_mock.Todo, sqlmock.Sqlmock, *gorm.DB) {
+func helperNewTodoAndContext(t *testing.T, method, path string, headers http.Header, body any, logger *slog.Logger) (echo.Context, *config.Config, *presenter_mock.MockTodoInput, *presenter_mock.MockTodoOutput, *interactor_mock.Todo, sqlmock.Sqlmock, *gorm.DB) {
 	e := echo.New()
 	require.NotNil(t, e)
 	ctx := echo_helper.NewContext(e, method, path, headers, body, logger)
@@ -53,7 +53,7 @@ func helperNewTodoAndContext(t *testing.T, method, path string, headers http.Hea
 	return ctx, cfg, inputMock, outputMock, i, sqlMock, db
 }
 
-func helperAssertTodoExpectations(t *testing.T, inputMock *presenter_mock.TodoInput, outputMock *presenter_mock.TodoOutput, i *interactor_mock.Todo, sqlMock sqlmock.Sqlmock) {
+func helperAssertTodoExpectations(t *testing.T, inputMock *presenter_mock.MockTodoInput, outputMock *presenter_mock.MockTodoOutput, i *interactor_mock.Todo, sqlMock sqlmock.Sqlmock) {
 	inputMock.AssertExpectations(t)
 	outputMock.AssertExpectations(t)
 	i.AssertExpectations(t)
