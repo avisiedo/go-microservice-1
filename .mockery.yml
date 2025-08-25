@@ -1,10 +1,10 @@
 # Mockery support
 # MOCK_DIRS :=
-# [ ] internal/api/http/private
-# [ ] internal/api/http/public
-# [ ] internal/api/http/openapi
-# [ ] internal/api/http/metrics
-# [ ] internal/api/http/healthcheck
+# [x] internal/api/http/private
+# [x] internal/api/http/public
+# [x] internal/api/http/openapi
+# [X] internal/api/http/metrics
+# [X] internal/api/http/healthcheck
 #
 # [ ] internal/interface/presenter/echo
 #
@@ -13,7 +13,7 @@
 # [ ] internal/interface/repository/event
 # [ ] internal/interface/repository/client
 # [ ] internal/interface/repository/db
-# [ ] internal/handler/http
+# [x] internal/handler/http
 # [ ] internal/infrastructure/event
 # [ ] internal/infrastructure/service
 # [ ] internal/infrastructure/middleware
@@ -63,10 +63,10 @@ packages:
       all: true
       dir: internal/test/mock/api/http/public
       include-auto-generated: false
-  # github.com/avisiedo/go-microservices-1/internal/handler:
-  #   config:
-  #     all: true
-  #     dir: internal/test/mock/handler
+  github.com/avisiedo/go-microservice-1/internal/handler/http:
+    config:
+      all: true
+      dir: internal/test/mock/handler/http
   # github.com/avisiedo/go-microservices-1/internal/infrastructure:
   #   config:
   #     all: true

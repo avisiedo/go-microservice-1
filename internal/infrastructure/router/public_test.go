@@ -33,7 +33,7 @@ func helperNewContextForSkipper(method, path string, headers map[string]string) 
 	return c
 }
 
-func helperNewGroupPublic(t *testing.T) (*echo.Echo, *config.Config, *mock_http.Application, *mock_openapi.MockServerInterface, *metrics.Metrics) {
+func helperNewGroupPublic(t *testing.T) (*echo.Echo, *config.Config, *mock_http.MockApplication, *mock_openapi.MockServerInterface, *metrics.Metrics) {
 	var (
 		err error
 		db  *gorm.DB
@@ -50,7 +50,7 @@ func helperNewGroupPublic(t *testing.T) (*echo.Echo, *config.Config, *mock_http.
 	require.NoError(t, err)
 	require.NotNil(t, db)
 
-	presenterPublic := mock_http.NewApplication(t)
+	presenterPublic := mock_http.NewMockApplication(t)
 	presenterOpenAPI := mock_openapi.NewMockServerInterface(t)
 
 	public.RegisterHandlers(e.Group(cfg.Application.PathPrefix), presenterPublic)
