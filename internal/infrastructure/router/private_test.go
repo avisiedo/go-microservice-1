@@ -11,7 +11,7 @@ import (
 
 func helperNewGroupPrivate(t *testing.T) (*echo.Group, *config.Config, handler.ServerInterface) {
 	e, cfg := helperNewEchoRouteConfig(t)
-	handlers := presenter.NewServerInterface(t)
+	handlers := presenter.NewMockServerInterface(t)
 	return e.Group(privatePath), cfg, handlers
 }
 
