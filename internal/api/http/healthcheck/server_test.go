@@ -13,18 +13,18 @@ import (
 func TestGetLivez(t *testing.T) {
 	const methodName = "GetLivez"
 	var (
-		m *mock_healthcheck.ServerInterface
+		m *mock_healthcheck.MockServerInterface
 		h ServerInterfaceWrapper
 	)
 
-	m = mock_healthcheck.NewServerInterface(t)
+	m = mock_healthcheck.NewMockServerInterface(t)
 	h = ServerInterfaceWrapper{Handler: m}
 	m.On(methodName, nil).Return(nil)
 	r := h.GetLivez(nil)
 	require.NoError(t, r)
 	mock.AssertExpectationsForObjects(t, m)
 
-	m = mock_healthcheck.NewServerInterface(t)
+	m = mock_healthcheck.NewMockServerInterface(t)
 	h = ServerInterfaceWrapper{Handler: m}
 	m.On(methodName, nil).Return(echo.NewHTTPError(http.StatusInternalServerError, "internal server error"))
 	r = h.GetLivez(nil)
@@ -35,18 +35,18 @@ func TestGetLivez(t *testing.T) {
 func TestGetReadyz(t *testing.T) {
 	const methodName = "GetReadyz"
 	var (
-		m *mock_healthcheck.ServerInterface
+		m *mock_healthcheck.MockServerInterface
 		h ServerInterfaceWrapper
 	)
 
-	m = mock_healthcheck.NewServerInterface(t)
+	m = mock_healthcheck.NewMockServerInterface(t)
 	h = ServerInterfaceWrapper{Handler: m}
 	m.On(methodName, nil).Return(nil)
 	r := h.GetReadyz(nil)
 	require.NoError(t, r)
 	mock.AssertExpectationsForObjects(t, m)
 
-	m = mock_healthcheck.NewServerInterface(t)
+	m = mock_healthcheck.NewMockServerInterface(t)
 	h = ServerInterfaceWrapper{Handler: m}
 	m.On(methodName, nil).Return(echo.NewHTTPError(http.StatusInternalServerError, "internal server error"))
 	r = h.GetReadyz(nil)
@@ -55,8 +55,8 @@ func TestGetReadyz(t *testing.T) {
 }
 
 func TestRegisterHandlersWithBaseURL(t *testing.T) {
-	e := mock_healthcheck.NewEchoRouter(t)
-	w := mock_healthcheck.NewServerInterface(t)
+	e := mock_healthcheck.NewMockEchoRouter(t)
+	w := mock_healthcheck.NewMockServerInterface(t)
 	e.On("GET", "/root/livez", mock.AnythingOfType("echo.HandlerFunc")).Return(nil)
 	e.On("GET", "/root/readyz", mock.AnythingOfType("echo.HandlerFunc")).Return(nil)
 	require.NotPanics(t, func() {
@@ -66,8 +66,8 @@ func TestRegisterHandlersWithBaseURL(t *testing.T) {
 }
 
 func TestRegisterHandlers(t *testing.T) {
-	e := mock_healthcheck.NewEchoRouter(t)
-	w := mock_healthcheck.NewServerInterface(t)
+	e := mock_healthcheck.NewMockEchoRouter(t)
+	w := mock_healthcheck.NewMockServerInterface(t)
 	e.On("GET", "/livez", mock.AnythingOfType("echo.HandlerFunc")).Return(nil)
 	e.On("GET", "/readyz", mock.AnythingOfType("echo.HandlerFunc")).Return(nil)
 	require.NotPanics(t, func() {
