@@ -72,6 +72,10 @@ packages:
       all: true
       dir: internal/test/mock/interfaces/presenter/sync/echo
       recursive: true
+  github.com/avisiedo/go-microservice-1/internal/infrastructure/service:
+    config:
+      all: true
+      dir: internal/test/mock/infrastructure/service
   # github.com/avisiedo/go-microservices-1/internal/infrastructure:
   #   config:
   #     all: true
