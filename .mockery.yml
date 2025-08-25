@@ -3,10 +3,10 @@
 # [x] internal/api/http/private
 # [x] internal/api/http/public
 # [x] internal/api/http/openapi
-# [X] internal/api/http/metrics
+# [x] internal/api/http/metrics
 # [X] internal/api/http/healthcheck
 #
-# [ ] internal/interface/presenter/echo
+# [x] internal/interface/presenter/echo
 #
 # [ ] internal/interface/interactor
 #
@@ -67,6 +67,11 @@ packages:
     config:
       all: true
       dir: internal/test/mock/handler/http
+  github.com/avisiedo/go-microservice-1/internal/interfaces/presenter/sync/echo:
+    config:
+      all: true
+      dir: internal/test/mock/interfaces/presenter/sync/echo
+      recursive: true
   # github.com/avisiedo/go-microservices-1/internal/infrastructure:
   #   config:
   #     all: true
