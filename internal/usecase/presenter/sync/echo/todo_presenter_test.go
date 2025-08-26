@@ -28,7 +28,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func helperNewTodo(t *testing.T) (*config.Config, *presenter_mock.MockTodoInput, *presenter_mock.MockTodoOutput, *interactor_mock.Todo, sqlmock.Sqlmock, *gorm.DB) {
+func helperNewTodo(t *testing.T) (*config.Config, *presenter_mock.MockTodoInput, *presenter_mock.MockTodoOutput, *interactor_mock.MockTodo, sqlmock.Sqlmock, *gorm.DB) {
 	var (
 		sqlMock sqlmock.Sqlmock
 		db      *gorm.DB
@@ -36,7 +36,7 @@ func helperNewTodo(t *testing.T) (*config.Config, *presenter_mock.MockTodoInput,
 	)
 	cfg := &config.Config{}
 	_ = config.Load(cfg)
-	i := interactor_mock.NewTodo(t)
+	i := interactor_mock.NewMockTodo(t)
 	inputMock := presenter_mock.NewMockTodoInput(t)
 	outputMock := presenter_mock.NewMockTodoOutput(t)
 	if sqlMock, db, err = test.NewSqlMock(&gorm.Session{}); err != nil {
@@ -45,7 +45,7 @@ func helperNewTodo(t *testing.T) (*config.Config, *presenter_mock.MockTodoInput,
 	return cfg, inputMock, outputMock, i, sqlMock, db
 }
 
-func helperNewTodoAndContext(t *testing.T, method, path string, headers http.Header, body any, logger *slog.Logger) (echo.Context, *config.Config, *presenter_mock.MockTodoInput, *presenter_mock.MockTodoOutput, *interactor_mock.Todo, sqlmock.Sqlmock, *gorm.DB) {
+func helperNewTodoAndContext(t *testing.T, method, path string, headers http.Header, body any, logger *slog.Logger) (echo.Context, *config.Config, *presenter_mock.MockTodoInput, *presenter_mock.MockTodoOutput, *interactor_mock.MockTodo, sqlmock.Sqlmock, *gorm.DB) {
 	e := echo.New()
 	require.NotNil(t, e)
 	ctx := echo_helper.NewContext(e, method, path, headers, body, logger)
@@ -53,7 +53,7 @@ func helperNewTodoAndContext(t *testing.T, method, path string, headers http.Hea
 	return ctx, cfg, inputMock, outputMock, i, sqlMock, db
 }
 
-func helperAssertTodoExpectations(t *testing.T, inputMock *presenter_mock.MockTodoInput, outputMock *presenter_mock.MockTodoOutput, i *interactor_mock.Todo, sqlMock sqlmock.Sqlmock) {
+func helperAssertTodoExpectations(t *testing.T, inputMock *presenter_mock.MockTodoInput, outputMock *presenter_mock.MockTodoOutput, i *interactor_mock.MockTodo, sqlMock sqlmock.Sqlmock) {
 	inputMock.AssertExpectations(t)
 	outputMock.AssertExpectations(t)
 	i.AssertExpectations(t)
@@ -70,7 +70,7 @@ func TestNewTodo(t *testing.T) {
 		NewTodo(cfg, nil, nil)
 	})
 
-	i := interactor_mock.NewTodo(t)
+	i := interactor_mock.NewMockTodo(t)
 	assert.PanicsWithError(t, common_err.ErrNil("db").Error(), func() {
 		NewTodo(cfg, i, nil)
 	})
