@@ -14,7 +14,7 @@ func TestNewPrivate(t *testing.T) {
 		_ = NewPrivate(nil)
 	})
 
-	i := interactor.NewPrivate(t)
+	i := interactor.NewMockPrivate(t)
 	p := NewPrivate(i)
 	require.NotNil(t, p)
 }

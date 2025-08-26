@@ -18,7 +18,7 @@ func TestNewHealthcheck(t *testing.T) {
 		NewHealthcheck(nil)
 	})
 
-	i := interactor.NewHealthcheckInteractor(t)
+	i := interactor.NewMockHealthcheckInteractor(t)
 	p := NewHealthcheck(i)
 	assert.NotNil(t, p)
 	i.AssertExpectations(t)
@@ -28,7 +28,7 @@ func TestGetLivez(t *testing.T) {
 	const path = "/livez"
 	const interactorMethod = "IsLive"
 	var ctx echo.Context
-	i := interactor.NewHealthcheckInteractor(t)
+	i := interactor.NewMockHealthcheckInteractor(t)
 	p := NewHealthcheck(i)
 	require.NotNil(t, p)
 
@@ -45,7 +45,7 @@ func TestGetLivez(t *testing.T) {
 	i.AssertExpectations(t)
 
 	ctx = helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil, slog.Default())
-	i = interactor.NewHealthcheckInteractor(t)
+	i = interactor.NewMockHealthcheckInteractor(t)
 	require.NotNil(t, ctx)
 	i.On(interactorMethod).Return(echo.ErrServiceUnavailable)
 	p = NewHealthcheck(i)
@@ -58,7 +58,7 @@ func TestGetLivez(t *testing.T) {
 func TestReadyz(t *testing.T) {
 	const path = "/readyz"
 	const interactorMethod = "IsReady"
-	i := interactor.NewHealthcheckInteractor(t)
+	i := interactor.NewMockHealthcheckInteractor(t)
 	p := NewHealthcheck(i)
 	require.NotNil(t, p)
 
@@ -68,7 +68,7 @@ func TestReadyz(t *testing.T) {
 
 	ctx := helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil, slog.Default())
 	require.NotNil(t, ctx)
-	i = interactor.NewHealthcheckInteractor(t)
+	i = interactor.NewMockHealthcheckInteractor(t)
 	i.On(interactorMethod).Return(nil)
 	p = NewHealthcheck(i)
 	err = p.GetReadyz(ctx)
@@ -76,7 +76,7 @@ func TestReadyz(t *testing.T) {
 	require.Equal(t, http.StatusOK, ctx.Response().Status)
 
 	ctx = helper_http_echo.NewContext(e, http.MethodGet, path, http.Header{}, nil, slog.Default())
-	i = interactor.NewHealthcheckInteractor(t)
+	i = interactor.NewMockHealthcheckInteractor(t)
 	require.NotNil(t, ctx)
 	i.On(interactorMethod).Return(echo.ErrServiceUnavailable)
 	p = NewHealthcheck(i)

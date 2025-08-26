@@ -8,7 +8,7 @@
 #
 # [x] internal/interface/presenter/echo
 #
-# [ ] internal/interface/interactor
+# [x] internal/interface/interactor
 #
 # [ ] internal/interface/repository/event
 # [ ] internal/interface/repository/client
@@ -80,8 +80,9 @@ packages:
     config:
       all: true
       dir: internal/test/mock/interfaces/repository/db
-  # github.com/avisiedo/go-microservices-1/internal/infrastructure:
-  #   config:
-  #     all: true
-  #     dir: internal/test/mock/infrastructure
+
+  github.com/avisiedo/go-microservice-1/internal/interfaces/interactor:
+    config:
+      all: true
+      dir: internal/test/mock/interfaces/interactor
 
