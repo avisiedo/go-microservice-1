@@ -15,8 +15,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func helperNewTodo(t *testing.T) (*db.TodoRepository, *todoInteractor) {
-	mockRepo := db.NewTodoRepository(t)
+func helperNewTodo(t *testing.T) (*db.MockTodoRepository, *todoInteractor) {
+	mockRepo := db.NewMockTodoRepository(t)
 	sut := newTodo(mockRepo)
 	return mockRepo, sut
 }
@@ -83,7 +83,7 @@ func TestCheckCreateTodo(t *testing.T) {
 
 func TestCreateTodo(t *testing.T) {
 	var (
-		mockRepo *db.TodoRepository
+		mockRepo *db.MockTodoRepository
 		sut      *todoInteractor
 	)
 
@@ -131,7 +131,7 @@ func TestCreateTodo(t *testing.T) {
 
 func TestUpdateTodo(t *testing.T) {
 	var (
-		mockRepo *db.TodoRepository
+		mockRepo *db.MockTodoRepository
 		sut      *todoInteractor
 	)
 
@@ -179,7 +179,7 @@ func TestUpdateTodo(t *testing.T) {
 
 func TestGetByUUID(t *testing.T) {
 	var (
-		mockRepo *db.TodoRepository
+		mockRepo *db.MockTodoRepository
 		sut      *todoInteractor
 	)
 
@@ -227,7 +227,7 @@ func TestGetByUUID(t *testing.T) {
 
 func TestGetAllTodo(t *testing.T) {
 	var (
-		mockRepo *db.TodoRepository
+		mockRepo *db.MockTodoRepository
 		sut      *todoInteractor
 	)
 
@@ -277,7 +277,7 @@ func TestGetAllTodo(t *testing.T) {
 
 func TestDeleteByUUIDTodo(t *testing.T) {
 	var (
-		mockRepo *db.TodoRepository
+		mockRepo *db.MockTodoRepository
 		sut      *todoInteractor
 	)
 
@@ -311,7 +311,7 @@ func TestDeleteByUUIDTodo(t *testing.T) {
 
 func TestPatchTodo(t *testing.T) {
 	var (
-		mockRepo *db.TodoRepository
+		mockRepo *db.MockTodoRepository
 		sut      *todoInteractor
 	)
 
