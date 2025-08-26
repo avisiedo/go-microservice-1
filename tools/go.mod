@@ -13,7 +13,7 @@ require (
 	github.com/achiku/planter v0.0.0-20230118102009-4847a8211e35
 	github.com/atombender/go-jsonschema v0.12.1
 	github.com/golangci/golangci-lint v1.59.1
-	github.com/loov/goda v0.5.11
+	github.com/loov/goda v0.7.1
 	github.com/mikefarah/yq/v4 v4.44.5
 	github.com/oapi-codegen/oapi-codegen/v2 v2.4.1
 	github.com/vektra/mockery/v3 v3.5.3
@@ -242,7 +242,6 @@ require (
 	golang.org/x/tools v0.36.0 // indirect
 	golang.org/x/tools/go/expect v0.1.1-deprecated // indirect
 	golang.org/x/tools/go/packages/packagestest v0.1.1-deprecated // indirect
-	golang.org/x/tools/go/vcs v0.1.0-deprecated // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/op/go-logging.v1 v1.0.0-20160211212156-b2cb9fa56473 // indirect
