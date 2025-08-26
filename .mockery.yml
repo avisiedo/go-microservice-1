@@ -85,4 +85,3 @@ packages:
     config:
       all: true
       dir: internal/test/mock/interfaces/interactor
-
