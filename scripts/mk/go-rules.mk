@@ -16,6 +16,28 @@ else
 MOD_VENDOR ?= -mod vendor
 endif
 
+# Tools and their dependencies
+# Build dependencies
+TOOLS_BIN := tools/bin
+
+GODA := $(TOOLS_BIN)/goda
+GOJSONSCHEMA := $(TOOLS_BIN)/go-jsonschema
+GOLANGCI_LINT := $(TOOLS_BIN)/golangci-lint
+MOCKERY := $(TOOLS_BIN)/mockery
+OAPI_CODEGEN := $(TOOLS_BIN)/oapi-codegen
+PLANTER := $(TOOLS_BIN)/planter
+YQ := $(TOOLS_BIN)/yq
+
+TOOLS := \
+	$(GODA) \
+	$(GOLANGCI_LINT) \
+	$(MOCKERY) \
+	$(OAPI_CODEGEN) \
+	$(PLANTER) \
+	$(YQ) \
+	$(GOJSONSCHEMA) \
+
+
 .PHONY: install-go-tools
 install-go-tools: $(TOOLS) ## Install Go tools
 
@@ -23,7 +45,7 @@ install-go-tools: $(TOOLS) ## Install Go tools
 install-tools: install-go-tools install-python-tools ## Install tools used to build, test and lint
 
 .PHONY: build-all
-build-all: ## Generate code and build binaries
+build-all: $(BIN) ## Generate code and build binaries
 	$(MAKE) generate-api
 	# $(MAKE) generate-event
 	$(MAKE) generate-mock
@@ -32,16 +54,23 @@ build-all: ## Generate code and build binaries
 
 # Meta rule to add dependency on the binaries generated
 .PHONY: build
-build: $(patsubst cmd/%,$(BIN)/%,$(wildcard cmd/*)) ## Build binaries
+build: $(BIN) $(patsubst cmd/%,$(BIN)/%,$(wildcard cmd/*)) ## Build binaries
 
-$(BIN) $(TOOLS_BIN):
+$(BIN):
+	mkdir -p "$(BIN)"
+
+TOOLS_DEPS := tools/go.mod tools/go.sum tools/tools.go tools/bin | $(TOOLS_BIN)
+
+$(TOOLS_BIN):
 	mkdir -p $@
+
+$(TOOLS): $(TOOLS_DEPS)
 
 # export CGO_ENABLED
 # $(BIN)/%: CGO_ENABLED=0
 # Build by path, not by referring to main.go. It's required to bake VCS
 # information into binary, see golang/go#51279.
-$(BIN)/%: cmd/%/main.go $(BIN)
+$(BIN)/%: cmd/%/main.go
 	go build -C $(dir $<) $(MOD_VENDOR) -buildvcs=true -o "$(CURDIR)/$@" .
 
 $(TOOLS_BIN)/%: $(TOOLS_DEPS)

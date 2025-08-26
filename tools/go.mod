@@ -11,7 +11,7 @@ toolchain go1.24.6
 
 require (
 	github.com/achiku/planter v0.0.0-20230118102009-4847a8211e35
-	github.com/atombender/go-jsonschema v0.12.1
+	github.com/atombender/go-jsonschema v0.20.0
 	github.com/golangci/golangci-lint v1.64.8
 	github.com/loov/goda v0.7.1
 	github.com/mikefarah/yq/v4 v4.44.5
@@ -22,6 +22,7 @@ require (
 require (
 	4d63.com/gocheckcompilerdirectives v1.3.0 // indirect
 	4d63.com/gochecknoglobals v0.2.2 // indirect
+	dario.cat/mergo v1.0.2 // indirect
 	github.com/4meepo/tagalign v1.4.2 // indirect
 	github.com/Abirdcfly/dupword v0.1.3 // indirect
 	github.com/Antonboom/errname v1.0.0 // indirect
@@ -90,7 +91,7 @@ require (
 	github.com/go-xmlfmt/xmlfmt v1.1.3 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
-	github.com/goccy/go-yaml v1.13.0 // indirect
+	github.com/goccy/go-yaml v1.17.1 // indirect
 	github.com/gofrs/flock v0.12.1 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golangci/dupl v0.0.0-20250308024227-f665c8d69b32 // indirect
@@ -188,7 +189,7 @@ require (
 	github.com/ryanrolds/sqlclosecheck v0.5.1 // indirect
 	github.com/sagikazarmark/locafero v0.3.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
-	github.com/sanity-io/litter v1.5.5 // indirect
+	github.com/sanity-io/litter v1.5.8 // indirect
 	github.com/sanposhiho/wastedassign/v2 v2.1.0 // indirect
 	github.com/santhosh-tekuri/jsonschema/v6 v6.0.1 // indirect
 	github.com/sashamelentyev/interfacebloat v1.1.0 // indirect
@@ -198,6 +199,7 @@ require (
 	github.com/sivchari/containedctx v1.0.3 // indirect
 	github.com/sivchari/tenv v1.12.1 // indirect
 	github.com/sonatard/noctx v0.1.0 // indirect
+	github.com/sosodev/duration v1.3.1 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/sourcegraph/go-diff v0.7.0 // indirect
 	github.com/speakeasy-api/jsonpath v0.6.0 // indirect
