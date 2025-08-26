@@ -12,10 +12,10 @@
 #
 # [ ] internal/interface/repository/event
 # [ ] internal/interface/repository/client
-# [ ] internal/interface/repository/db
+# [x] internal/interface/repository/db
 # [x] internal/handler/http
 # [ ] internal/infrastructure/event
-# [ ] internal/infrastructure/service
+# [x] internal/infrastructure/service
 # [ ] internal/infrastructure/middleware
 ---
 all: false
@@ -76,6 +76,10 @@ packages:
     config:
       all: true
       dir: internal/test/mock/infrastructure/service
+  github.com/avisiedo/go-microservice-1/internal/interfaces/repository/db:
+    config:
+      all: true
+      dir: internal/test/mock/interfaces/repository/db
   # github.com/avisiedo/go-microservices-1/internal/infrastructure:
   #   config:
   #     all: true
