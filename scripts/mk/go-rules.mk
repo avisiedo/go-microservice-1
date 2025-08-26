@@ -16,6 +16,28 @@ else
 MOD_VENDOR ?= -mod vendor
 endif
 
+# Tools and their dependencies
+# Build dependencies
+TOOLS_BIN := tools/bin
+
+GODA := $(TOOLS_BIN)/goda
+GOJSONSCHEMA := $(TOOLS_BIN)/go-jsonschema
+GOLANGCI_LINT := $(TOOLS_BIN)/golangci-lint
+MOCKERY := $(TOOLS_BIN)/mockery
+OAPI_CODEGEN := $(TOOLS_BIN)/oapi-codegen
+PLANTER := $(TOOLS_BIN)/planter
+YQ := $(TOOLS_BIN)/yq
+
+TOOLS := \
+	$(GODA) \
+	$(GOLANGCI_LINT) \
+	$(MOCKERY) \
+	$(OAPI_CODEGEN) \
+	$(PLANTER) \
+	$(YQ) \
+	$(GOJSONSCHEMA) \
+
+
 .PHONY: install-go-tools
 install-go-tools: $(TOOLS) ## Install Go tools
 
@@ -34,8 +56,13 @@ build-all: ## Generate code and build binaries
 .PHONY: build
 build: $(patsubst cmd/%,$(BIN)/%,$(wildcard cmd/*)) ## Build binaries
 
-$(BIN) $(TOOLS_BIN):
+
+TOOLS_DEPS := tools/go.mod tools/go.sum tools/tools.go tools/bin | $(TOOLS_BIN)
+
+$(TOOLS_BIN):
 	mkdir -p $@
+
+$(TOOLS): $(TOOLS_DEPS)
 
 # export CGO_ENABLED
 # $(BIN)/%: CGO_ENABLED=0
