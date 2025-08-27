@@ -67,8 +67,8 @@ func TestInputCreate(t *testing.T) {
 	// Success case
 	dataModel = builder.NewTodo().Build()
 	data, err = input.Create(helper_echo.NewContext(e, http.MethodPost, "/todos/v1/todo", http.Header{}, dataModel, slog.Default()))
-	require.NotNil(t, data)
 	assert.NoError(t, err)
+	require.NotNil(t, data)
 }
 
 func TestInputGetAll(t *testing.T) {
