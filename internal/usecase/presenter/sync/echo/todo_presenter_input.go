@@ -49,7 +49,7 @@ func (i *todoInput) Create(ctx echo.Context) (*model.Todo, error) {
 // GetAll input adapter for GetAll operation
 func (i *todoInput) GetAll(ctx echo.Context) error {
 	if len(ctx.QueryParams()) > 0 {
-		return fmt.Errorf("No query parameters expected for " + ctx.Path())
+		return fmt.Errorf("No query parameters expected for %s", ctx.Path())
 	}
 	return nil
 }

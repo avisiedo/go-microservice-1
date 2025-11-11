@@ -131,35 +131,35 @@ func TestLogCommon(t *testing.T) {
 func TestLogMsg(t *testing.T) {
 	testCases := helperCommonTestCase(LevelDebug)
 	testCommon(t, testCases, func(l *gormLogger, level slog.Level, msg string) {
-		l.logMsg(context.Background(), level, msg)
+		l.logMsg(context.Background(), level, "%s", msg)
 	})
 }
 
 func TestLog(t *testing.T) {
 	testCases := helperCommonTestCase(LevelDebug)
 	testCommon(t, testCases, func(l *gormLogger, level slog.Level, msg string) {
-		l.log(context.Background(), level, msg)
+		l.log(context.Background(), level, "%s", msg)
 	})
 }
 
 func TestInfo(t *testing.T) {
 	testCases := helperCommonTestCase(LevelInfo)
 	testCommonSpecific(t, testCases, func(l *gormLogger, msg string) {
-		l.Info(context.Background(), msg)
+		l.Info(context.Background(), "%s", msg)
 	})
 }
 
 func TestWarn(t *testing.T) {
 	testCases := helperCommonTestCase(LevelWarn)
 	testCommonSpecific(t, testCases, func(l *gormLogger, msg string) {
-		l.Warn(context.Background(), msg)
+		l.Warn(context.Background(), "%s", msg)
 	})
 }
 
 func TestError(t *testing.T) {
 	testCases := helperCommonTestCase(LevelError)
 	testCommonSpecific(t, testCases, func(l *gormLogger, msg string) {
-		l.Error(context.Background(), msg)
+		l.Error(context.Background(), "%s", msg)
 	})
 }
 
