@@ -17,7 +17,7 @@ require (
 	github.com/confluentinc/confluent-kafka-go v1.9.2
 	github.com/getkin/kin-openapi v0.133.0
 	github.com/go-playground/validator/v10 v10.27.0
-	github.com/golang-migrate/migrate/v4 v4.17.1
+	github.com/golang-migrate/migrate/v4 v4.19.0
 	github.com/google/uuid v1.6.0
 	github.com/labstack/echo/v4 v4.13.4
 	github.com/oapi-codegen/runtime v1.1.2
@@ -80,7 +80,6 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	github.com/woodsbury/decimal128 v1.3.0 // indirect
-	go.uber.org/atomic v1.11.0 // indirect
 	go.yaml.in/yaml/v2 v2.4.2 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/crypto v0.41.0 // indirect
