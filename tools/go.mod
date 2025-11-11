@@ -16,7 +16,7 @@ require (
 	github.com/loov/goda v0.7.1
 	github.com/mikefarah/yq/v4 v4.44.5
 	github.com/oapi-codegen/oapi-codegen/v2 v2.5.0
-	github.com/vektra/mockery/v3 v3.5.3
+	github.com/vektra/mockery/v3 v3.5.5
 )
 
 require (
@@ -131,7 +131,7 @@ require (
 	github.com/knadh/koanf/providers/file v1.1.2 // indirect
 	github.com/knadh/koanf/providers/posflag v0.1.0 // indirect
 	github.com/knadh/koanf/providers/structs v0.1.0 // indirect
-	github.com/knadh/koanf/v2 v2.2.1 // indirect
+	github.com/knadh/koanf/v2 v2.3.0 // indirect
 	github.com/kulti/thelper v0.6.3 // indirect
 	github.com/kunwardeep/paralleltest v1.0.10 // indirect
 	github.com/lasiar/canonicalheader v1.1.2 // indirect
