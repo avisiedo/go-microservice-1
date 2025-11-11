@@ -5,7 +5,7 @@ module github.com/avisiedo/go-microservice-1/tools
 // When updating go version, update the below too:
 //   .github/workflows/main.yml
 //   build/package/Dockerfile
-go 1.23.7
+go 1.24.0
 
 toolchain go1.24.6
 

@@ -8,7 +8,7 @@ module github.com/avisiedo/go-microservice-1
 //  .golangci.yaml
 //    => linters-settings.gofumpt.lang-version
 //    => run.go
-go 1.23.7
+go 1.24.0
 
 toolchain go1.24.6
 
