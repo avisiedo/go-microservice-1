@@ -16,7 +16,7 @@ require (
 	github.com/loov/goda v0.7.1
 	github.com/mikefarah/yq/v4 v4.48.1
 	github.com/oapi-codegen/oapi-codegen/v2 v2.5.1
-	github.com/vektra/mockery/v3 v3.5.5
+	github.com/vektra/mockery/v3 v3.6.1
 )
 
 require (
