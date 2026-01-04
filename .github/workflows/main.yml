@@ -1,15 +1,88 @@
+# https://docs.github.com/en/actions/reference/workflows-and-actions
+# about cache size: https://github.blog/changelog/2025-11-20-github-actions-cache-size-can-now-exceed-10-gb-per-repository/
 ---
 name: Validate
 
 on:
   - push
-  - pull_request
+  # - pull_request   # Enable this one when starting to receive PR from forks to avoid repeat workflow
 
 permissions:
   contents: read
 
+env:
+  GO_VERSION: 1.24
+  CONTAINER_IMAGE: golang:1.24
+
 jobs:
-  validate:
+  cache:
+    runs-on: "ubuntu-latest"
+    container: golang:1.24
+    steps:
+      - uses: "actions/checkout@v6"
+        with:
+          submodules: recursive
+
+      - uses: actions/cache@v5
+        with:
+          path: |
+            /github/home/.cache/go-build
+            /go/pkg/mod
+            tools/bin
+          key: ${{ runner.os }}-go-${{ hashFiles('go.sum', 'tools/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Install service dependencies
+        run: |
+          make tidy
+          make install-go-tools
+
+  checks:
+    needs: ["cache"]
+    runs-on: "ubuntu-latest"
+    container: golang:1.24
+    steps:
+      - uses: "actions/checkout@v6"
+        with:
+          submodules: recursive
+
+      - name: "Set git safe directory"
+        run: git config --system --add safe.directory $GITHUB_WORKSPACE
+
+      - uses: actions/cache/restore@v5
+        id: cache-tools
+        with:
+          path: |
+            /github/home/.cache/go-build
+            /go/pkg/mod
+            tools/bin
+          key: ${{ runner.os }}-go-${{ hashFiles('go.sum', 'tools/go.sum') }}
+
+      - name: print go version
+        run: go version
+
+      - name: Checking missed 'make tidy'
+        run: make tidy && git diff go.mod go.sum tools/go.mod tools/go.sum
+
+      - name: Checking missed 'make generate-api'
+        run: make generate-api && git diff internal/api/http/
+
+      - name: Checking missed 'make generate-mock'
+        run: make generate-mock && git diff internal/test/mock/
+
+      - name: Checking missed 'go fmt'
+        run: make go-fmt && git diff internal/ cmd/
+
+      # - name: Checking yaml files
+      #   run: .venv/bin/python3 -m yamllint .
+
+      - name: Run go vet
+        run: make vet
+
+  tests:
+    needs: ["checks"]
+    runs-on: "ubuntu-latest"
+    container: golang:1.24
     # https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers
     services:
       postgres:
@@ -20,8 +93,6 @@ jobs:
           POSTGRESQL_PASSWORD: database-secret
         ports:
           - 5432:5432
-    runs-on: "ubuntu-latest"
-    container: golang:1.24
     env:
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
@@ -36,50 +107,20 @@ jobs:
       - name: "Set git safe directory"
         run: git config --system --add safe.directory $GITHUB_WORKSPACE
 
-      - name: Install package dependencies
-        run: |
-          apt-get update
-          apt-get install -y python3-venv python3-pip
-          python3 -m venv .venv
-          .venv/bin/pip install yamllint
-
-      - name: print go version
-        run: go version
-
-      - name: Install golang tools
-        run: make install-go-tools
-
-      - name: Install service dependencies
-        run: make get-deps
-
-      - name: Checking missed 'make tidy'
-        run: make tidy && git diff go.mod go.sum tools/go.mod tools/go.sum
-
-      - name: Checking missed 'make generate-api'
-        run: make generate-api && git diff internal/api/http/
-
-      - name: Checking missed 'make generate-mock'
-        run: make generate-mock && git diff internal/test/mock/
-
-      - name: Checking missed 'go fmt'
-        run: make go-fmt && git diff internal/ cmd/
-
-      - name: Checking yaml files
-        run: .venv/bin/python3 -m yamllint .
-
-      - name: Run go vet
-        run: go vet $(go list ./... | grep -v /vendor/)
+      - uses: actions/cache/restore@v5
+        id: cache-tools
+        with:
+          path: |
+            /github/home/.cache/go-build
+            /go/pkg/mod
+            tools/bin
+          key: ${{ runner.os }}-go-${{ hashFiles('go.sum', 'tools/go.sum') }}
 
       - name: Run tests
         run: |
           cp -vf configs/config.ci.yaml configs/config.yaml
           make db-migrate-up
           make test
-
-      - name: Build executables
-        run: |
-          make tidy
-          make build
 
       - name: Process coverage report
         run: |
@@ -91,3 +132,28 @@ jobs:
         uses: "actions/upload-artifact@v6"
         with:
           path: coverage.xml
+
+  build:
+    needs: ["tests"]
+    runs-on: "ubuntu-latest"
+    container: golang:1.24
+    steps:
+      - uses: "actions/checkout@v6"
+        with:
+          submodules: recursive
+
+      - name: "Set git safe directory"
+        run: git config --system --add safe.directory $GITHUB_WORKSPACE
+
+      - uses: actions/cache/restore@v5
+        id: cache-tools
+        with:
+          path: |
+            /github/home/.cache/go-build
+            /go/pkg/mod
+            tools/bin
+          key: ${{ runner.os }}-go-${{ hashFiles('go.sum', 'tools/go.sum') }}
+
+      - name: Build executables
+        run: |
+          make build

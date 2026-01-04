@@ -91,7 +91,15 @@ run: $(BIN)/service .compose-wait-db ## Run the api & kafka consumer locally
 # See: https://go.dev/doc/modules/managing-dependencies#synchronizing
 .PHONY: tidy
 tidy:  ## Synchronize your code's dependencies
+	$(MAKE) tidy-repo
+	$(MAKE) tidy-tools
+
+.PHONY: tidy-repo
+tidy-repo:
 	go mod tidy -go=$(GOVERSION)
+
+.PHONY: tidy-tools
+tidy-tools:
 	cd tools && go mod tidy -go=$(GOVERSION)
 
 .PHONY: get-deps
