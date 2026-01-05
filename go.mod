@@ -19,7 +19,7 @@ require (
 	github.com/go-playground/validator/v10 v10.30.1
 	github.com/golang-migrate/migrate/v4 v4.19.1
 	github.com/google/uuid v1.6.0
-	github.com/labstack/echo/v4 v4.14.0
+	github.com/labstack/echo/v4 v4.15.0
 	github.com/oapi-codegen/runtime v1.1.2
 	github.com/openlyinc/pointy v1.2.1
 	github.com/pioz/faker v2.0.1+incompatible
