@@ -13,9 +13,11 @@ require (
 	github.com/achiku/planter v0.0.0-20230118102009-4847a8211e35
 	github.com/atombender/go-jsonschema v0.20.0
 	github.com/golangci/golangci-lint v1.64.8
+	github.com/gotesttools/gotestfmt/v2 v2.5.0
 	github.com/loov/goda v0.7.1
 	github.com/mikefarah/yq/v4 v4.50.1
 	github.com/oapi-codegen/oapi-codegen/v2 v2.5.1
+	github.com/t-yuki/gocover-cobertura v0.0.0-20180217150009-aaee18c8195c
 	github.com/vektra/mockery/v3 v3.6.1
 )
 

@@ -11,4 +11,6 @@ import (
 	_ "github.com/loov/goda"
 	_ "github.com/mikefarah/yq/v4"
 	_ "github.com/vektra/mockery/v3"
+	_ "github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt"
+	_ "github.com/t-yuki/gocover-cobertura"
 )

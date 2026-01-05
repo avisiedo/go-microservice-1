@@ -27,6 +27,8 @@ MOCKERY := $(TOOLS_BIN)/mockery
 OAPI_CODEGEN := $(TOOLS_BIN)/oapi-codegen
 PLANTER := $(TOOLS_BIN)/planter
 YQ := $(TOOLS_BIN)/yq
+GOTESTFMT := $(TOOLS_BIN)/gotestfmt
+GOCOVER_COBERTURA := $(TOOLS_BIN)/gocover-cobertura
 
 TOOLS := \
 	$(GODA) \
@@ -36,6 +38,8 @@ TOOLS := \
 	$(PLANTER) \
 	$(YQ) \
 	$(GOJSONSCHEMA) \
+	$(GOTESTFMT) \
+	$(GOCOVER_COBERTURA) \
 
 
 .PHONY: install-go-tools
@@ -150,7 +154,8 @@ test-unit: ## Run unit tests
 
 .PHONY: test-ci
 test-ci: ## Run tests for ci
-	go test $(MOD_VENDOR) ./...
+	go test -race -json -v -coverprofile="coverage.out" $(MOD_VENDOR) $(shell go list ./... | grep $(TEST_GREP_FILTER) ) 2>&1 | tee /tmp/gotest.log | $(GOTESTFMT)
+	$(GOCOVER_COBERTURA) < coverage.out > coverage.xml
 
 .PHONY: test-integration
 test-integration:  ## Run integration tests
