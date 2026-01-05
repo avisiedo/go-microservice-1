@@ -1,0 +1,81 @@
+# https://docs.github.com/en/actions/reference/workflows-and-actions
+# about cache size: https://github.blog/changelog/2025-11-20-github-actions-cache-size-can-now-exceed-10-gb-per-repository/
+---
+name: Continuous Integration
+
+on:
+  - push
+  # - pull_request   # Enable this one when starting to receive PR from forks to avoid repeat workflow
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: "ubuntu-latest"
+    container: golang:1.24
+    # https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers
+    services:
+      postgres:
+        image: quay.io/cloudservices/postgresql-rds:15
+        env:
+          POSTGRESQL_DATABASE: database-db
+          POSTGRESQL_USER: database-user
+          POSTGRESQL_PASSWORD: database-secret
+        ports:
+          - 5432:5432
+    env:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: database-db
+      DATABASE_USER: database-user
+      DATABASE_PASSWORD: database-secret
+    steps:
+      - uses: "actions/checkout@v6"
+        with:
+          submodules: recursive
+
+      - uses: actions/cache@v5
+        with:
+          path: |
+            /github/home/.cache/go-build
+            /go/pkg/mod
+            tools/bin
+          key: ${{ runner.os }}-go-${{ hashFiles('go.sum', 'tools/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: "Prepare CI"
+        run: |
+          git config --system --add safe.directory $GITHUB_WORKSPACE
+          make tidy
+          make install-go-tools
+
+      - name: "Run checks"
+        run: |
+          go version
+          git diff go.mod go.sum tools/go.mod tools/go.sum               ## Check missed make tidy
+          make generate-api && git diff internal/api/http/               ## Check missed: make generate-api
+          make generate-mock && git diff internal/test/mock/             ## Check missed: make generate-mock
+          make go-fmt && git diff internal/ cmd/                         ## Check missed: make go-fmt
+          make vet                                                       ## Check: make vet
+
+      - name: "Run tests"
+        run: |
+          cp -vf configs/config.ci.yaml configs/config.yaml
+          make db-migrate-up
+          make test
+
+          # Process coverage report
+          go get github.com/boumenot/gocover-cobertura
+          go run github.com/boumenot/gocover-cobertura < coverage.out > coverage.xml
+          go tool cover -func ./coverage.out
+
+      - name: "Upload coverage report"
+        uses: "actions/upload-artifact@v6"
+        with:
+          path: coverage.xml
+
+      - name: "Build executables"
+        run: |
+          make build
