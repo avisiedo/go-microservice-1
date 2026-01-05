@@ -1,7 +1,7 @@
 # https://docs.github.com/en/actions/reference/workflows-and-actions
 # about cache size: https://github.blog/changelog/2025-11-20-github-actions-cache-size-can-now-exceed-10-gb-per-repository/
 ---
-name: Validate
+name: Continuous Integration
 
 on:
   - push
