@@ -53,8 +53,8 @@ build-all: $(BIN) ## Generate code and build binaries
 	$(MAKE) generate-api
 	# $(MAKE) generate-event
 	$(MAKE) generate-mock
-	$(MAKE) generate-diagrams
 	$(MAKE) build
+	# $(MAKE) generate-diagrams
 
 # Meta rule to add dependency on the binaries generated
 .PHONY: build
