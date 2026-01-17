@@ -14,7 +14,7 @@ jobs:
     # https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers
     services:
       postgres:
-        image: quay.io/cloudservices/postgresql-rds:15
+        image: quay.io/cloudservices/postgresql-rds:18
         env:
           POSTGRESQL_DATABASE: database-db
           POSTGRESQL_USER: database-user

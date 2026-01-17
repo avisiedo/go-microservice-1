@@ -24,7 +24,7 @@ services:
     #   - POSTGRESQL_DATABASE=${DATABASE_NAME:-todo-db}
     #   - POSTGRESQL_USER=${DATABASE_USER:-todo-user}
     #   - POSTGRESQL_PASSWORD=${DATABASE_PASSWORD:-todo-secret}
-    image: docker.io/library/postgres:16
+    image: docker.io/library/postgres:18
     environment:
       - POSTGRES_DB=${DATABASE_NAME:-todo-db}
       - POSTGRES_USER=${DATABASE_USER:-todo-user}
