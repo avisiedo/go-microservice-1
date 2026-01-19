@@ -18,7 +18,7 @@ require (
 	github.com/mikefarah/yq/v4 v4.50.1
 	github.com/oapi-codegen/oapi-codegen/v2 v2.5.1
 	github.com/t-yuki/gocover-cobertura v0.0.0-20180217150009-aaee18c8195c
-	github.com/vektra/mockery/v3 v3.6.1
+	github.com/vektra/mockery/v3 v3.6.3
 )
 
 require (
@@ -77,7 +77,7 @@ require (
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/fatih/structtag v1.2.0 // indirect
 	github.com/firefart/nonamedreturns v1.0.5 // indirect
-	github.com/fsnotify/fsnotify v1.8.0 // indirect
+	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/fzipp/gocyclo v0.6.0 // indirect
 	github.com/getkin/kin-openapi v0.133.0 // indirect
 	github.com/ghostiam/protogetter v0.3.9 // indirect
