@@ -11,7 +11,7 @@ toolchain go1.24.6
 
 require (
 	github.com/achiku/planter v0.0.0-20230118102009-4847a8211e35
-	github.com/atombender/go-jsonschema v0.20.0
+	github.com/atombender/go-jsonschema v0.21.0
 	github.com/golangci/golangci-lint v1.64.8
 	github.com/gotesttools/gotestfmt/v2 v2.5.0
 	github.com/loov/goda v0.7.1
@@ -96,7 +96,7 @@ require (
 	github.com/go-xmlfmt/xmlfmt v1.1.3 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/goccy/go-json v0.10.5 // indirect
-	github.com/goccy/go-yaml v1.19.0 // indirect
+	github.com/goccy/go-yaml v1.19.2 // indirect
 	github.com/gofrs/flock v0.12.1 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golangci/dupl v0.0.0-20250308024227-f665c8d69b32 // indirect
