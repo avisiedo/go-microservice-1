@@ -5,16 +5,14 @@ module github.com/avisiedo/go-microservice-1/tools
 // When updating go version, update the below too:
 //   .github/workflows/main.yml
 //   build/package/Dockerfile
-go 1.24.0
-
-toolchain go1.24.6
+go 1.25
 
 require (
 	github.com/achiku/planter v0.0.0-20230118102009-4847a8211e35
 	github.com/atombender/go-jsonschema v0.21.0
 	github.com/golangci/golangci-lint v1.64.8
 	github.com/gotesttools/gotestfmt/v2 v2.5.0
-	github.com/loov/goda v0.7.1
+	github.com/loov/goda v0.8.1
 	github.com/mikefarah/yq/v4 v4.50.1
 	github.com/oapi-codegen/oapi-codegen/v2 v2.5.1
 	github.com/t-yuki/gocover-cobertura v0.0.0-20180217150009-aaee18c8195c
@@ -250,13 +248,14 @@ require (
 	go.yaml.in/yaml/v4 v4.0.0-rc.3 // indirect
 	golang.org/x/exp v0.0.0-20240909161429-701f63a606c0 // indirect
 	golang.org/x/exp/typeparams v0.0.0-20250210185358-939b2ce775ac // indirect
-	golang.org/x/mod v0.30.0 // indirect
-	golang.org/x/net v0.48.0 // indirect
+	golang.org/x/image v0.35.0 // indirect
+	golang.org/x/mod v0.32.0 // indirect
+	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
-	golang.org/x/sys v0.39.0 // indirect
-	golang.org/x/term v0.38.0 // indirect
-	golang.org/x/text v0.32.0 // indirect
-	golang.org/x/tools v0.39.0 // indirect
+	golang.org/x/sys v0.40.0 // indirect
+	golang.org/x/term v0.39.0 // indirect
+	golang.org/x/text v0.33.0 // indirect
+	golang.org/x/tools v0.41.0 // indirect
 	golang.org/x/tools/go/expect v0.1.1-deprecated // indirect
 	golang.org/x/tools/go/packages/packagestest v0.1.1-deprecated // indirect
 	google.golang.org/protobuf v1.36.5 // indirect
