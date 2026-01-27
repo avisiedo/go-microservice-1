@@ -11,13 +11,13 @@ permissions:
   contents: read
 
 env:
-  GO_VERSION: 1.24
-  CONTAINER_IMAGE: golang:1.24
+  GO_VERSION: 1.25
+  CONTAINER_IMAGE: golang:1.25
 
 jobs:
   cache:
     runs-on: "ubuntu-latest"
-    container: golang:1.24
+    container: golang:1.25
     steps:
       - uses: "actions/checkout@v6"
         with:
@@ -40,7 +40,7 @@ jobs:
   checks:
     needs: ["cache"]
     runs-on: "ubuntu-latest"
-    container: golang:1.24
+    container: golang:1.25
     steps:
       - uses: "actions/checkout@v6"
         with:
@@ -82,7 +82,7 @@ jobs:
   tests:
     needs: ["checks"]
     runs-on: "ubuntu-latest"
-    container: golang:1.24
+    container: golang:1.25
     # https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers
     services:
       postgres:
@@ -136,7 +136,7 @@ jobs:
   build:
     needs: ["tests"]
     runs-on: "ubuntu-latest"
-    container: golang:1.24
+    container: golang:1.25
     steps:
       - uses: "actions/checkout@v6"
         with:

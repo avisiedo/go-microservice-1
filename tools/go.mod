@@ -5,7 +5,7 @@ module github.com/avisiedo/go-microservice-1/tools
 // When updating go version, update the below too:
 //   .github/workflows/main.yml
 //   build/package/Dockerfile
-go 1.25
+go 1.25.0
 
 require (
 	github.com/achiku/planter v0.0.0-20230118102009-4847a8211e35
