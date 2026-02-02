@@ -475,8 +475,8 @@ github.com/matttproud/golang_protobuf_extensions v1.0.2-0.20181231171920-c182aff
 github.com/matttproud/golang_protobuf_extensions v1.0.2-0.20181231171920-c182affec369/go.mod h1:BSXmuO+STAnVfrANrmjBb36TMTDstsz7MSK+HVaYKv4=
 github.com/mgechev/revive v1.7.0 h1:JyeQ4yO5K8aZhIKf5rec56u0376h8AlKNQEmjfkjKlY=
 github.com/mgechev/revive v1.7.0/go.mod h1:qZnwcNhoguE58dfi96IJeSTPeZQejNeoMQLUZGi4SW4=
-github.com/mikefarah/yq/v4 v4.50.1 h1:u7pnei4FIv4HGL5ZBuNVDhDBe9et1YRFnoTmKZw6zOY=
-github.com/mikefarah/yq/v4 v4.50.1/go.mod h1:L4Z8NywrquZ+PVMz6IFFeGIp64eBC2mGC0nMryygCnI=
+github.com/mikefarah/yq/v4 v4.52.2 h1:g38MGUsWO4y6Te1tzZy3fk6hZ9xknRHLzBaXVoqfAyI=
+github.com/mikefarah/yq/v4 v4.52.2/go.mod h1:05ytoLM9RqcBCI73V3lqDL1gbQ29mEe573IslI9ibU8=
 github.com/mitchellh/copystructure v1.2.0 h1:vpKXTN4ewci03Vljg/q9QvCGUDttBOGBIa15WveJJGw=
 github.com/mitchellh/copystructure v1.2.0/go.mod h1:qLl+cE2AmVv+CoeAwDPye/v+N2HKCj9FbZEVFJRxO9s=
 github.com/mitchellh/go-homedir v1.1.0 h1:lukF9ziXFxDFPkA1vsr5zpc1XuPDn/wFntq5mG+4E0Y=
