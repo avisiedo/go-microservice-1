@@ -9,7 +9,7 @@ go 1.25.0
 
 require (
 	github.com/achiku/planter v0.0.0-20230118102009-4847a8211e35
-	github.com/atombender/go-jsonschema v0.21.0
+	github.com/atombender/go-jsonschema v0.22.0
 	github.com/golangci/golangci-lint v1.64.8
 	github.com/gotesttools/gotestfmt/v2 v2.5.0
 	github.com/loov/goda v0.8.1
