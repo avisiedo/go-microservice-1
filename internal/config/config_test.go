@@ -4,6 +4,7 @@ import (
 	"os"
 	"testing"
 
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	validator "github.com/go-playground/validator/v10"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
@@ -31,9 +32,9 @@ func TestSetDefaults(t *testing.T) {
 func TestLoad(t *testing.T) {
 	var v *viper.Viper
 	// 'cfg' is nil panic
-	assert.Panics(t, func() {
+	assert.PanicsWithError(t, common_err.ErrNil("cfg").Error(), func() {
 		Load(nil)
-	}, "'cfg' is nil")
+	})
 
 	// Success Load
 	cfg := Config{}

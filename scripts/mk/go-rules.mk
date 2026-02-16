@@ -4,8 +4,11 @@
 # the generated binaries.
 ##
 
-GOVERSION := 1.22
+GOVERSION := 1.25.0
 export GOVERSION
+
+GOSUMDB := sum.golang.org
+export GOSUMDB
 
 ifeq (,$(shell ls -1d vendor 2>/dev/null))
 MOD_VENDOR :=
@@ -13,36 +16,65 @@ else
 MOD_VENDOR ?= -mod vendor
 endif
 
+# Tools and their dependencies
+# Build dependencies
+TOOLS_BIN := tools/bin
+
+GODA := $(TOOLS_BIN)/goda
+GOJSONSCHEMA := $(TOOLS_BIN)/go-jsonschema
+GOLANGCI_LINT := $(TOOLS_BIN)/golangci-lint
+MOCKERY := $(TOOLS_BIN)/mockery
+OAPI_CODEGEN := $(TOOLS_BIN)/oapi-codegen
+PLANTER := $(TOOLS_BIN)/planter
+YQ := $(TOOLS_BIN)/yq
+GOTESTFMT := $(TOOLS_BIN)/gotestfmt
+GOCOVER_COBERTURA := $(TOOLS_BIN)/gocover-cobertura
+
+TOOLS := \
+	$(GODA) \
+	$(GOLANGCI_LINT) \
+	$(MOCKERY) \
+	$(OAPI_CODEGEN) \
+	$(PLANTER) \
+	$(YQ) \
+	$(GOJSONSCHEMA) \
+	$(GOTESTFMT) \
+	$(GOCOVER_COBERTURA) \
+
+
 .PHONY: install-go-tools
 install-go-tools: $(TOOLS) ## Install Go tools
-
-# used by ipa-hcc backend test
-.PHONY: install-xrhidgen
-install-xrhidgen: $(XRHIDGEN) ## Install xrhidgen tool
 
 .PHONY: install-tools
 install-tools: install-go-tools install-python-tools ## Install tools used to build, test and lint
 
 .PHONY: build-all
-build-all: ## Generate code and build binaries
+build-all: $(BIN) ## Generate code and build binaries
 	$(MAKE) generate-api
 	# $(MAKE) generate-event
 	$(MAKE) generate-mock
-	$(MAKE) generate-diagrams
 	$(MAKE) build
+	# $(MAKE) generate-diagrams
 
 # Meta rule to add dependency on the binaries generated
 .PHONY: build
-build: $(patsubst cmd/%,$(BIN)/%,$(wildcard cmd/*)) ## Build binaries
+build: $(BIN) $(patsubst cmd/%,$(BIN)/%,$(wildcard cmd/*)) ## Build binaries
 
-$(BIN) $(TOOLS_BIN):
+$(BIN):
+	mkdir -p "$(BIN)"
+
+TOOLS_DEPS := tools/go.mod tools/go.sum tools/tools.go tools/bin | $(TOOLS_BIN)
+
+$(TOOLS_BIN):
 	mkdir -p $@
+
+$(TOOLS): $(TOOLS_DEPS)
 
 # export CGO_ENABLED
 # $(BIN)/%: CGO_ENABLED=0
 # Build by path, not by referring to main.go. It's required to bake VCS
 # information into binary, see golang/go#51279.
-$(BIN)/%: cmd/%/main.go $(BIN)
+$(BIN)/%: cmd/%/main.go
 	go build -C $(dir $<) $(MOD_VENDOR) -buildvcs=true -o "$(CURDIR)/$@" .
 
 $(TOOLS_BIN)/%: $(TOOLS_DEPS)
@@ -63,7 +95,15 @@ run: $(BIN)/service .compose-wait-db ## Run the api & kafka consumer locally
 # See: https://go.dev/doc/modules/managing-dependencies#synchronizing
 .PHONY: tidy
 tidy:  ## Synchronize your code's dependencies
+	$(MAKE) tidy-repo
+	$(MAKE) tidy-tools
+
+.PHONY: tidy-repo
+tidy-repo:
 	go mod tidy -go=$(GOVERSION)
+
+.PHONY: tidy-tools
+tidy-tools:
 	cd tools && go mod tidy -go=$(GOVERSION)
 
 .PHONY: get-deps
@@ -106,7 +146,7 @@ TEST_GREP_FILTER := -v \
 
 
 .PHONY: test
-test: test-unit test-integration  ## Run unit tests and integration tests
+test: test-unit test-integration  ## Run unit tests and integration tests; Could need 'make ... TEST=integration'
 
 .PHONY: test-unit
 test-unit: ## Run unit tests
@@ -114,11 +154,13 @@ test-unit: ## Run unit tests
 
 .PHONY: test-ci
 test-ci: ## Run tests for ci
-	go test $(MOD_VENDOR) ./...
+	go test -race -json -v -coverprofile="coverage.out" $(MOD_VENDOR) $(shell go list ./... | grep $(TEST_GREP_FILTER) ) 2>&1 | tee /tmp/gotest.log | $(GOTESTFMT)
+	$(GOCOVER_COBERTURA) < coverage.out > coverage.xml
 
 .PHONY: test-integration
 test-integration:  ## Run integration tests
-	CONFIG_PATH="$(PROJECT_DIR)/configs" go test -parallel 1 ./internal/test/integration/... -test.failfast -test.v
+	if [ "$${CI}" != "true" ] && [ "$${TEST}" == "integration" ]; then $(MAKE) .compose-wait-db || exit 1; fi
+	TEST=integration CONFIG_PATH="$(PROJECT_DIR)/configs" go test -parallel 1 ./internal/test/integration/... -test.failfast -test.v
 
 # Add dependencies from binaries to all the the sources
 # so any change is detected for the build rule
@@ -172,35 +214,9 @@ $(EVENT_SCHEMA_DIR)/%.event.json: $(EVENT_MESSAGE_DIR)/%.event.yaml
 	@[ -e "$(EVENT_MESSAGE_DIR)" ] || mkdir -p "$(EVENT_MESSAGE_DIR)"
 	yaml2json "$<" "$@"
 
-# Mockery support
-MOCK_DIRS := internal/api/http/private \
-	internal/api/http/public \
-	internal/api/http/openapi \
-	internal/api/http/metrics \
-	internal/api/http/healthcheck \
-	internal/interface/presenter/echo \
-	internal/interface/interactor \
-	internal/interface/repository/event \
-	internal/interface/repository/client \
-	internal/interface/repository/db \
-	internal/handler/http \
-	internal/infrastructure/event \
-	internal/infrastructure/service \
-	internal/infrastructure/middleware \
-
 .PHONY: generate-mock
 generate-mock: $(MOCKERY)  ## Generate mock by using mockery tool
-	for item in $(MOCK_DIRS); do \
-	  PKG="$${item##*/}"; \
-	  DEST_DIR="internal/test/mock/$${item#*/}"; \
-	  [ -e "$${DEST_DIR}" ] || mkdir -p "$${DEST_DIR}"; \
-	  $(MOCKERY) \
-	    --all \
-	    --outpkg "$${PKG}" \
-	    --dir "$${item}" \
-		--output "$${DEST_DIR}" \
-		--case underscore || exit 1; \
-	done
+	$(MOCKERY)
 
 .PHONY: generate-deps
 generate-deps: $(GODA)

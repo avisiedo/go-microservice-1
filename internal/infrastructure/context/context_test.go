@@ -6,6 +6,7 @@ import (
 	"os"
 	"testing"
 
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	"github.com/avisiedo/go-microservice-1/internal/test"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -36,7 +37,7 @@ func TestDBFromContext(t *testing.T) {
 	)
 
 	db, err = DBFromContext(nil)
-	require.EqualError(t, err, "'ctx' is nil")
+	require.EqualError(t, err, common_err.ErrNil("ctx").Error())
 	require.Nil(t, db)
 
 	ctx := context.Background()
