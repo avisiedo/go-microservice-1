@@ -8,6 +8,7 @@ import (
 
 	"github.com/avisiedo/go-microservice-1/internal/api/header"
 	"github.com/avisiedo/go-microservice-1/internal/api/http/public"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	builder_api "github.com/avisiedo/go-microservice-1/internal/test/builder/api/http"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -17,7 +18,7 @@ type BodyFuncTodoUpdate func(t *testing.T, body *public.ToDo)
 
 func WrapBodyFuncTodoResponse(t *testing.T, expected BodyFuncTodoUpdate) BodyFunc {
 	if t == nil {
-		panic("'t' is nil")
+		panic(common_err.ErrNil("t"))
 	}
 	if expected == nil {
 		return func(t *testing.T, body []byte) {

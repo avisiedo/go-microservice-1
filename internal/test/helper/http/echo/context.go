@@ -6,11 +6,41 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/http/httptest"
 
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	"github.com/labstack/echo/v4"
 )
+
+type AdditionalContext interface {
+	SetLog(log *slog.Logger)
+	Log() *slog.Logger
+}
+
+type ExtendedContext interface {
+	echo.Context
+	AdditionalContext
+}
+
+type extendedContext struct {
+	logger *slog.Logger
+	echo.Context
+	AdditionalContext
+}
+
+func NewExtendedContext(ctx echo.Context) ExtendedContext {
+	extContext := &extendedContext{
+		Context: ctx,
+	}
+	extContext.AdditionalContext = extContext
+	return extContext
+}
+
+func (ctx *extendedContext) SetLog(log *slog.Logger) {
+	ctx.logger = log
+}
 
 func checkHttpMethod(value string) {
 	switch value {
@@ -30,9 +60,9 @@ func checkHttpMethod(value string) {
 }
 
 // NewContextWithContext create an echo.Context related with go context.Context.
-func NewContextWithContext(ctx context.Context, e *echo.Echo, method, path string, headers http.Header, body interface{}) echo.Context {
+func NewContextWithContext(ctx context.Context, e *echo.Echo, method, path string, headers http.Header, body any) ExtendedContext {
 	if e == nil {
-		panic("echo instance is nil")
+		panic(common_err.ErrNil("e"))
 	}
 	checkHttpMethod(method)
 	var bodyReader io.Reader = nil
@@ -43,7 +73,7 @@ func NewContextWithContext(ctx context.Context, e *echo.Echo, method, path strin
 		}
 		bodyReader = bytes.NewBuffer(bodyBytes)
 	}
-	req, err := http.NewRequestWithContext(context.Background(), method, path, bodyReader)
+	req, err := http.NewRequestWithContext(ctx, method, path, bodyReader)
 	if err != nil {
 		panic(err)
 	}
@@ -53,15 +83,17 @@ func NewContextWithContext(ctx context.Context, e *echo.Echo, method, path strin
 	}
 	req.Header = headers
 	if body != nil {
-		req.Header.Set(echo.HeaderContentType, "application/json")
+		req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	}
 	res := httptest.NewRecorder()
 
-	return e.NewContext(req, res)
+	echoCtx := NewExtendedContext(e.NewContext(req, res))
+	echoCtx.SetLog(slog.Default())
+	return echoCtx
 }
 
 // NewContext create a new echo context ready for a test request.
-func NewContext(e *echo.Echo, method, path string, headers http.Header, body interface{}) echo.Context {
+func NewContext(e *echo.Echo, method, path string, headers http.Header, body any, logger *slog.Logger) ExtendedContext {
 	return NewContextWithContext(context.Background(), e, method, path, headers, body)
 }
 
@@ -73,4 +105,8 @@ func NewHandler(status int, response any, err error) echo.HandlerFunc {
 		}
 		return c.JSON(status, response)
 	}
+}
+
+func NewDummyContext(e *echo.Echo) echo.Context {
+	return NewContextWithContext(context.Background(), e, http.MethodGet, "/", http.Header{}, nil)
 }

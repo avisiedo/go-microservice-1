@@ -4,6 +4,7 @@ import (
 	"context"
 	"log/slog"
 
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	app_context "github.com/avisiedo/go-microservice-1/internal/infrastructure/context"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -19,7 +20,7 @@ type SLogMiddlewareConfig struct {
 // config provides
 func SLogMiddlewareWithConfig(cfg *SLogMiddlewareConfig) echo.MiddlewareFunc {
 	if cfg == nil {
-		panic("'cfg' is nil")
+		panic(common_err.ErrNil("cfg"))
 	}
 	if cfg.Log == nil {
 		cfg.Log = slog.Default()
