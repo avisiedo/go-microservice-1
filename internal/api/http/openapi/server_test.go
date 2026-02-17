@@ -46,14 +46,14 @@ func TestGetOpenapi(t *testing.T) {
 	ctx := e.NewContext(req, rec)
 	ctx.SetPath(path)
 
-	m := &mock_api_openapi.ServerInterface{}
+	m := &mock_api_openapi.MockServerInterface{}
 	h := ServerInterfaceWrapper{Handler: m}
 	m.On("GetOpenapi", ctx).Return(nil)
 	err := h.GetOpenapi(ctx)
 	assert.NoError(t, err)
 	m.AssertExpectations(t)
 
-	m = &mock_api_openapi.ServerInterface{}
+	m = &mock_api_openapi.MockServerInterface{}
 	h = ServerInterfaceWrapper{Handler: m}
 	m.On("GetOpenapi", ctx).Return(fmt.Errorf("some error"))
 	err = h.GetOpenapi(ctx)

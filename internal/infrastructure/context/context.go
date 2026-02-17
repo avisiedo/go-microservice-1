@@ -6,6 +6,7 @@ import (
 
 	"log/slog"
 
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	"gorm.io/gorm"
 )
 
@@ -32,7 +33,7 @@ func LogFromContext(ctx context.Context) *slog.Logger {
 // DBFromContext retrieve the gorm.DB data struct from the context.
 func DBFromContext(ctx context.Context) (*gorm.DB, error) {
 	if ctx == nil {
-		return nil, errors.New("'ctx' is nil")
+		return nil, common_err.ErrNil("ctx")
 	}
 	if data := ctx.Value(ctxKeyDB); data != nil {
 		if db, ok := data.(*gorm.DB); ok {

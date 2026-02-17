@@ -2,6 +2,7 @@ package helper
 
 import (
 	"fmt"
+	"math/rand"
 	"strings"
 	"time"
 
@@ -13,15 +14,21 @@ import (
 // GenRandNum generate a random number >= min and <= max interval.
 // min is the lower boundary interval including the value.
 // max is the higher boundary interval including the value.
-func GenRandNum(min, max int64) int64 {
-	return faker.Int64InRange(min, max+1)
+func GenRandNum(min, max int) int {
+	if min > max {
+		return GenRandNum(max, min)
+	}
+	if min == max {
+		return 0
+	}
+	return (rand.Int() % (max - min)) + min
 }
 
 // GenPastNearTime generate a past timestamp not further than delta.
 // delta is the duration that set the threshold for the time.
 // Return a time.Time for the expected interval.
 func GenPastNearTime(delta time.Duration) time.Time {
-	var value int64 = GenRandNum(0, int64(delta))
+	var value int = GenRandNum(0, int(delta))
 	return time.Now().UTC().Add(time.Duration(value) * -1)
 }
 
@@ -29,16 +36,20 @@ func GenPastNearTime(delta time.Duration) time.Time {
 // delta is the duration that set the threshold for the time.
 // Return a time.Time for the expected interval.
 func GenFutureNearTimeUTC(delta time.Duration) time.Time {
-	var value int64 = GenRandNum(0, int64(delta))
+	var value int = GenRandNum(0, int(delta))
 	return time.Now().UTC().Add(time.Duration(value))
+}
+
+func timeinrange(begin, end time.Time) time.Time {
+	return begin.Add(time.Duration(GenRandNum(0, int(end.Sub(begin).Abs()))))
 }
 
 // GenBetweenTimeUTC generate a timestamp between the given parameters
 // as earlier as 'begin' and before 'end'.
 // delta is the duration that set the threshold for the time.
 // Return a time.Time for the expected interval.
-func GenBetweenTimeUTC(begin time.Time, end time.Time) time.Time {
-	return faker.TimeInRange(begin, end).UTC()
+func GenBetweenTimeUTC(begin, end time.Time) time.Time {
+	return timeinrange(begin, end).UTC()
 }
 
 // GenRandString generate a random string from the letters set
@@ -49,7 +60,7 @@ func GenBetweenTimeUTC(begin time.Time, end time.Time) time.Time {
 func GenRandString(letters []rune, n int) string {
 	s := make([]rune, n)
 	for i := range s {
-		s[i] = letters[GenRandNum(0, int64(len(letters)-1))]
+		s[i] = letters[GenRandNum(0, len(letters)-1)]
 	}
 	return string(s)
 }
@@ -67,7 +78,7 @@ func GenRandTitle() string {
 // Return a random string pointer, a pointer to empty string
 // or nil.
 func GenRandDescription() string {
-	return GenRandParagraph(0)
+	return GenRandParagraph()
 }
 
 // GenRandDomainLabel generate a random label according to RFC1035
@@ -131,7 +142,7 @@ func GenRandFQDN() string {
 // GenRandBool generate a random boolean.
 // Return a bool value.
 func GenRandBool() bool {
-	return faker.Bool()
+	return GenRandNum(0, 1) == 0
 }
 
 // GenRandUserID Generate a random UUID.
@@ -152,37 +163,66 @@ func GenRandUsername() string {
 // GenRandFirstName generate a random first name.
 // Return a string.
 func GenRandFirstName() string {
-	return faker.FirstName()
+	type Data struct {
+		FirstName string `faker:"firstName"`
+	}
+	value := Data{}
+	err := faker.FakeData(&value)
+	if err != nil {
+		panic(err)
+	}
+	return value.FirstName
 }
 
 // GenRandLastName generate a random last name.
 // Return a string.
 func GenRandLastName() string {
-	return faker.LastName()
+	type Data struct {
+		LastName string `faker:"lastName"`
+	}
+	value := Data{}
+	err := faker.FakeData(&value)
+	if err != nil {
+		panic(err)
+	}
+	return value.LastName
 }
 
 // GenRandEmail generate a random email.
 // Return a string.
 func GenRandEmail() string {
-	return strings.Join([]string{GenRandUsername(), faker.Domain()}, "@")
+	type Data struct {
+		Email string `faker:"email"`
+	}
+	value := Data{}
+	err := faker.FakeData(&value)
+	if err != nil {
+		panic(err)
+	}
+	return value.Email
 }
 
 // GenRandPointyBool generate a random bool pointer.
 // Return nil, or a bool pointer.
 func GenRandPointyBool() *bool {
-	if faker.Bool() {
-		return pointy.Bool(faker.Bool())
+	if GenRandBool() {
+		return pointy.Bool(GenRandBool())
 	}
 	return nil
 }
 
 // GenRandParagraph generate a random paragraph.
 // Return a multiline string.
-func GenRandParagraph(n int) string {
-	if n == 0 {
-		n = int(GenRandNum(3, 10))
+func GenRandParagraph() string {
+	type Data struct {
+		Paragraph string `faker:"paragraph"`
 	}
-	return faker.ArticleWithParagraphCount(n)
+	value := Data{}
+	err := faker.FakeData(&value)
+	if err != nil {
+		panic(err)
+	}
+	return value.Paragraph
 }
 
 // GenPemCertificate currently return a static PEM certificate.
@@ -268,6 +308,13 @@ kE32lJu4gVL1W2fSeii8K9y7pMGNUMbV+h2sF24EGxP5zlhruE2lJGRgONjFpA==
 -----END CERTIFICATE-----`
 }
 
+func pick(values ...string) string {
+	if len(values) == 0 {
+		return ""
+	}
+	return values[GenRandNum(0, len(values)-1)]
+}
+
 // GenRandLocationLabel generate a random location label.
 // Return a string with the label value.
 func GenRandLocationLabel() string {
@@ -277,7 +324,7 @@ func GenRandLocationLabel() string {
 		"europe", "boston", "france", "australia", "india",
 		"brasil", "africa", "china",
 	}
-	return faker.Pick(set...)
+	return pick(set...)
 }
 
 // GenRandLocationDescription generate a random description
@@ -292,7 +339,7 @@ func GenRandLocationDescription() string {
 // issuer is a string describing the certificate issuer, for instance "Verisign".
 // realm is the domain realm that the certificate is issuer belongs to.
 // Return a string with the issuer string.
-func GenIssuerWithRealm(issuer string, realm string) string {
+func GenIssuerWithRealm(issuer, realm string) string {
 	// TODO To be reviewed
 	result := fmt.Sprintf("CN=%s", issuer)
 	for _, item := range strings.Split(realm, ".") {
@@ -306,7 +353,7 @@ func GenIssuerWithRealm(issuer string, realm string) string {
 // subject is a string describing the certificate subject, for instance "My Site".
 // realm is the domain realm that the certificate is issued for.
 // Return a string with the subject string.
-func GenSubjectWithRealm(subject string, realm string) string {
+func GenSubjectWithRealm(subject, realm string) string {
 	// TODO To be reviewed
 	return GenIssuerWithRealm(subject, realm)
 }

@@ -9,6 +9,7 @@ import (
 	"log/slog"
 
 	"github.com/avisiedo/go-microservice-1/internal/config"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	handler "github.com/avisiedo/go-microservice-1/internal/handler/http"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/router"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/service"
@@ -26,10 +27,10 @@ type metricsService struct {
 
 func NewMetrics(ctx context.Context, wg *sync.WaitGroup, cfg *config.Config, app handler.Application) service.ApplicationService {
 	if cfg == nil {
-		panic("config is nil")
+		panic(common_err.ErrNil("config"))
 	}
 	if wg == nil {
-		panic("wg is nil")
+		panic(common_err.ErrNil("wg"))
 	}
 
 	result := &metricsService{}
