@@ -3,24 +3,29 @@ package common
 import (
 	"testing"
 
-	"github.com/magiconair/properties/assert"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-func TestNewNil(t *testing.T) {
-	e := NewNil("ctx")
-	require.EqualError(t, e, "'ctx' is nil")
-
-	assert.Panic(t, func() {
-		e = NewNil("")
-	}, "'fieldName' is empty")
+func TestCheckEmptyFieldName(t *testing.T) {
+	require.PanicsWithError(t, ErrEmpty("fieldName").Error(), func() {
+		checkEmptyFieldName("")
+	})
+	require.NotPanics(t, func() {
+		checkEmptyFieldName("demo")
+	})
 }
 
-func TestNewEmpty(t *testing.T) {
-	e := NewEmpty("ctx")
-	require.EqualError(t, e, "'ctx' is empty")
+func TestErrNil(t *testing.T) {
+	assert.PanicsWithError(t, ErrEmpty("fieldName").Error(), func() {
+		_ = ErrNil("")
+	})
+	assert.EqualError(t, ErrNil("someField"), "'someField' is nil")
+}
 
-	assert.Panic(t, func() {
-		e = NewEmpty("")
-	}, "'fieldName' is empty")
+func TestErrEmpty(t *testing.T) {
+	assert.PanicsWithError(t, ErrEmpty("fieldName").Error(), func() {
+		_ = ErrEmpty("")
+	})
+	require.EqualError(t, ErrEmpty("someField"), "'someField' is empty")
 }

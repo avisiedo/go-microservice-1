@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"github.com/avisiedo/go-microservice-1/internal/config"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/datastore"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/logger"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/service"
@@ -100,7 +101,7 @@ func (s *Suite) TearDownTest() {
 func (s *Suite) WaitReady(cfg *config.Config) {
 	t := s.T()
 	if cfg == nil {
-		panic("cfg is nil")
+		panic(common_err.ErrNil("cfg"))
 	}
 	header := http.Header{}
 	path := s.DefaultHealthcheckBaseURL() + "/readyz"
@@ -351,4 +352,16 @@ func StartSignalHandler(c context.Context) (context.Context, context.CancelFunc)
 // TearDownSignalHandler reset the signal handlers
 func TearDownSignalHandler() {
 	signal.Reset(syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
+}
+
+func TestSuite(t *testing.T) {
+	if value, exist := os.LookupEnv("TEST"); !exist || value != "integration" {
+		t.Skip("This TestSuite needs to start infrastructure: Enforce by TEST=integration if it is up: make compose-up && make test-integration TEST=integration")
+	}
+	// TODO Add here your test suites
+	suite.Run(t, new(SuiteTodosCreate))
+	suite.Run(t, new(SuiteTodosRead))
+	// suite.Run(t, new(SuiteTodosDelete))
+	// suite.Run(t, new(SuiteTodosUpdate))
+	// suite.Run(t, new(SuiteTodosList))
 }

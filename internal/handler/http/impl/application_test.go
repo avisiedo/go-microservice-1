@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/avisiedo/go-microservice-1/internal/config"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
 	"github.com/avisiedo/go-microservice-1/internal/test"
 	"github.com/stretchr/testify/assert"
@@ -19,11 +20,11 @@ func TestNewHandler(t *testing.T) {
 	assert.Panics(t, func() {
 		NewHandler(nil, nil, nil)
 	})
-	assert.PanicsWithValue(t, "db is nil", func() {
+	assert.PanicsWithError(t, common_err.ErrNil("db").Error(), func() {
 		NewHandler(&config.Config{}, nil, nil)
 	})
 	cfg := test.GetTestConfig()
-	assert.PanicsWithValue(t, "m is nil", func() {
+	assert.PanicsWithError(t, common_err.ErrNil("m").Error(), func() {
 		NewHandler(cfg, gormDB, nil)
 	})
 	assert.NotPanics(t, func() {
