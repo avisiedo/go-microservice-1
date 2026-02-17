@@ -6,12 +6,15 @@
 !internal
 !pkg
 !scripts/mk
+!scripts/db/migrations
 !Makefile
 !tools
 tools/bin
 !api
 !requirements-dev.txt
 !requirements.txt
+!go.mod
+!go.sum
 
 # NOTE DO NOT ADD ANYTHING BELOW THIS LINE
 .docker

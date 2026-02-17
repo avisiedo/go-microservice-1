@@ -4,6 +4,6 @@
     "vacuum:lint": "vacuum lint -d"
   },
   "dependencies": {
-    "@quobix/vacuum": "^0.2.5"
+    "@quobix/vacuum": "^0.23.2"
   }
 }

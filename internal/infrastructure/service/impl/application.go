@@ -5,6 +5,7 @@ import (
 	"sync"
 
 	"github.com/avisiedo/go-microservice-1/internal/config"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	handler_impl "github.com/avisiedo/go-microservice-1/internal/handler/http/impl"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/service"
@@ -25,16 +26,16 @@ type svcApplication struct {
 
 func NewApplication(ctx context.Context, wg *sync.WaitGroup, cfg *config.Config, db *gorm.DB) service.ApplicationService {
 	if ctx == nil {
-		panic("ctx is nil")
+		panic(common_err.ErrNil("ctx"))
 	}
 	if wg == nil {
-		panic("wg is nil")
+		panic(common_err.ErrNil("wg"))
 	}
 	if cfg == nil {
-		panic("cfg is nil")
+		panic(common_err.ErrNil("cfg"))
 	}
 	if db == nil {
-		panic("db is nil")
+		panic(common_err.ErrNil("db"))
 	}
 
 	s := &svcApplication{}
