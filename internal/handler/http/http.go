@@ -1,4 +1,4 @@
-package handler
+package http
 
 import (
 	"github.com/avisiedo/go-microservice-1/internal/api/http/healthcheck"

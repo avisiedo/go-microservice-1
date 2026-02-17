@@ -10,6 +10,7 @@ import (
 
 	"github.com/avisiedo/go-microservice-1/internal/api/http/public"
 	"github.com/avisiedo/go-microservice-1/internal/config"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	handler "github.com/avisiedo/go-microservice-1/internal/handler/http"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/router"
@@ -28,10 +29,10 @@ type apiService struct {
 
 func NewApi(ctx context.Context, wg *sync.WaitGroup, cfg *config.Config, app handler.Application, metrics *metrics.Metrics) service.ApplicationService {
 	if cfg == nil {
-		panic("config is nil")
+		panic(common_err.ErrNil("config"))
 	}
 	if wg == nil {
-		panic("wg is nil")
+		panic(common_err.ErrNil("wg"))
 	}
 
 	result := &apiService{}

@@ -9,6 +9,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	app_context "github.com/avisiedo/go-microservice-1/internal/infrastructure/context"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/logger"
 	"github.com/labstack/echo/v4"
@@ -16,7 +17,7 @@ import (
 )
 
 func TestSLogMiddlewareWithConfig(t *testing.T) {
-	require.PanicsWithValue(t, "'cfg' is nil", func() {
+	require.PanicsWithError(t, common_err.ErrNil("cfg").Error(), func() {
 		_ = SLogMiddlewareWithConfig(nil)
 	})
 

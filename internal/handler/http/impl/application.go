@@ -2,11 +2,12 @@ package impl
 
 import (
 	"github.com/avisiedo/go-microservice-1/internal/config"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	handler_http "github.com/avisiedo/go-microservice-1/internal/handler/http"
 	metrics "github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
-	presenter_interface "github.com/avisiedo/go-microservice-1/internal/interface/presenter/echo"
+	presenter_interface "github.com/avisiedo/go-microservice-1/internal/interfaces/presenter/sync/echo"
 	"github.com/avisiedo/go-microservice-1/internal/usecase/interactor"
-	presenter "github.com/avisiedo/go-microservice-1/internal/usecase/presenter/echo"
+	presenter "github.com/avisiedo/go-microservice-1/internal/usecase/presenter/sync/echo"
 	repository "github.com/avisiedo/go-microservice-1/internal/usecase/repository/db"
 	"gorm.io/gorm"
 )
@@ -28,13 +29,13 @@ func NewHandler(cfg *config.Config, db *gorm.DB, m *metrics.Metrics) handler_htt
 
 func newHandler(cfg *config.Config, db *gorm.DB, m *metrics.Metrics) *application {
 	if cfg == nil {
-		panic("config is nil")
+		panic(common_err.ErrNil("config"))
 	}
 	if db == nil {
-		panic("db is nil")
+		panic(common_err.ErrNil("db"))
 	}
 	if m == nil {
-		panic("m is nil")
+		panic(common_err.ErrNil("m"))
 	}
 
 	// Initialize the presenters
