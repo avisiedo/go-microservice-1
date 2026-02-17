@@ -38,6 +38,10 @@ COMPOSE_VARS_KAFKA=\
 	ZOOKEEPER_CLIENT_PORT=$(ZOOKEEPER_CLIENT_PORT) \
 	KAFKA_TOPICS=$(KAFKA_TOPICS)
 
+COMPOSE_VARS_MINIO=\
+	MINIO_USER="$(MINIO_USER)" \
+	MINIO_PASSWORD="$(MINIO_PASSWORD)"
+
 COMPOSE_VARS_APP=\
     APP_SECRET="$(APP_SECRET)" \
     APP_VALIDATE_API=$(APP_VALIDATE_API) \
@@ -62,8 +66,12 @@ compose-up: ## Start local infrastructure
 .PHONY: .compose-wait-db
 .compose-wait-db:
 	@printf "Waiting database"; \
-	while [ "$$( $(CONTAINER_ENGINE) container inspect --format '{{$(CONTAINER_HEALTH_PATH)}}' "$(CONTAINER_DATABASE_NAME)" )" != "healthy" ]; \
-	do sleep 1; printf "."; \
+	export CONTAINER_TIMEOUT=10; \
+	  while [ "$$( $(CONTAINER_ENGINE) container inspect --format '{{$(CONTAINER_HEALTH_PATH)}}' "$(CONTAINER_DATABASE_NAME)" 2>/dev/null )" != "healthy" ]; \
+	    do sleep 1; \
+		CONTAINER_TIMEOUT=$$((CONTAINER_TIMEOUT - 1)); \
+		[ "$${CONTAINER_TIMEOUT}" -gt 0 ] || { echo "error: timeout waiting for container"; exit 1; }; \
+		printf "."; \
 	done; \
 	printf "\n"
 

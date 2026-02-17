@@ -16,15 +16,15 @@ PLANTUML ?= $(shell command -v plantuml 2>/dev/null)
 PLANTUML ?= false
 
 PLANTUML_SOURCES ?= $(patsubst docs/%.puml,docs/%.svg,$(wildcard docs/*.puml)) $(patsubst docs/sequence/%.puml,docs/sequence/%.svg,$(wildcard docs/sequence/*.puml))
-PLANTER_NO_GENERATE ?= n
+PLANTER_GENERATE ?= y
 .PHONY: generate-diagrams
-generate-diagrams: $(PLANTUML_SOURCES)  ## Generate diagrams (PLANTER_NO_GENERATE=y to don't generate docs/db-model.puml)
-ifneq (y,$(PLANTER_NO_GENERATE))
+generate-diagrams: $(PLANTUML_SOURCES)  ## Generate diagrams (PLANTER_GENERATE=n to don't generate docs/db-model.puml)
+ifeq (y,$(PLANTER_GENERATE))
 	$(MAKE) docs/db-model.svg
 endif
 
 docs/db-model.puml: $(PLANTER) .compose-wait-db scripts/db/migrations/*.up.sql
-	$(PLANTER) -o $@ postgres://$(DATABASE_USER):$(DATABASE_PASSWORD)@$(DATABASE_HOST)/$(DATABASE_NAME)?sslmode=disable
+	[ "$(PLANTER_GENERATE)" != "y" ] || $(PLANTER) -o $@ postgres://$(DATABASE_USER):$(DATABASE_PASSWORD)@$(DATABASE_HOST)/$(DATABASE_NAME)?sslmode=disable
 
 # General rule to generate a diagram in SVG format for
 # each .puml file found at docs/ directory
