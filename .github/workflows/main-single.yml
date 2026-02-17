@@ -1,0 +1,93 @@
+# https://docs.github.com/en/actions/reference/workflows-and-actions
+# about cache size: https://github.blog/changelog/2025-11-20-github-actions-cache-size-can-now-exceed-10-gb-per-repository/
+---
+name: Continuous Integration
+
+on:
+  # - push
+  - pull_request
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  ci:
+    runs-on: "ubuntu-latest"
+    container: golang:1.25
+    # https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers
+    services:
+      postgres:
+        image: quay.io/cloudservices/postgresql-rds:16
+        env:
+          POSTGRESQL_DATABASE: database-db
+          POSTGRESQL_USER: database-user
+          POSTGRESQL_PASSWORD: database-secret
+        ports:
+          - 5432:5432
+    env:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: database-db
+      DATABASE_USER: database-user
+      DATABASE_PASSWORD: database-secret
+    steps:
+      - uses: "actions/checkout@v6"
+        with:
+          submodules: recursive
+
+      - uses: actions/cache@v5
+        with:
+          path: |
+            /github/home/.cache/go-build
+            /go/pkg/mod
+            tools/bin
+          key: ${{ runner.os }}-go-${{ hashFiles('go.sum', 'tools/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: "Prepare CI"
+        run: |
+          git config --system --add safe.directory $GITHUB_WORKSPACE
+          make tidy
+          make install-go-tools
+
+      - name: "Run checks"
+        run: |
+          go version
+          git diff go.mod go.sum tools/go.mod tools/go.sum               ## Check missed make tidy
+          make generate-api && git diff internal/api/http/               ## Check missed: make generate-api
+          make generate-mock && git diff internal/test/mock/             ## Check missed: make generate-mock
+          make go-fmt && git diff internal/ cmd/                         ## Check missed: make go-fmt
+          make vet                                                       ## Check: make vet
+
+      - name: "Run tests"
+        run: |
+          cp -vf configs/config.ci.yaml configs/config.yaml
+          make db-migrate-up
+          make test-ci
+
+      - name: "Generate code coverage report"
+        if: ${{ github.actor != 'dependabot[bot]' && github.repository == 'little-engineer-2025/go-microservice-1' }}
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: coverage.xml
+          badge: false
+          fail_below_min: false
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: '60 80'
+
+      - name: "Add Coverage PR Comment"
+        if: ${{ github.actor != 'dependabot[bot]' && github.repository == 'little-engineer-2025/go-microservice-1' }}
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          recreate: true
+          path: code-coverage-results.md
+
+      - name: "Build executables"
+        run: |
+          make build

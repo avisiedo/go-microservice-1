@@ -5,10 +5,12 @@ package main
 
 import (
 	_ "github.com/achiku/planter"
-	_ "github.com/atombender/go-jsonschema/cmd/gojsonschema"
-	_ "github.com/deepmap/oapi-codegen/cmd/oapi-codegen"
+	_ "github.com/atombender/go-jsonschema"
+	_ "github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen"
 	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
 	_ "github.com/loov/goda"
 	_ "github.com/mikefarah/yq/v4"
-	_ "github.com/vektra/mockery/v2"
+	_ "github.com/vektra/mockery/v3"
+	_ "github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt"
+	_ "github.com/t-yuki/gocover-cobertura"
 )
