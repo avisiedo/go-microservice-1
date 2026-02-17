@@ -12,6 +12,7 @@ import (
 	"strings"
 	"sync"
 
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	validator "github.com/go-playground/validator/v10"
 	"github.com/spf13/viper"
 	"k8s.io/utils/env"
@@ -158,7 +159,7 @@ func Load(cfg *Config) *viper.Viper {
 	var err error
 
 	if cfg == nil {
-		panic("'cfg' is nil")
+		panic(common_err.ErrNil("cfg"))
 	}
 
 	v := viper.New()

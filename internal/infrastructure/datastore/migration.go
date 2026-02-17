@@ -11,6 +11,7 @@ import (
 	"log/slog"
 
 	"github.com/avisiedo/go-microservice-1/internal/config"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
@@ -59,7 +60,7 @@ COMMIT;
 
 func MigrateDb(cfg *config.Config, direction string, steps ...int) error {
 	if cfg == nil {
-		return fmt.Errorf("'cfg' is nil")
+		return common_err.ErrNil("cfg")
 	}
 	m, err := NewDbMigration(cfg)
 	if err != nil {

@@ -8,6 +8,7 @@ import (
 	"github.com/avisiedo/go-microservice-1/internal/api/http/openapi"
 	"github.com/avisiedo/go-microservice-1/internal/api/http/public"
 	"github.com/avisiedo/go-microservice-1/internal/config"
+	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/middleware"
 	"github.com/getkin/kin-openapi/openapi3"
@@ -53,25 +54,25 @@ func createMiddlewares(cfg *config.Config, metrics *metrics.Metrics) []echo.Midd
 	return middlewares
 }
 
-func newPublic(e *echo.Group, cfg *config.Config, publicHandler public.ServerInterface, openapiHandler openapi.ServerInterface, metrics *metrics.Metrics) *echo.Group {
+func newPublic(e *echo.Group, cfg *config.Config, publicHandler public.ServerInterface, openapiHandler openapi.ServerInterface, metricsHandler *metrics.Metrics) *echo.Group {
 	if e == nil {
-		panic("echo group is nil")
+		panic(common_err.ErrNil("e"))
 	}
 	if cfg == nil {
-		panic("cfg is nil")
+		panic(common_err.ErrNil("cfg"))
 	}
 	if publicHandler == nil {
-		panic("publicHandler is nil")
+		panic(common_err.ErrNil("publicHandler"))
 	}
 	if openapiHandler == nil {
-		panic("openapiHandler is nil")
+		panic(common_err.ErrNil("openapiHandler"))
 	}
-	if metrics == nil {
-		panic("metrics is nil")
+	if metricsHandler == nil {
+		panic(common_err.ErrNil("metricsHandler"))
 	}
 
 	// Wire the middlewares
-	middlewares := createMiddlewares(cfg, metrics)
+	middlewares := createMiddlewares(cfg, metricsHandler)
 	e.Use(middlewares...)
 
 	// Setup routes
@@ -82,14 +83,14 @@ func newPublic(e *echo.Group, cfg *config.Config, publicHandler public.ServerInt
 
 func getOpenapiPaths(cfg *config.Config, swagger *openapi3.T) func() []string {
 	if cfg == nil {
-		panic("'cfg' is nil")
+		panic(common_err.ErrNil("cfg"))
 	}
 	if swagger == nil {
-		panic("'swagger' is nil")
+		panic(common_err.ErrNil("swagger"))
 	}
 	version := swagger.Info.Version
 	if version == "" {
-		panic(fmt.Errorf("'Info.Version' at public api is empty"))
+		panic(common_err.ErrEmpty("swagger.Info.Version"))
 	}
 	majorVersion := strings.Split(version, ".")[0]
 	majorMinorVersion := fmt.Sprintf("%s.%s", majorVersion, strings.Split(version, ".")[1])
