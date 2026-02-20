@@ -12,6 +12,7 @@
 !requirements.txt
 !SECURITY.md
 !toolbox.sh
+!Jenkinsfile
 
 # Hidden files
 !.dockerignore
