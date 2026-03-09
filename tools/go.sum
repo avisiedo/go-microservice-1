@@ -708,8 +708,8 @@ github.com/uudashr/gocognit v1.2.0 h1:3BU9aMr1xbhPlvJLSydKwdLN3tEUUrzPSSM8S4hDYR
 github.com/uudashr/gocognit v1.2.0/go.mod h1:k/DdKPI6XBZO1q7HgoV2juESI2/Ofj9AcHPZhBBdrTU=
 github.com/uudashr/iface v1.3.1 h1:bA51vmVx1UIhiIsQFSNq6GZ6VPTk3WNMZgRiCe9R29U=
 github.com/uudashr/iface v1.3.1/go.mod h1:4QvspiRd3JLPAEXBQ9AiZpLbJlrWWgRChOKDJEuQTdg=
-github.com/vektra/mockery/v3 v3.6.4 h1:EWkuwRnCewRwzQfMQx0btrMPGWSlq2ekaEOeXR2L8U4=
-github.com/vektra/mockery/v3 v3.6.4/go.mod h1:z9Wr23Ha8etImqQwS3boTNR9WkjX6tIklW5c88DRkSw=
+github.com/vektra/mockery/v3 v3.7.0 h1:Dd0EeaOcRJBVP9n3oYOVPV7KdPaaE3EcwTppaZIsFSM=
+github.com/vektra/mockery/v3 v3.7.0/go.mod h1:z9Wr23Ha8etImqQwS3boTNR9WkjX6tIklW5c88DRkSw=
 github.com/vmware-labs/yaml-jsonpath v0.3.2 h1:/5QKeCBGdsInyDCyVNLbXyilb61MXGi9NP674f9Hobk=
 github.com/vmware-labs/yaml-jsonpath v0.3.2/go.mod h1:U6whw1z03QyqgWdgXxvVnQ90zN1BWz5V+51Ewf8k+rQ=
 github.com/woodsbury/decimal128 v1.3.0 h1:8pffMNWIlC0O5vbyHWFZAt5yWvWcrHA+3ovIIjVWss0=
