@@ -112,5 +112,6 @@ func NewRouterWithConfig(e *echo.Echo, cfg *config.Config, public *openapi3.T, h
 	healthcheck.RegisterHandlers(e, h)
 	newPrivate(e.Group(privatePath), cfg, h)
 	newPublic(e.Group(cfg.Application.PathPrefix), cfg, h, h, m)
+
 	return e
 }

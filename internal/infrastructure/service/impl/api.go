@@ -3,10 +3,10 @@ package impl
 import (
 	"context"
 	"fmt"
+	"io"
+	"log/slog"
 	"net/http"
 	"sync"
-
-	"log/slog"
 
 	"github.com/avisiedo/go-microservice-1/internal/api/http/public"
 	"github.com/avisiedo/go-microservice-1/internal/config"
@@ -15,6 +15,7 @@ import (
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/router"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/service"
+	"github.com/labstack/echo-contrib/v5/jaegertracing"
 	"github.com/labstack/echo/v4"
 )
 
@@ -23,6 +24,7 @@ type apiService struct {
 	cancel    context.CancelFunc
 	waitGroup *sync.WaitGroup
 	config    *config.Config
+	jaeger    io.Closer
 
 	echo *echo.Echo
 }
@@ -50,6 +52,10 @@ func NewApi(ctx context.Context, wg *sync.WaitGroup, cfg *config.Config, app han
 		app,
 		metrics,
 	)
+	// https://medium.com/jaegertracing/jaeger-v2-released-09a6033d1b10
+	// https://echo.labstack.com/docs/middleware/jaeger
+	result.jaeger = jaegertracing.New(result.echo, nil)
+
 	result.echo.HideBanner = true
 	if result.config.Logging.Level == "debug" || result.config.Logging.Level == "trace" {
 		result.echo.Debug = true
@@ -80,6 +86,7 @@ func (srv *apiService) Start() error {
 	}()
 
 	go func() {
+		defer srv.jaeger.Close()
 		defer srv.waitGroup.Done()
 		defer srv.cancel()
 		<-srv.context.Done()
