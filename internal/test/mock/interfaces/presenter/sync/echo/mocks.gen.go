@@ -7,7 +7,7 @@ package echo
 import (
 	"github.com/avisiedo/go-microservice-1/internal/api/http/public"
 	"github.com/avisiedo/go-microservice-1/internal/domain/model"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 	"github.com/oapi-codegen/runtime/types"
 	mock "github.com/stretchr/testify/mock"
 )
@@ -17,7 +17,8 @@ import (
 func NewMockHealthcheck(t interface {
 	mock.TestingT
 	Cleanup(func())
-}) *MockHealthcheck {
+},
+) *MockHealthcheck {
 	mock := &MockHealthcheck{}
 	mock.Mock.Test(t)
 
@@ -146,7 +147,8 @@ func (_c *MockHealthcheck_GetReadyz_Call) RunAndReturn(run func(ctx echo.Context
 func NewMockInstrumentation(t interface {
 	mock.TestingT
 	Cleanup(func())
-}) *MockInstrumentation {
+},
+) *MockInstrumentation {
 	mock := &MockInstrumentation{}
 	mock.Mock.Test(t)
 
@@ -224,7 +226,8 @@ func (_c *MockInstrumentation_GetMetrics_Call) RunAndReturn(run func(ctx echo.Co
 func NewMockOpenAPI(t interface {
 	mock.TestingT
 	Cleanup(func())
-}) *MockOpenAPI {
+},
+) *MockOpenAPI {
 	mock := &MockOpenAPI{}
 	mock.Mock.Test(t)
 
@@ -302,7 +305,8 @@ func (_c *MockOpenAPI_GetOpenapi_Call) RunAndReturn(run func(ctx echo.Context) e
 func NewMockPrivate(t interface {
 	mock.TestingT
 	Cleanup(func())
-}) *MockPrivate {
+},
+) *MockPrivate {
 	mock := &MockPrivate{}
 	mock.Mock.Test(t)
 
@@ -329,7 +333,8 @@ func (_m *MockPrivate) EXPECT() *MockPrivate_Expecter {
 func NewMockTodo(t interface {
 	mock.TestingT
 	Cleanup(func())
-}) *MockTodo {
+},
+) *MockTodo {
 	mock := &MockTodo{}
 	mock.Mock.Test(t)
 
@@ -686,7 +691,8 @@ func (_c *MockTodo_UpdateTodo_Call) RunAndReturn(run func(ctx echo.Context, todo
 func NewMockTodoInput(t interface {
 	mock.TestingT
 	Cleanup(func())
-}) *MockTodoInput {
+},
+) *MockTodoInput {
 	mock := &MockTodoInput{}
 	mock.Mock.Test(t)
 
@@ -826,7 +832,8 @@ func (_c *MockTodoInput_GetAll_Call) RunAndReturn(run func(ctx echo.Context) err
 func NewMockTodoOutput(t interface {
 	mock.TestingT
 	Cleanup(func())
-}) *MockTodoOutput {
+},
+) *MockTodoOutput {
 	mock := &MockTodoOutput{}
 	mock.Mock.Test(t)
 

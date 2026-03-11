@@ -12,8 +12,8 @@ import (
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/middleware"
 	"github.com/getkin/kin-openapi/openapi3"
-	"github.com/labstack/echo/v4"
 	echo_middleware "github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/echo/v5"
 )
 
 const (

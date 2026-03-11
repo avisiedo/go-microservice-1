@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	helper_http_echo "github.com/avisiedo/go-microservice-1/internal/test/helper/http/echo"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 	"github.com/oapi-codegen/runtime"
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
@@ -144,7 +144,6 @@ func RegisterHandlers(router EchoRouter, si ServerInterface) {
 // Registers handlers, and prepends BaseURL to the paths, so that the paths
 // can be served under a prefix.
 func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL string) {
-
 	wrapper := ServerInterfaceWrapper{
 		Handler: si,
 	}
@@ -155,5 +154,4 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	router.GET(baseURL+"/todos/:todoId", wrapper.GetTodo)
 	router.PATCH(baseURL+"/todos/:todoId", wrapper.PatchTodo)
 	router.PUT(baseURL+"/todos/:todoId", wrapper.UpdateTodo)
-
 }

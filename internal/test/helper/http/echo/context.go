@@ -11,7 +11,7 @@ import (
 	"net/http/httptest"
 
 	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 type AdditionalContext interface {

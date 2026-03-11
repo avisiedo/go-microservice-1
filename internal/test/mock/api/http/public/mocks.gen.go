@@ -5,7 +5,7 @@
 package public
 
 import (
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 	"github.com/oapi-codegen/runtime/types"
 	mock "github.com/stretchr/testify/mock"
 )
@@ -15,7 +15,8 @@ import (
 func NewMockServerInterface(t interface {
 	mock.TestingT
 	Cleanup(func())
-}) *MockServerInterface {
+},
+) *MockServerInterface {
 	mock := &MockServerInterface{}
 	mock.Mock.Test(t)
 
@@ -372,7 +373,8 @@ func (_c *MockServerInterface_UpdateTodo_Call) RunAndReturn(run func(ctx echo.Co
 func NewMockEchoRouter(t interface {
 	mock.TestingT
 	Cleanup(func())
-}) *MockEchoRouter {
+},
+) *MockEchoRouter {
 	mock := &MockEchoRouter{}
 	mock.Mock.Test(t)
 

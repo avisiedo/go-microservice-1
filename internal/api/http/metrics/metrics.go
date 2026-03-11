@@ -2,7 +2,7 @@
 // the same pattern as the generated code from the openapi code generator.
 package metrics
 
-import "github.com/labstack/echo/v4"
+import "github.com/labstack/echo/v5"
 
 // ServerInterface provides the endpoint to retrieve the metrics for this service.
 type ServerInterface interface {

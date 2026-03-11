@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	mock_healthcheck "github.com/avisiedo/go-microservice-1/internal/test/mock/api/http/healthcheck"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )

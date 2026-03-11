@@ -12,7 +12,7 @@ import (
 	"github.com/avisiedo/go-microservice-1/internal/test"
 	mock_openapi "github.com/avisiedo/go-microservice-1/internal/test/mock/api/http/openapi"
 	mock_http "github.com/avisiedo/go-microservice-1/internal/test/mock/handler/http"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

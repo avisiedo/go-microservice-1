@@ -4,7 +4,7 @@ import (
 	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	infra_metrics "github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
 	presenter "github.com/avisiedo/go-microservice-1/internal/interfaces/presenter/sync/echo"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 

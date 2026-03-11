@@ -10,7 +10,7 @@ import (
 	app_context "github.com/avisiedo/go-microservice-1/internal/infrastructure/context"
 	"github.com/avisiedo/go-microservice-1/internal/interfaces/interactor"
 	presenter "github.com/avisiedo/go-microservice-1/internal/interfaces/presenter/sync/echo"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 	openapi_types "github.com/oapi-codegen/runtime/types"
 	"gorm.io/gorm"
 )

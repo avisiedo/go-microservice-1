@@ -5,7 +5,7 @@
 package private
 
 import (
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 	mock "github.com/stretchr/testify/mock"
 )
 
@@ -14,7 +14,8 @@ import (
 func NewMockServerInterface(t interface {
 	mock.TestingT
 	Cleanup(func())
-}) *MockServerInterface {
+},
+) *MockServerInterface {
 	mock := &MockServerInterface{}
 	mock.Mock.Test(t)
 
@@ -41,7 +42,8 @@ func (_m *MockServerInterface) EXPECT() *MockServerInterface_Expecter {
 func NewMockEchoRouter(t interface {
 	mock.TestingT
 	Cleanup(func())
-}) *MockEchoRouter {
+},
+) *MockEchoRouter {
 	mock := &MockEchoRouter{}
 	mock.Mock.Test(t)
 

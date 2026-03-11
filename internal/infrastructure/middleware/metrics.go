@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
-	"github.com/labstack/echo/v4"
 	echo_middleware "github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/echo/v5"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

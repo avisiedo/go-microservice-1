@@ -20,7 +20,7 @@ import (
 	interactor_mock "github.com/avisiedo/go-microservice-1/internal/test/mock/interfaces/interactor"
 	presenter_mock "github.com/avisiedo/go-microservice-1/internal/test/mock/interfaces/presenter/sync/echo"
 	"github.com/google/uuid"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 	openapi_types "github.com/oapi-codegen/runtime/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"

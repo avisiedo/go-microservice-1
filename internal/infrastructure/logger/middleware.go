@@ -5,8 +5,8 @@ import (
 
 	"github.com/avisiedo/go-microservice-1/internal/api/header"
 	// "github.com/avisiedo/go-microservice-1/internal/infrastructure/logger"
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/echo/v5"
+	"github.com/labstack/echo/v5/middleware"
 )
 
 // This requires the following values to be set in

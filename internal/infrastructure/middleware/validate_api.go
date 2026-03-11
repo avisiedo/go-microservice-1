@@ -15,8 +15,8 @@ import (
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/getkin/kin-openapi/openapi3filter"
 	"github.com/getkin/kin-openapi/routers/gorillamux"
-	"github.com/labstack/echo/v4"
-	echo_middleware "github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/echo/v5"
+	echo_middleware "github.com/labstack/echo/v5/middleware"
 )
 
 // See: https://github.com/stellirin/go-validator/blob/main/config.go

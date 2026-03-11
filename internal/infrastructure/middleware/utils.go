@@ -1,6 +1,6 @@
 package middleware
 
-import "github.com/labstack/echo/v4"
+import "github.com/labstack/echo/v5"
 
 // See: https://github.com/labstack/echo/pull/1502/files
 // This method exist for v5 echo framework

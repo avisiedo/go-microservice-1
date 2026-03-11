@@ -5,7 +5,7 @@ import (
 	metrics_handler "github.com/avisiedo/go-microservice-1/internal/api/http/metrics"
 	"github.com/avisiedo/go-microservice-1/internal/config"
 	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 func newGroupMetrics(e *echo.Echo, cfg *config.Config, handlers metrics.ServerInterface) *echo.Echo {

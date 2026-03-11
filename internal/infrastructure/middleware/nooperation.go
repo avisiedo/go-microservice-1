@@ -1,6 +1,6 @@
 package middleware
 
-import "github.com/labstack/echo/v4"
+import "github.com/labstack/echo/v5"
 
 // DefaultNooperation is a default instance for Nooperation middleware
 var DefaultNooperation = Nooperation()

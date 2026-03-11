@@ -5,7 +5,7 @@ import (
 
 	"github.com/avisiedo/go-microservice-1/internal/api/http/public"
 	presenter "github.com/avisiedo/go-microservice-1/internal/interfaces/presenter/sync/echo"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 type openAPIPresenter struct{}

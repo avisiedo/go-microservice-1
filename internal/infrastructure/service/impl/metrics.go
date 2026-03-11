@@ -3,17 +3,16 @@ package impl
 import (
 	"context"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"sync"
-
-	"log/slog"
 
 	"github.com/avisiedo/go-microservice-1/internal/config"
 	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	handler "github.com/avisiedo/go-microservice-1/internal/handler/http"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/router"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/service"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 type metricsService struct {

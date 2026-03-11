@@ -3,10 +3,9 @@ package impl
 import (
 	"context"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"sync"
-
-	"log/slog"
 
 	"github.com/avisiedo/go-microservice-1/internal/api/http/public"
 	"github.com/avisiedo/go-microservice-1/internal/config"
@@ -15,7 +14,7 @@ import (
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/router"
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/service"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 type apiService struct {

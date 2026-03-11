@@ -5,7 +5,7 @@
 package http
 
 import (
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 	"github.com/oapi-codegen/runtime/types"
 	mock "github.com/stretchr/testify/mock"
 )
@@ -15,7 +15,8 @@ import (
 func NewMockApplication(t interface {
 	mock.TestingT
 	Cleanup(func())
-}) *MockApplication {
+},
+) *MockApplication {
 	mock := &MockApplication{}
 	mock.Mock.Test(t)
 

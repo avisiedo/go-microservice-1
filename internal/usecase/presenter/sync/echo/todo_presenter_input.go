@@ -7,7 +7,7 @@ import (
 	"github.com/avisiedo/go-microservice-1/internal/domain/model"
 	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	. "github.com/avisiedo/go-microservice-1/internal/interfaces/presenter/sync/echo"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 // TodoInput is the input adapter for Todo resource

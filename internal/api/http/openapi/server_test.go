@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 	"github.com/stretchr/testify/assert"
 
 	mock_api_openapi "github.com/avisiedo/go-microservice-1/internal/test/mock/api/http/openapi"

@@ -2,7 +2,7 @@
 // the same pattern as the generated code from the openapi code generator.
 package openapi
 
-import "github.com/labstack/echo/v4"
+import "github.com/labstack/echo/v5"
 
 // ServerInterface provides the endpoint to retrieve the openapi
 // specification implemented by this service.

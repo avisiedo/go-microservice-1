@@ -11,8 +11,8 @@ import (
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
 	app_middleware "github.com/avisiedo/go-microservice-1/internal/infrastructure/middleware"
 	"github.com/getkin/kin-openapi/openapi3"
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/echo/v5"
+	"github.com/labstack/echo/v5/middleware"
 )
 
 type RouterConfig struct {

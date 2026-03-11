@@ -3,7 +3,7 @@ package router
 import (
 	"github.com/avisiedo/go-microservice-1/internal/config"
 	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 func newRouterWithConfigCommonGuards(e *echo.Echo, cfg *config.Config) {

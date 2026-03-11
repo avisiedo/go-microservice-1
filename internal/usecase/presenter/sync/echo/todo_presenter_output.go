@@ -6,7 +6,7 @@ import (
 	common_err "github.com/avisiedo/go-microservice-1/internal/errors/common"
 	. "github.com/avisiedo/go-microservice-1/internal/interfaces/presenter/sync/echo"
 	"github.com/google/uuid"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 type todoOutput struct{}
