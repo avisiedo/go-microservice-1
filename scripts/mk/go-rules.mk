@@ -179,10 +179,10 @@ API_LIST := api/public.openapi.yaml api/internal.openapi.yaml
 generate-api: $(OAPI_CODEGEN) $(API_LIST) ## Generate server stubs from openapi
 	# Public API
 	$(OAPI_CODEGEN) -generate spec -package public -o internal/api/http/public/spec.gen.go api/http/public.openapi.yaml
-	$(OAPI_CODEGEN) -generate server -package public -o internal/api/http/public/server.gen.go api/http/public.openapi.yaml
+	$(OAPI_CODEGEN) -generate echo5-server -package public -o internal/api/http/public/server.gen.go api/http/public.openapi.yaml
 	$(OAPI_CODEGEN) -generate types -package public -o internal/api/http/public/types.gen.go -alias-types api/http/public.openapi.yaml
 	# Internal API # FIXME Update -import-mapping options
-	$(OAPI_CODEGEN) -generate server -package private -o internal/api/http/private/server.gen.go api/http/internal.openapi.yaml
+	$(OAPI_CODEGEN) -generate echo5-server -package private -o internal/api/http/private/server.gen.go api/http/internal.openapi.yaml
 	$(OAPI_CODEGEN) -generate types -package private -o internal/api/http/private/types.gen.go api/http/internal.openapi.yaml
 
 $(API_LIST):
