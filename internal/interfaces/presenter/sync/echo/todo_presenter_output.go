@@ -7,7 +7,7 @@ import (
 )
 
 type TodoOutput interface {
-	Create(ctx echo.Context, data *model.Todo) (*public.ToDo, error)
-	GetAll(ctx echo.Context, data []model.Todo) ([]public.ToDo, error)
-	Get(ctx echo.Context, data *model.Todo) (*public.ToDo, error)
+	Create(ctx *echo.Context, data *model.Todo) (*public.ToDo, error)
+	GetAll(ctx *echo.Context, data []model.Todo) ([]public.ToDo, error)
+	Get(ctx *echo.Context, data *model.Todo) (*public.ToDo, error)
 }

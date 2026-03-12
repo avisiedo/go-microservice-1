@@ -6,6 +6,6 @@ import (
 )
 
 type TodoInput interface {
-	Create(ctx echo.Context) (*model.Todo, error)
-	GetAll(ctx echo.Context) error
+	Create(ctx *echo.Context) (*model.Todo, error)
+	GetAll(ctx *echo.Context) error
 }

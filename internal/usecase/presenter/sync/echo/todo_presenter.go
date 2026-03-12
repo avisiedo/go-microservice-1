@@ -46,7 +46,7 @@ func newTodo(cfg *config.Config, input presenter.TodoInput, output presenter.Tod
 
 // Retrieve all ToDo items
 // (GET /todos)
-func (p *todoPresenter) GetAllTodos(c echo.Context) error {
+func (p *todoPresenter) GetAllTodos(c *echo.Context) error {
 	var (
 		todos  []model.Todo
 		output []public.ToDo
@@ -82,7 +82,7 @@ func (p *todoPresenter) GetAllTodos(c echo.Context) error {
 
 // Create a new ToDo item
 // (POST /todos)
-func (p *todoPresenter) CreateTodo(ctx echo.Context) error {
+func (p *todoPresenter) CreateTodo(ctx *echo.Context) error {
 	var (
 		output *public.ToDo
 		data   *model.Todo
@@ -114,16 +114,16 @@ func (p *todoPresenter) CreateTodo(ctx echo.Context) error {
 
 // Remove item by ID
 // (DELETE /todos/{todoId})
-func (p *todoPresenter) DeleteTodo(c echo.Context, todoId openapi_types.UUID) error {
+func (p *todoPresenter) DeleteTodo(c *echo.Context, todoId openapi_types.UUID) error {
 	ctx := c.Request().Context()
 	app_context.LogFromContext(ctx).
 		ErrorContext(ctx, common_err.ErrNotImplemented.Error())
-	return echo.ErrNotImplemented
+	return common_err.ErrNotImplemented
 }
 
 // Get item by ID
 // (GET /todos/{todoId})
-func (p *todoPresenter) GetTodo(c echo.Context, todoId openapi_types.UUID) error {
+func (p *todoPresenter) GetTodo(c *echo.Context, todoId openapi_types.UUID) error {
 	var (
 		todo   *model.Todo
 		output *public.ToDo
@@ -154,18 +154,18 @@ func (p *todoPresenter) GetTodo(c echo.Context, todoId openapi_types.UUID) error
 
 // Patch an existing ToDo item
 // (PATCH /todos/{todoId})
-func (p *todoPresenter) PatchTodo(c echo.Context, todoId openapi_types.UUID) error {
+func (p *todoPresenter) PatchTodo(c *echo.Context, todoId openapi_types.UUID) error {
 	ctx := c.Request().Context()
 	app_context.LogFromContext(ctx).
 		ErrorContext(ctx, common_err.ErrNotImplemented.Error())
-	return echo.ErrNotImplemented
+	return echo.ErrBadRequest
 }
 
 // Substitute an existing ToDo item
 // (PUT /todos/{todoId})
-func (p *todoPresenter) UpdateTodo(c echo.Context, todoId openapi_types.UUID) error {
+func (p *todoPresenter) UpdateTodo(c *echo.Context, todoId openapi_types.UUID) error {
 	ctx := c.Request().Context()
 	app_context.LogFromContext(ctx).
 		ErrorContext(ctx, common_err.ErrNotImplemented.Error())
-	return echo.ErrNotImplemented
+	return echo.ErrBadRequest
 }

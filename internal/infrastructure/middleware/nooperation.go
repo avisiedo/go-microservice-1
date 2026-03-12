@@ -11,7 +11,7 @@ var DefaultNooperation = Nooperation()
 // middleware instead of add middlewares in a conditional way.
 func Nooperation() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(c echo.Context) error {
+		return func(c *echo.Context) error {
 			return next(c)
 		}
 	}

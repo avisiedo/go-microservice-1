@@ -196,7 +196,7 @@ func RequestResponseValidatorWithConfig(config *RequestResponseValidatorConfig) 
 	}
 
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(c echo.Context) error {
+		return func(c *echo.Context) error {
 			if config.Skipper(c) {
 				return next(c)
 			}
@@ -258,13 +258,13 @@ func RequestResponseValidatorWithConfig(config *RequestResponseValidatorConfig) 
 
 			if config.ValidateResponse {
 				// Intercept and validate the response
-				rw := c.Response().Writer
+				rw := c.Response()
 				resRec := &ResponseRecorder{buffer: &bytes.Buffer{}, original: rw}
-				c.Response().Writer = resRec
+				c.Response().Write(resRec.buffer.Bytes())
 
 				defer func() {
 					// reset the response, using the original ResponseWriter
-					c.SetResponse(echo.NewResponse(rw, c.Echo()))
+					c.SetResponse(echo.NewResponse(rw, c.Logger()))
 				}()
 
 				err = next(c)

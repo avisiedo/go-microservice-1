@@ -9,7 +9,7 @@ import "github.com/labstack/echo/v5"
 type ServerInterface interface {
 	// Return the openapi specification for this service
 	// (GET /openapi.json)
-	GetOpenapi(ctx echo.Context) error
+	GetOpenapi(ctx *echo.Context) error
 }
 
 // ServerInterfaceWrapper converts echo contexts to parameters.
@@ -18,7 +18,7 @@ type ServerInterfaceWrapper struct {
 }
 
 // GetOpenapi converts echo context to params.
-func (w *ServerInterfaceWrapper) GetOpenapi(ctx echo.Context) error {
+func (w *ServerInterfaceWrapper) GetOpenapi(ctx *echo.Context) error {
 	// Invoke the callback with all the unmarshalled arguments
 	err := w.Handler.GetOpenapi(ctx)
 	return err

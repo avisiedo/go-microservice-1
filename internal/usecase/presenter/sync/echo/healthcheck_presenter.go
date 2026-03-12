@@ -28,7 +28,7 @@ func NewHealthcheck(i interactor.HealthcheckInteractor) presenter.Healthcheck {
 
 // Liveness kubernetes probe endpoint
 // (GET /livez)
-func (p *healthcheckPresenter) GetLivez(ctx echo.Context) error {
+func (p *healthcheckPresenter) GetLivez(ctx *echo.Context) error {
 	if ctx == nil {
 		slog.Error(common_err.ErrNil("ctx").Error())
 		return echo.ErrInternalServerError
@@ -47,7 +47,7 @@ func (p *healthcheckPresenter) GetLivez(ctx echo.Context) error {
 
 // Readiness kubernetes probe endpoint
 // (GET /readyz)
-func (p *healthcheckPresenter) GetReadyz(ctx echo.Context) error {
+func (p *healthcheckPresenter) GetReadyz(ctx *echo.Context) error {
 	if ctx == nil {
 		slog.Default().Error(common.ErrNil("ctx").Error())
 		return echo.ErrInternalServerError

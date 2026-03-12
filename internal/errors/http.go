@@ -16,7 +16,7 @@ func NewHTTPErrorWithInternal(internal error, code int, format string, a ...any)
 	} else {
 		msg = format
 	}
-	return &echo.HTTPError{Code: code, Message: msg, Internal: internal}
+	return &echo.HTTPError{Code: code, Message: msg}
 }
 
 // NewHTTPErrorF creates a new HTTPError instance from a format string.

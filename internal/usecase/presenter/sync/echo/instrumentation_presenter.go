@@ -21,7 +21,7 @@ func NewInstrumentation(metrics *infra_metrics.Metrics) presenter.Instrumentatio
 	}
 }
 
-func (p *instrumentation) GetMetrics(ctx echo.Context) error {
+func (p *instrumentation) GetMetrics(ctx *echo.Context) error {
 	return echo.WrapHandler(promhttp.HandlerFor(
 		p.metrics.Registry(),
 		promhttp.HandlerOpts{

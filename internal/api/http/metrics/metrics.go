@@ -8,7 +8,7 @@ import "github.com/labstack/echo/v5"
 type ServerInterface interface {
 	// Return the metrics
 	// (GET /metrics)
-	GetMetrics(ctx echo.Context) error
+	GetMetrics(ctx *echo.Context) error
 }
 
 // ServerInterfaceWrapper converts echo contexts to parameters.
@@ -17,7 +17,7 @@ type ServerInterfaceWrapper struct {
 }
 
 // GetMetrics converts echo context to params.
-func (w *ServerInterfaceWrapper) GetMetrics(ctx echo.Context) error {
+func (w *ServerInterfaceWrapper) GetMetrics(ctx *echo.Context) error {
 	// Invoke the callback with all the unmarshalled arguments
 	err := w.Handler.GetMetrics(ctx)
 	return err

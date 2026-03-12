@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/avisiedo/go-microservice-1/internal/infrastructure/metrics"
-	echo_middleware "github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/echo/v5"
+	echo_middleware "github.com/labstack/echo/v5/middleware"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
@@ -31,15 +31,18 @@ func MetricsMiddlewareWithConfig(config *MetricsConfig) echo.MiddlewareFunc {
 		panic("config.Metrics can not be nil")
 	}
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(ctx echo.Context) error {
+		return func(ctx *echo.Context) error {
 			start := time.Now()
+			if ctx == nil {
+				panic("ctx is nil at MetricsMiddlewareWithConfig")
+			}
 			if config.Skipper(ctx) {
 				return next(ctx)
 			}
 			method := ctx.Request().Method
 			path := MatchedRoute(ctx)
 			err := next(ctx)
-			status := strconv.Itoa(ctx.Response().Status)
+			status := strconv.Itoa(ctx.Request().Response.StatusCode)
 			config.Metrics.HttpStatusHistogram.WithLabelValues(status, method, path).Observe(time.Since(start).Seconds())
 			return err
 		}

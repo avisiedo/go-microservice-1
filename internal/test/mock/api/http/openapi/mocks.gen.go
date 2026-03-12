@@ -14,8 +14,7 @@ import (
 func NewMockServerInterface(t interface {
 	mock.TestingT
 	Cleanup(func())
-},
-) *MockServerInterface {
+}) *MockServerInterface {
 	mock := &MockServerInterface{}
 	mock.Mock.Test(t)
 
@@ -38,7 +37,7 @@ func (_m *MockServerInterface) EXPECT() *MockServerInterface_Expecter {
 }
 
 // GetOpenapi provides a mock function for the type MockServerInterface
-func (_mock *MockServerInterface) GetOpenapi(ctx echo.Context) error {
+func (_mock *MockServerInterface) GetOpenapi(ctx *echo.Context) error {
 	ret := _mock.Called(ctx)
 
 	if len(ret) == 0 {
@@ -46,7 +45,7 @@ func (_mock *MockServerInterface) GetOpenapi(ctx echo.Context) error {
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context) error); ok {
 		r0 = returnFunc(ctx)
 	} else {
 		r0 = ret.Error(0)
@@ -60,16 +59,16 @@ type MockServerInterface_GetOpenapi_Call struct {
 }
 
 // GetOpenapi is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 func (_e *MockServerInterface_Expecter) GetOpenapi(ctx interface{}) *MockServerInterface_GetOpenapi_Call {
 	return &MockServerInterface_GetOpenapi_Call{Call: _e.mock.On("GetOpenapi", ctx)}
 }
 
-func (_c *MockServerInterface_GetOpenapi_Call) Run(run func(ctx echo.Context)) *MockServerInterface_GetOpenapi_Call {
+func (_c *MockServerInterface_GetOpenapi_Call) Run(run func(ctx *echo.Context)) *MockServerInterface_GetOpenapi_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		run(
 			arg0,
@@ -83,7 +82,7 @@ func (_c *MockServerInterface_GetOpenapi_Call) Return(err error) *MockServerInte
 	return _c
 }
 
-func (_c *MockServerInterface_GetOpenapi_Call) RunAndReturn(run func(ctx echo.Context) error) *MockServerInterface_GetOpenapi_Call {
+func (_c *MockServerInterface_GetOpenapi_Call) RunAndReturn(run func(ctx *echo.Context) error) *MockServerInterface_GetOpenapi_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -93,8 +92,7 @@ func (_c *MockServerInterface_GetOpenapi_Call) RunAndReturn(run func(ctx echo.Co
 func NewMockEchoRouter(t interface {
 	mock.TestingT
 	Cleanup(func())
-},
-) *MockEchoRouter {
+}) *MockEchoRouter {
 	mock := &MockEchoRouter{}
 	mock.Mock.Test(t)
 

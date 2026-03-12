@@ -26,7 +26,7 @@ func SLogMiddlewareWithConfig(cfg *SLogMiddlewareConfig) echo.MiddlewareFunc {
 		cfg.Log = slog.Default()
 	}
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(c echo.Context) error {
+		return func(c *echo.Context) error {
 			if cfg.Skipper != nil && cfg.Skipper(c) {
 				return next(c)
 			}
@@ -44,7 +44,7 @@ func SLogMiddlewareWithConfig(cfg *SLogMiddlewareConfig) echo.MiddlewareFunc {
 				err,
 				c.Request().Method,
 				c.Request().URL.RequestURI(),
-				c.Response().Status,
+				c.Request().Response.StatusCode,
 			)
 			return err
 		}

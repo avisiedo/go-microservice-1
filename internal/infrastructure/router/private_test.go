@@ -6,7 +6,7 @@ import (
 	handler "github.com/avisiedo/go-microservice-1/internal/api/http/private"
 	"github.com/avisiedo/go-microservice-1/internal/config"
 	presenter "github.com/avisiedo/go-microservice-1/internal/test/mock/api/http/private"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 func helperNewGroupPrivate(t *testing.T) (*echo.Group, *config.Config, handler.ServerInterface) {

@@ -11,7 +11,7 @@ import (
 
 type todoOutput struct{}
 
-func todoCommonGuards(ctx echo.Context, data *model.Todo) error {
+func todoCommonGuards(ctx *echo.Context, data *model.Todo) error {
 	if ctx == nil {
 		return common_err.ErrNil("ctx")
 	}
@@ -25,11 +25,11 @@ func NewTodoOutput() TodoOutput {
 	return &todoOutput{}
 }
 
-func (o *todoOutput) createGuards(ctx echo.Context, data *model.Todo) error {
+func (o *todoOutput) createGuards(ctx *echo.Context, data *model.Todo) error {
 	return todoCommonGuards(ctx, data)
 }
 
-func (o *todoOutput) Create(ctx echo.Context, data *model.Todo) (*public.ToDo, error) {
+func (o *todoOutput) Create(ctx *echo.Context, data *model.Todo) (*public.ToDo, error) {
 	if err := o.createGuards(ctx, data); err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (o *todoOutput) Create(ctx echo.Context, data *model.Todo) (*public.ToDo, e
 	return output, nil
 }
 
-func (o *todoOutput) getAllGuards(ctx echo.Context, data []model.Todo) error {
+func (o *todoOutput) getAllGuards(ctx *echo.Context, data []model.Todo) error {
 	if ctx == nil {
 		return common_err.ErrNil("ctx")
 	}
@@ -53,7 +53,7 @@ func (o *todoOutput) getAllGuards(ctx echo.Context, data []model.Todo) error {
 	return nil
 }
 
-func (o *todoOutput) GetAll(ctx echo.Context, data []model.Todo) ([]public.ToDo, error) {
+func (o *todoOutput) GetAll(ctx *echo.Context, data []model.Todo) ([]public.ToDo, error) {
 	if err := o.getAllGuards(ctx, data); err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func (o *todoOutput) GetAll(ctx echo.Context, data []model.Todo) ([]public.ToDo,
 	return output, nil
 }
 
-func (o *todoOutput) getGuards(ctx echo.Context, data *model.Todo) error {
+func (o *todoOutput) getGuards(ctx *echo.Context, data *model.Todo) error {
 	if err := todoCommonGuards(ctx, data); err != nil {
 		return err
 	}
@@ -77,7 +77,7 @@ func (o *todoOutput) getGuards(ctx echo.Context, data *model.Todo) error {
 	return nil
 }
 
-func (o *todoOutput) Get(ctx echo.Context, data *model.Todo) (*public.ToDo, error) {
+func (o *todoOutput) Get(ctx *echo.Context, data *model.Todo) (*public.ToDo, error) {
 	if err := o.getGuards(ctx, data); err != nil {
 		return nil, err
 	}

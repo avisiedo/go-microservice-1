@@ -20,7 +20,7 @@ var openapiSpec = public.PathToRawSpec("/openapi.json")
 // from the boilerplate generated.
 // ctx is the echo context.
 // Return nil for success execution or an error object.
-func (p openAPIPresenter) GetOpenapi(ctx echo.Context) error {
+func (p openAPIPresenter) GetOpenapi(ctx *echo.Context) error {
 	resp, err := openapiSpec["/openapi.json"]()
 	if err != nil {
 		return err

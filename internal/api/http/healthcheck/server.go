@@ -9,10 +9,10 @@ import (
 type ServerInterface interface {
 	// Liveness kubernetes probe endpoint
 	// (GET /livez)
-	GetLivez(ctx echo.Context) error
+	GetLivez(ctx *echo.Context) error
 	// Readiness kubernetes probe endpoint
 	// (GET /readyz)
-	GetReadyz(ctx echo.Context) error
+	GetReadyz(ctx *echo.Context) error
 }
 
 // ServerInterfaceWrapper converts echo contexts to parameters.
@@ -21,13 +21,13 @@ type ServerInterfaceWrapper struct {
 }
 
 // GetLivez converts echo context to params.
-func (w *ServerInterfaceWrapper) GetLivez(ctx echo.Context) error {
+func (w *ServerInterfaceWrapper) GetLivez(ctx *echo.Context) error {
 	err := w.Handler.GetLivez(ctx)
 	return err
 }
 
 // GetReadyz converts echo context to params.
-func (w *ServerInterfaceWrapper) GetReadyz(ctx echo.Context) error {
+func (w *ServerInterfaceWrapper) GetReadyz(ctx *echo.Context) error {
 	err := w.Handler.GetReadyz(ctx)
 	return err
 }
@@ -61,4 +61,6 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 
 	router.GET(baseURL+"/livez", wrapper.GetLivez)
 	router.GET(baseURL+"/readyz", wrapper.GetReadyz)
+
+	router.GET(baseURL+"/livez", wrapper.GetLivez)
 }

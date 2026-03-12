@@ -23,7 +23,7 @@ func newTodoInput() *todoInput {
 }
 
 // Create input adapter for CreateTodo operation
-func (i *todoInput) Create(ctx echo.Context) (*model.Todo, error) {
+func (i *todoInput) Create(ctx *echo.Context) (*model.Todo, error) {
 	var apiInput public.ToDo
 	if ctx.Request().Body == nil {
 		return nil, common_err.ErrNil("Body")
@@ -47,7 +47,7 @@ func (i *todoInput) Create(ctx echo.Context) (*model.Todo, error) {
 }
 
 // GetAll input adapter for GetAll operation
-func (i *todoInput) GetAll(ctx echo.Context) error {
+func (i *todoInput) GetAll(ctx *echo.Context) error {
 	if len(ctx.QueryParams()) > 0 {
 		return fmt.Errorf("No query parameters expected for %s", ctx.Path())
 	}

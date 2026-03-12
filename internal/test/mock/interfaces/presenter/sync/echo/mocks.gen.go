@@ -17,8 +17,7 @@ import (
 func NewMockHealthcheck(t interface {
 	mock.TestingT
 	Cleanup(func())
-},
-) *MockHealthcheck {
+}) *MockHealthcheck {
 	mock := &MockHealthcheck{}
 	mock.Mock.Test(t)
 
@@ -41,7 +40,7 @@ func (_m *MockHealthcheck) EXPECT() *MockHealthcheck_Expecter {
 }
 
 // GetLivez provides a mock function for the type MockHealthcheck
-func (_mock *MockHealthcheck) GetLivez(ctx echo.Context) error {
+func (_mock *MockHealthcheck) GetLivez(ctx *echo.Context) error {
 	ret := _mock.Called(ctx)
 
 	if len(ret) == 0 {
@@ -49,7 +48,7 @@ func (_mock *MockHealthcheck) GetLivez(ctx echo.Context) error {
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context) error); ok {
 		r0 = returnFunc(ctx)
 	} else {
 		r0 = ret.Error(0)
@@ -63,16 +62,16 @@ type MockHealthcheck_GetLivez_Call struct {
 }
 
 // GetLivez is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 func (_e *MockHealthcheck_Expecter) GetLivez(ctx interface{}) *MockHealthcheck_GetLivez_Call {
 	return &MockHealthcheck_GetLivez_Call{Call: _e.mock.On("GetLivez", ctx)}
 }
 
-func (_c *MockHealthcheck_GetLivez_Call) Run(run func(ctx echo.Context)) *MockHealthcheck_GetLivez_Call {
+func (_c *MockHealthcheck_GetLivez_Call) Run(run func(ctx *echo.Context)) *MockHealthcheck_GetLivez_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		run(
 			arg0,
@@ -86,13 +85,13 @@ func (_c *MockHealthcheck_GetLivez_Call) Return(err error) *MockHealthcheck_GetL
 	return _c
 }
 
-func (_c *MockHealthcheck_GetLivez_Call) RunAndReturn(run func(ctx echo.Context) error) *MockHealthcheck_GetLivez_Call {
+func (_c *MockHealthcheck_GetLivez_Call) RunAndReturn(run func(ctx *echo.Context) error) *MockHealthcheck_GetLivez_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetReadyz provides a mock function for the type MockHealthcheck
-func (_mock *MockHealthcheck) GetReadyz(ctx echo.Context) error {
+func (_mock *MockHealthcheck) GetReadyz(ctx *echo.Context) error {
 	ret := _mock.Called(ctx)
 
 	if len(ret) == 0 {
@@ -100,7 +99,7 @@ func (_mock *MockHealthcheck) GetReadyz(ctx echo.Context) error {
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context) error); ok {
 		r0 = returnFunc(ctx)
 	} else {
 		r0 = ret.Error(0)
@@ -114,16 +113,16 @@ type MockHealthcheck_GetReadyz_Call struct {
 }
 
 // GetReadyz is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 func (_e *MockHealthcheck_Expecter) GetReadyz(ctx interface{}) *MockHealthcheck_GetReadyz_Call {
 	return &MockHealthcheck_GetReadyz_Call{Call: _e.mock.On("GetReadyz", ctx)}
 }
 
-func (_c *MockHealthcheck_GetReadyz_Call) Run(run func(ctx echo.Context)) *MockHealthcheck_GetReadyz_Call {
+func (_c *MockHealthcheck_GetReadyz_Call) Run(run func(ctx *echo.Context)) *MockHealthcheck_GetReadyz_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		run(
 			arg0,
@@ -137,7 +136,7 @@ func (_c *MockHealthcheck_GetReadyz_Call) Return(err error) *MockHealthcheck_Get
 	return _c
 }
 
-func (_c *MockHealthcheck_GetReadyz_Call) RunAndReturn(run func(ctx echo.Context) error) *MockHealthcheck_GetReadyz_Call {
+func (_c *MockHealthcheck_GetReadyz_Call) RunAndReturn(run func(ctx *echo.Context) error) *MockHealthcheck_GetReadyz_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -147,8 +146,7 @@ func (_c *MockHealthcheck_GetReadyz_Call) RunAndReturn(run func(ctx echo.Context
 func NewMockInstrumentation(t interface {
 	mock.TestingT
 	Cleanup(func())
-},
-) *MockInstrumentation {
+}) *MockInstrumentation {
 	mock := &MockInstrumentation{}
 	mock.Mock.Test(t)
 
@@ -171,7 +169,7 @@ func (_m *MockInstrumentation) EXPECT() *MockInstrumentation_Expecter {
 }
 
 // GetMetrics provides a mock function for the type MockInstrumentation
-func (_mock *MockInstrumentation) GetMetrics(ctx echo.Context) error {
+func (_mock *MockInstrumentation) GetMetrics(ctx *echo.Context) error {
 	ret := _mock.Called(ctx)
 
 	if len(ret) == 0 {
@@ -179,7 +177,7 @@ func (_mock *MockInstrumentation) GetMetrics(ctx echo.Context) error {
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context) error); ok {
 		r0 = returnFunc(ctx)
 	} else {
 		r0 = ret.Error(0)
@@ -193,16 +191,16 @@ type MockInstrumentation_GetMetrics_Call struct {
 }
 
 // GetMetrics is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 func (_e *MockInstrumentation_Expecter) GetMetrics(ctx interface{}) *MockInstrumentation_GetMetrics_Call {
 	return &MockInstrumentation_GetMetrics_Call{Call: _e.mock.On("GetMetrics", ctx)}
 }
 
-func (_c *MockInstrumentation_GetMetrics_Call) Run(run func(ctx echo.Context)) *MockInstrumentation_GetMetrics_Call {
+func (_c *MockInstrumentation_GetMetrics_Call) Run(run func(ctx *echo.Context)) *MockInstrumentation_GetMetrics_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		run(
 			arg0,
@@ -216,7 +214,7 @@ func (_c *MockInstrumentation_GetMetrics_Call) Return(err error) *MockInstrument
 	return _c
 }
 
-func (_c *MockInstrumentation_GetMetrics_Call) RunAndReturn(run func(ctx echo.Context) error) *MockInstrumentation_GetMetrics_Call {
+func (_c *MockInstrumentation_GetMetrics_Call) RunAndReturn(run func(ctx *echo.Context) error) *MockInstrumentation_GetMetrics_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -226,8 +224,7 @@ func (_c *MockInstrumentation_GetMetrics_Call) RunAndReturn(run func(ctx echo.Co
 func NewMockOpenAPI(t interface {
 	mock.TestingT
 	Cleanup(func())
-},
-) *MockOpenAPI {
+}) *MockOpenAPI {
 	mock := &MockOpenAPI{}
 	mock.Mock.Test(t)
 
@@ -250,7 +247,7 @@ func (_m *MockOpenAPI) EXPECT() *MockOpenAPI_Expecter {
 }
 
 // GetOpenapi provides a mock function for the type MockOpenAPI
-func (_mock *MockOpenAPI) GetOpenapi(ctx echo.Context) error {
+func (_mock *MockOpenAPI) GetOpenapi(ctx *echo.Context) error {
 	ret := _mock.Called(ctx)
 
 	if len(ret) == 0 {
@@ -258,7 +255,7 @@ func (_mock *MockOpenAPI) GetOpenapi(ctx echo.Context) error {
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context) error); ok {
 		r0 = returnFunc(ctx)
 	} else {
 		r0 = ret.Error(0)
@@ -272,16 +269,16 @@ type MockOpenAPI_GetOpenapi_Call struct {
 }
 
 // GetOpenapi is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 func (_e *MockOpenAPI_Expecter) GetOpenapi(ctx interface{}) *MockOpenAPI_GetOpenapi_Call {
 	return &MockOpenAPI_GetOpenapi_Call{Call: _e.mock.On("GetOpenapi", ctx)}
 }
 
-func (_c *MockOpenAPI_GetOpenapi_Call) Run(run func(ctx echo.Context)) *MockOpenAPI_GetOpenapi_Call {
+func (_c *MockOpenAPI_GetOpenapi_Call) Run(run func(ctx *echo.Context)) *MockOpenAPI_GetOpenapi_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		run(
 			arg0,
@@ -295,7 +292,7 @@ func (_c *MockOpenAPI_GetOpenapi_Call) Return(err error) *MockOpenAPI_GetOpenapi
 	return _c
 }
 
-func (_c *MockOpenAPI_GetOpenapi_Call) RunAndReturn(run func(ctx echo.Context) error) *MockOpenAPI_GetOpenapi_Call {
+func (_c *MockOpenAPI_GetOpenapi_Call) RunAndReturn(run func(ctx *echo.Context) error) *MockOpenAPI_GetOpenapi_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -305,8 +302,7 @@ func (_c *MockOpenAPI_GetOpenapi_Call) RunAndReturn(run func(ctx echo.Context) e
 func NewMockPrivate(t interface {
 	mock.TestingT
 	Cleanup(func())
-},
-) *MockPrivate {
+}) *MockPrivate {
 	mock := &MockPrivate{}
 	mock.Mock.Test(t)
 
@@ -333,8 +329,7 @@ func (_m *MockPrivate) EXPECT() *MockPrivate_Expecter {
 func NewMockTodo(t interface {
 	mock.TestingT
 	Cleanup(func())
-},
-) *MockTodo {
+}) *MockTodo {
 	mock := &MockTodo{}
 	mock.Mock.Test(t)
 
@@ -357,7 +352,7 @@ func (_m *MockTodo) EXPECT() *MockTodo_Expecter {
 }
 
 // CreateTodo provides a mock function for the type MockTodo
-func (_mock *MockTodo) CreateTodo(ctx echo.Context) error {
+func (_mock *MockTodo) CreateTodo(ctx *echo.Context) error {
 	ret := _mock.Called(ctx)
 
 	if len(ret) == 0 {
@@ -365,7 +360,7 @@ func (_mock *MockTodo) CreateTodo(ctx echo.Context) error {
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context) error); ok {
 		r0 = returnFunc(ctx)
 	} else {
 		r0 = ret.Error(0)
@@ -379,16 +374,16 @@ type MockTodo_CreateTodo_Call struct {
 }
 
 // CreateTodo is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 func (_e *MockTodo_Expecter) CreateTodo(ctx interface{}) *MockTodo_CreateTodo_Call {
 	return &MockTodo_CreateTodo_Call{Call: _e.mock.On("CreateTodo", ctx)}
 }
 
-func (_c *MockTodo_CreateTodo_Call) Run(run func(ctx echo.Context)) *MockTodo_CreateTodo_Call {
+func (_c *MockTodo_CreateTodo_Call) Run(run func(ctx *echo.Context)) *MockTodo_CreateTodo_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		run(
 			arg0,
@@ -402,13 +397,13 @@ func (_c *MockTodo_CreateTodo_Call) Return(err error) *MockTodo_CreateTodo_Call 
 	return _c
 }
 
-func (_c *MockTodo_CreateTodo_Call) RunAndReturn(run func(ctx echo.Context) error) *MockTodo_CreateTodo_Call {
+func (_c *MockTodo_CreateTodo_Call) RunAndReturn(run func(ctx *echo.Context) error) *MockTodo_CreateTodo_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // DeleteTodo provides a mock function for the type MockTodo
-func (_mock *MockTodo) DeleteTodo(ctx echo.Context, todoId types.UUID) error {
+func (_mock *MockTodo) DeleteTodo(ctx *echo.Context, todoId types.UUID) error {
 	ret := _mock.Called(ctx, todoId)
 
 	if len(ret) == 0 {
@@ -416,7 +411,7 @@ func (_mock *MockTodo) DeleteTodo(ctx echo.Context, todoId types.UUID) error {
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context, types.UUID) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context, types.UUID) error); ok {
 		r0 = returnFunc(ctx, todoId)
 	} else {
 		r0 = ret.Error(0)
@@ -430,17 +425,17 @@ type MockTodo_DeleteTodo_Call struct {
 }
 
 // DeleteTodo is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 //   - todoId types.UUID
 func (_e *MockTodo_Expecter) DeleteTodo(ctx interface{}, todoId interface{}) *MockTodo_DeleteTodo_Call {
 	return &MockTodo_DeleteTodo_Call{Call: _e.mock.On("DeleteTodo", ctx, todoId)}
 }
 
-func (_c *MockTodo_DeleteTodo_Call) Run(run func(ctx echo.Context, todoId types.UUID)) *MockTodo_DeleteTodo_Call {
+func (_c *MockTodo_DeleteTodo_Call) Run(run func(ctx *echo.Context, todoId types.UUID)) *MockTodo_DeleteTodo_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		var arg1 types.UUID
 		if args[1] != nil {
@@ -459,13 +454,13 @@ func (_c *MockTodo_DeleteTodo_Call) Return(err error) *MockTodo_DeleteTodo_Call 
 	return _c
 }
 
-func (_c *MockTodo_DeleteTodo_Call) RunAndReturn(run func(ctx echo.Context, todoId types.UUID) error) *MockTodo_DeleteTodo_Call {
+func (_c *MockTodo_DeleteTodo_Call) RunAndReturn(run func(ctx *echo.Context, todoId types.UUID) error) *MockTodo_DeleteTodo_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetAllTodos provides a mock function for the type MockTodo
-func (_mock *MockTodo) GetAllTodos(ctx echo.Context) error {
+func (_mock *MockTodo) GetAllTodos(ctx *echo.Context) error {
 	ret := _mock.Called(ctx)
 
 	if len(ret) == 0 {
@@ -473,7 +468,7 @@ func (_mock *MockTodo) GetAllTodos(ctx echo.Context) error {
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context) error); ok {
 		r0 = returnFunc(ctx)
 	} else {
 		r0 = ret.Error(0)
@@ -487,16 +482,16 @@ type MockTodo_GetAllTodos_Call struct {
 }
 
 // GetAllTodos is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 func (_e *MockTodo_Expecter) GetAllTodos(ctx interface{}) *MockTodo_GetAllTodos_Call {
 	return &MockTodo_GetAllTodos_Call{Call: _e.mock.On("GetAllTodos", ctx)}
 }
 
-func (_c *MockTodo_GetAllTodos_Call) Run(run func(ctx echo.Context)) *MockTodo_GetAllTodos_Call {
+func (_c *MockTodo_GetAllTodos_Call) Run(run func(ctx *echo.Context)) *MockTodo_GetAllTodos_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		run(
 			arg0,
@@ -510,13 +505,13 @@ func (_c *MockTodo_GetAllTodos_Call) Return(err error) *MockTodo_GetAllTodos_Cal
 	return _c
 }
 
-func (_c *MockTodo_GetAllTodos_Call) RunAndReturn(run func(ctx echo.Context) error) *MockTodo_GetAllTodos_Call {
+func (_c *MockTodo_GetAllTodos_Call) RunAndReturn(run func(ctx *echo.Context) error) *MockTodo_GetAllTodos_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetTodo provides a mock function for the type MockTodo
-func (_mock *MockTodo) GetTodo(ctx echo.Context, todoId types.UUID) error {
+func (_mock *MockTodo) GetTodo(ctx *echo.Context, todoId types.UUID) error {
 	ret := _mock.Called(ctx, todoId)
 
 	if len(ret) == 0 {
@@ -524,7 +519,7 @@ func (_mock *MockTodo) GetTodo(ctx echo.Context, todoId types.UUID) error {
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context, types.UUID) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context, types.UUID) error); ok {
 		r0 = returnFunc(ctx, todoId)
 	} else {
 		r0 = ret.Error(0)
@@ -538,17 +533,17 @@ type MockTodo_GetTodo_Call struct {
 }
 
 // GetTodo is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 //   - todoId types.UUID
 func (_e *MockTodo_Expecter) GetTodo(ctx interface{}, todoId interface{}) *MockTodo_GetTodo_Call {
 	return &MockTodo_GetTodo_Call{Call: _e.mock.On("GetTodo", ctx, todoId)}
 }
 
-func (_c *MockTodo_GetTodo_Call) Run(run func(ctx echo.Context, todoId types.UUID)) *MockTodo_GetTodo_Call {
+func (_c *MockTodo_GetTodo_Call) Run(run func(ctx *echo.Context, todoId types.UUID)) *MockTodo_GetTodo_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		var arg1 types.UUID
 		if args[1] != nil {
@@ -567,13 +562,13 @@ func (_c *MockTodo_GetTodo_Call) Return(err error) *MockTodo_GetTodo_Call {
 	return _c
 }
 
-func (_c *MockTodo_GetTodo_Call) RunAndReturn(run func(ctx echo.Context, todoId types.UUID) error) *MockTodo_GetTodo_Call {
+func (_c *MockTodo_GetTodo_Call) RunAndReturn(run func(ctx *echo.Context, todoId types.UUID) error) *MockTodo_GetTodo_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // PatchTodo provides a mock function for the type MockTodo
-func (_mock *MockTodo) PatchTodo(ctx echo.Context, todoId types.UUID) error {
+func (_mock *MockTodo) PatchTodo(ctx *echo.Context, todoId types.UUID) error {
 	ret := _mock.Called(ctx, todoId)
 
 	if len(ret) == 0 {
@@ -581,7 +576,7 @@ func (_mock *MockTodo) PatchTodo(ctx echo.Context, todoId types.UUID) error {
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context, types.UUID) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context, types.UUID) error); ok {
 		r0 = returnFunc(ctx, todoId)
 	} else {
 		r0 = ret.Error(0)
@@ -595,17 +590,17 @@ type MockTodo_PatchTodo_Call struct {
 }
 
 // PatchTodo is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 //   - todoId types.UUID
 func (_e *MockTodo_Expecter) PatchTodo(ctx interface{}, todoId interface{}) *MockTodo_PatchTodo_Call {
 	return &MockTodo_PatchTodo_Call{Call: _e.mock.On("PatchTodo", ctx, todoId)}
 }
 
-func (_c *MockTodo_PatchTodo_Call) Run(run func(ctx echo.Context, todoId types.UUID)) *MockTodo_PatchTodo_Call {
+func (_c *MockTodo_PatchTodo_Call) Run(run func(ctx *echo.Context, todoId types.UUID)) *MockTodo_PatchTodo_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		var arg1 types.UUID
 		if args[1] != nil {
@@ -624,13 +619,13 @@ func (_c *MockTodo_PatchTodo_Call) Return(err error) *MockTodo_PatchTodo_Call {
 	return _c
 }
 
-func (_c *MockTodo_PatchTodo_Call) RunAndReturn(run func(ctx echo.Context, todoId types.UUID) error) *MockTodo_PatchTodo_Call {
+func (_c *MockTodo_PatchTodo_Call) RunAndReturn(run func(ctx *echo.Context, todoId types.UUID) error) *MockTodo_PatchTodo_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateTodo provides a mock function for the type MockTodo
-func (_mock *MockTodo) UpdateTodo(ctx echo.Context, todoId types.UUID) error {
+func (_mock *MockTodo) UpdateTodo(ctx *echo.Context, todoId types.UUID) error {
 	ret := _mock.Called(ctx, todoId)
 
 	if len(ret) == 0 {
@@ -638,7 +633,7 @@ func (_mock *MockTodo) UpdateTodo(ctx echo.Context, todoId types.UUID) error {
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context, types.UUID) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context, types.UUID) error); ok {
 		r0 = returnFunc(ctx, todoId)
 	} else {
 		r0 = ret.Error(0)
@@ -652,17 +647,17 @@ type MockTodo_UpdateTodo_Call struct {
 }
 
 // UpdateTodo is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 //   - todoId types.UUID
 func (_e *MockTodo_Expecter) UpdateTodo(ctx interface{}, todoId interface{}) *MockTodo_UpdateTodo_Call {
 	return &MockTodo_UpdateTodo_Call{Call: _e.mock.On("UpdateTodo", ctx, todoId)}
 }
 
-func (_c *MockTodo_UpdateTodo_Call) Run(run func(ctx echo.Context, todoId types.UUID)) *MockTodo_UpdateTodo_Call {
+func (_c *MockTodo_UpdateTodo_Call) Run(run func(ctx *echo.Context, todoId types.UUID)) *MockTodo_UpdateTodo_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		var arg1 types.UUID
 		if args[1] != nil {
@@ -681,7 +676,7 @@ func (_c *MockTodo_UpdateTodo_Call) Return(err error) *MockTodo_UpdateTodo_Call 
 	return _c
 }
 
-func (_c *MockTodo_UpdateTodo_Call) RunAndReturn(run func(ctx echo.Context, todoId types.UUID) error) *MockTodo_UpdateTodo_Call {
+func (_c *MockTodo_UpdateTodo_Call) RunAndReturn(run func(ctx *echo.Context, todoId types.UUID) error) *MockTodo_UpdateTodo_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -691,8 +686,7 @@ func (_c *MockTodo_UpdateTodo_Call) RunAndReturn(run func(ctx echo.Context, todo
 func NewMockTodoInput(t interface {
 	mock.TestingT
 	Cleanup(func())
-},
-) *MockTodoInput {
+}) *MockTodoInput {
 	mock := &MockTodoInput{}
 	mock.Mock.Test(t)
 
@@ -715,7 +709,7 @@ func (_m *MockTodoInput) EXPECT() *MockTodoInput_Expecter {
 }
 
 // Create provides a mock function for the type MockTodoInput
-func (_mock *MockTodoInput) Create(ctx echo.Context) (*model.Todo, error) {
+func (_mock *MockTodoInput) Create(ctx *echo.Context) (*model.Todo, error) {
 	ret := _mock.Called(ctx)
 
 	if len(ret) == 0 {
@@ -724,17 +718,17 @@ func (_mock *MockTodoInput) Create(ctx echo.Context) (*model.Todo, error) {
 
 	var r0 *model.Todo
 	var r1 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context) (*model.Todo, error)); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context) (*model.Todo, error)); ok {
 		return returnFunc(ctx)
 	}
-	if returnFunc, ok := ret.Get(0).(func(echo.Context) *model.Todo); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context) *model.Todo); ok {
 		r0 = returnFunc(ctx)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*model.Todo)
 		}
 	}
-	if returnFunc, ok := ret.Get(1).(func(echo.Context) error); ok {
+	if returnFunc, ok := ret.Get(1).(func(*echo.Context) error); ok {
 		r1 = returnFunc(ctx)
 	} else {
 		r1 = ret.Error(1)
@@ -748,16 +742,16 @@ type MockTodoInput_Create_Call struct {
 }
 
 // Create is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 func (_e *MockTodoInput_Expecter) Create(ctx interface{}) *MockTodoInput_Create_Call {
 	return &MockTodoInput_Create_Call{Call: _e.mock.On("Create", ctx)}
 }
 
-func (_c *MockTodoInput_Create_Call) Run(run func(ctx echo.Context)) *MockTodoInput_Create_Call {
+func (_c *MockTodoInput_Create_Call) Run(run func(ctx *echo.Context)) *MockTodoInput_Create_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		run(
 			arg0,
@@ -771,13 +765,13 @@ func (_c *MockTodoInput_Create_Call) Return(todo *model.Todo, err error) *MockTo
 	return _c
 }
 
-func (_c *MockTodoInput_Create_Call) RunAndReturn(run func(ctx echo.Context) (*model.Todo, error)) *MockTodoInput_Create_Call {
+func (_c *MockTodoInput_Create_Call) RunAndReturn(run func(ctx *echo.Context) (*model.Todo, error)) *MockTodoInput_Create_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetAll provides a mock function for the type MockTodoInput
-func (_mock *MockTodoInput) GetAll(ctx echo.Context) error {
+func (_mock *MockTodoInput) GetAll(ctx *echo.Context) error {
 	ret := _mock.Called(ctx)
 
 	if len(ret) == 0 {
@@ -785,7 +779,7 @@ func (_mock *MockTodoInput) GetAll(ctx echo.Context) error {
 	}
 
 	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context) error); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context) error); ok {
 		r0 = returnFunc(ctx)
 	} else {
 		r0 = ret.Error(0)
@@ -799,16 +793,16 @@ type MockTodoInput_GetAll_Call struct {
 }
 
 // GetAll is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 func (_e *MockTodoInput_Expecter) GetAll(ctx interface{}) *MockTodoInput_GetAll_Call {
 	return &MockTodoInput_GetAll_Call{Call: _e.mock.On("GetAll", ctx)}
 }
 
-func (_c *MockTodoInput_GetAll_Call) Run(run func(ctx echo.Context)) *MockTodoInput_GetAll_Call {
+func (_c *MockTodoInput_GetAll_Call) Run(run func(ctx *echo.Context)) *MockTodoInput_GetAll_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		run(
 			arg0,
@@ -822,7 +816,7 @@ func (_c *MockTodoInput_GetAll_Call) Return(err error) *MockTodoInput_GetAll_Cal
 	return _c
 }
 
-func (_c *MockTodoInput_GetAll_Call) RunAndReturn(run func(ctx echo.Context) error) *MockTodoInput_GetAll_Call {
+func (_c *MockTodoInput_GetAll_Call) RunAndReturn(run func(ctx *echo.Context) error) *MockTodoInput_GetAll_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -832,8 +826,7 @@ func (_c *MockTodoInput_GetAll_Call) RunAndReturn(run func(ctx echo.Context) err
 func NewMockTodoOutput(t interface {
 	mock.TestingT
 	Cleanup(func())
-},
-) *MockTodoOutput {
+}) *MockTodoOutput {
 	mock := &MockTodoOutput{}
 	mock.Mock.Test(t)
 
@@ -856,7 +849,7 @@ func (_m *MockTodoOutput) EXPECT() *MockTodoOutput_Expecter {
 }
 
 // Create provides a mock function for the type MockTodoOutput
-func (_mock *MockTodoOutput) Create(ctx echo.Context, data *model.Todo) (*public.ToDo, error) {
+func (_mock *MockTodoOutput) Create(ctx *echo.Context, data *model.Todo) (*public.ToDo, error) {
 	ret := _mock.Called(ctx, data)
 
 	if len(ret) == 0 {
@@ -865,17 +858,17 @@ func (_mock *MockTodoOutput) Create(ctx echo.Context, data *model.Todo) (*public
 
 	var r0 *public.ToDo
 	var r1 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context, *model.Todo) (*public.ToDo, error)); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context, *model.Todo) (*public.ToDo, error)); ok {
 		return returnFunc(ctx, data)
 	}
-	if returnFunc, ok := ret.Get(0).(func(echo.Context, *model.Todo) *public.ToDo); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context, *model.Todo) *public.ToDo); ok {
 		r0 = returnFunc(ctx, data)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*public.ToDo)
 		}
 	}
-	if returnFunc, ok := ret.Get(1).(func(echo.Context, *model.Todo) error); ok {
+	if returnFunc, ok := ret.Get(1).(func(*echo.Context, *model.Todo) error); ok {
 		r1 = returnFunc(ctx, data)
 	} else {
 		r1 = ret.Error(1)
@@ -889,17 +882,17 @@ type MockTodoOutput_Create_Call struct {
 }
 
 // Create is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 //   - data *model.Todo
 func (_e *MockTodoOutput_Expecter) Create(ctx interface{}, data interface{}) *MockTodoOutput_Create_Call {
 	return &MockTodoOutput_Create_Call{Call: _e.mock.On("Create", ctx, data)}
 }
 
-func (_c *MockTodoOutput_Create_Call) Run(run func(ctx echo.Context, data *model.Todo)) *MockTodoOutput_Create_Call {
+func (_c *MockTodoOutput_Create_Call) Run(run func(ctx *echo.Context, data *model.Todo)) *MockTodoOutput_Create_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		var arg1 *model.Todo
 		if args[1] != nil {
@@ -918,13 +911,13 @@ func (_c *MockTodoOutput_Create_Call) Return(toDo *public.ToDo, err error) *Mock
 	return _c
 }
 
-func (_c *MockTodoOutput_Create_Call) RunAndReturn(run func(ctx echo.Context, data *model.Todo) (*public.ToDo, error)) *MockTodoOutput_Create_Call {
+func (_c *MockTodoOutput_Create_Call) RunAndReturn(run func(ctx *echo.Context, data *model.Todo) (*public.ToDo, error)) *MockTodoOutput_Create_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // Get provides a mock function for the type MockTodoOutput
-func (_mock *MockTodoOutput) Get(ctx echo.Context, data *model.Todo) (*public.ToDo, error) {
+func (_mock *MockTodoOutput) Get(ctx *echo.Context, data *model.Todo) (*public.ToDo, error) {
 	ret := _mock.Called(ctx, data)
 
 	if len(ret) == 0 {
@@ -933,17 +926,17 @@ func (_mock *MockTodoOutput) Get(ctx echo.Context, data *model.Todo) (*public.To
 
 	var r0 *public.ToDo
 	var r1 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context, *model.Todo) (*public.ToDo, error)); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context, *model.Todo) (*public.ToDo, error)); ok {
 		return returnFunc(ctx, data)
 	}
-	if returnFunc, ok := ret.Get(0).(func(echo.Context, *model.Todo) *public.ToDo); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context, *model.Todo) *public.ToDo); ok {
 		r0 = returnFunc(ctx, data)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*public.ToDo)
 		}
 	}
-	if returnFunc, ok := ret.Get(1).(func(echo.Context, *model.Todo) error); ok {
+	if returnFunc, ok := ret.Get(1).(func(*echo.Context, *model.Todo) error); ok {
 		r1 = returnFunc(ctx, data)
 	} else {
 		r1 = ret.Error(1)
@@ -957,17 +950,17 @@ type MockTodoOutput_Get_Call struct {
 }
 
 // Get is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 //   - data *model.Todo
 func (_e *MockTodoOutput_Expecter) Get(ctx interface{}, data interface{}) *MockTodoOutput_Get_Call {
 	return &MockTodoOutput_Get_Call{Call: _e.mock.On("Get", ctx, data)}
 }
 
-func (_c *MockTodoOutput_Get_Call) Run(run func(ctx echo.Context, data *model.Todo)) *MockTodoOutput_Get_Call {
+func (_c *MockTodoOutput_Get_Call) Run(run func(ctx *echo.Context, data *model.Todo)) *MockTodoOutput_Get_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		var arg1 *model.Todo
 		if args[1] != nil {
@@ -986,13 +979,13 @@ func (_c *MockTodoOutput_Get_Call) Return(toDo *public.ToDo, err error) *MockTod
 	return _c
 }
 
-func (_c *MockTodoOutput_Get_Call) RunAndReturn(run func(ctx echo.Context, data *model.Todo) (*public.ToDo, error)) *MockTodoOutput_Get_Call {
+func (_c *MockTodoOutput_Get_Call) RunAndReturn(run func(ctx *echo.Context, data *model.Todo) (*public.ToDo, error)) *MockTodoOutput_Get_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetAll provides a mock function for the type MockTodoOutput
-func (_mock *MockTodoOutput) GetAll(ctx echo.Context, data []model.Todo) ([]public.ToDo, error) {
+func (_mock *MockTodoOutput) GetAll(ctx *echo.Context, data []model.Todo) ([]public.ToDo, error) {
 	ret := _mock.Called(ctx, data)
 
 	if len(ret) == 0 {
@@ -1001,17 +994,17 @@ func (_mock *MockTodoOutput) GetAll(ctx echo.Context, data []model.Todo) ([]publ
 
 	var r0 []public.ToDo
 	var r1 error
-	if returnFunc, ok := ret.Get(0).(func(echo.Context, []model.Todo) ([]public.ToDo, error)); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context, []model.Todo) ([]public.ToDo, error)); ok {
 		return returnFunc(ctx, data)
 	}
-	if returnFunc, ok := ret.Get(0).(func(echo.Context, []model.Todo) []public.ToDo); ok {
+	if returnFunc, ok := ret.Get(0).(func(*echo.Context, []model.Todo) []public.ToDo); ok {
 		r0 = returnFunc(ctx, data)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([]public.ToDo)
 		}
 	}
-	if returnFunc, ok := ret.Get(1).(func(echo.Context, []model.Todo) error); ok {
+	if returnFunc, ok := ret.Get(1).(func(*echo.Context, []model.Todo) error); ok {
 		r1 = returnFunc(ctx, data)
 	} else {
 		r1 = ret.Error(1)
@@ -1025,17 +1018,17 @@ type MockTodoOutput_GetAll_Call struct {
 }
 
 // GetAll is a helper method to define mock.On call
-//   - ctx echo.Context
+//   - ctx *echo.Context
 //   - data []model.Todo
 func (_e *MockTodoOutput_Expecter) GetAll(ctx interface{}, data interface{}) *MockTodoOutput_GetAll_Call {
 	return &MockTodoOutput_GetAll_Call{Call: _e.mock.On("GetAll", ctx, data)}
 }
 
-func (_c *MockTodoOutput_GetAll_Call) Run(run func(ctx echo.Context, data []model.Todo)) *MockTodoOutput_GetAll_Call {
+func (_c *MockTodoOutput_GetAll_Call) Run(run func(ctx *echo.Context, data []model.Todo)) *MockTodoOutput_GetAll_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 echo.Context
+		var arg0 *echo.Context
 		if args[0] != nil {
-			arg0 = args[0].(echo.Context)
+			arg0 = args[0].(*echo.Context)
 		}
 		var arg1 []model.Todo
 		if args[1] != nil {
@@ -1054,7 +1047,7 @@ func (_c *MockTodoOutput_GetAll_Call) Return(toDos []public.ToDo, err error) *Mo
 	return _c
 }
 
-func (_c *MockTodoOutput_GetAll_Call) RunAndReturn(run func(ctx echo.Context, data []model.Todo) ([]public.ToDo, error)) *MockTodoOutput_GetAll_Call {
+func (_c *MockTodoOutput_GetAll_Call) RunAndReturn(run func(ctx *echo.Context, data []model.Todo) ([]public.ToDo, error)) *MockTodoOutput_GetAll_Call {
 	_c.Call.Return(run)
 	return _c
 }

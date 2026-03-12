@@ -39,7 +39,7 @@ func getMajorVersion(version string) string {
 }
 
 func loggerSkipperWithPaths(paths ...string) middleware.Skipper {
-	return func(c echo.Context) bool {
+	return func(c *echo.Context) bool {
 		path := c.Path()
 		for _, item := range paths {
 			if item == path {
