@@ -107,6 +107,20 @@ services:
       timeout: 3s
       retries: 10
       start_period: 5s
+  
+  # jaeger:
+  #   image: docker.io/jaegertracing/jaeger:2.16.0
+  #   ports:
+  #     - 16686:16686/tcp
+  #     - 14268:14268/tcp
+  #     - 14250:14250/tcp
+  #     - 9411:9411/tcp
+  #   healthcheck:
+  #     test: curl -I http://localhost:16686/api/traces
+  #     interval: 5s
+  #     timeout: 3s
+  #     retries: 10
+  #     start_period: 5s
 
 volumes:
   database:
