@@ -83,7 +83,7 @@ jobs:
 
       - name: "Add Coverage PR Comment"
         if: ${{ github.actor != 'dependabot[bot]' && github.repository == 'little-engineer-2025/go-microservice-1' }}
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           recreate: true
           path: code-coverage-results.md
