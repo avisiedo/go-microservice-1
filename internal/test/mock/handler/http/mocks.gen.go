@@ -61,7 +61,7 @@ type MockApplication_CreateTodo_Call struct {
 
 // CreateTodo is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockApplication_Expecter) CreateTodo(ctx interface{}) *MockApplication_CreateTodo_Call {
+func (_e *MockApplication_Expecter) CreateTodo(ctx any) *MockApplication_CreateTodo_Call {
 	return &MockApplication_CreateTodo_Call{Call: _e.mock.On("CreateTodo", ctx)}
 }
 
@@ -113,7 +113,7 @@ type MockApplication_DeleteTodo_Call struct {
 // DeleteTodo is a helper method to define mock.On call
 //   - ctx echo.Context
 //   - todoId types.UUID
-func (_e *MockApplication_Expecter) DeleteTodo(ctx interface{}, todoId interface{}) *MockApplication_DeleteTodo_Call {
+func (_e *MockApplication_Expecter) DeleteTodo(ctx any, todoId any) *MockApplication_DeleteTodo_Call {
 	return &MockApplication_DeleteTodo_Call{Call: _e.mock.On("DeleteTodo", ctx, todoId)}
 }
 
@@ -169,7 +169,7 @@ type MockApplication_GetAllTodos_Call struct {
 
 // GetAllTodos is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockApplication_Expecter) GetAllTodos(ctx interface{}) *MockApplication_GetAllTodos_Call {
+func (_e *MockApplication_Expecter) GetAllTodos(ctx any) *MockApplication_GetAllTodos_Call {
 	return &MockApplication_GetAllTodos_Call{Call: _e.mock.On("GetAllTodos", ctx)}
 }
 
@@ -220,7 +220,7 @@ type MockApplication_GetLivez_Call struct {
 
 // GetLivez is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockApplication_Expecter) GetLivez(ctx interface{}) *MockApplication_GetLivez_Call {
+func (_e *MockApplication_Expecter) GetLivez(ctx any) *MockApplication_GetLivez_Call {
 	return &MockApplication_GetLivez_Call{Call: _e.mock.On("GetLivez", ctx)}
 }
 
@@ -271,7 +271,7 @@ type MockApplication_GetMetrics_Call struct {
 
 // GetMetrics is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockApplication_Expecter) GetMetrics(ctx interface{}) *MockApplication_GetMetrics_Call {
+func (_e *MockApplication_Expecter) GetMetrics(ctx any) *MockApplication_GetMetrics_Call {
 	return &MockApplication_GetMetrics_Call{Call: _e.mock.On("GetMetrics", ctx)}
 }
 
@@ -322,7 +322,7 @@ type MockApplication_GetOpenapi_Call struct {
 
 // GetOpenapi is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockApplication_Expecter) GetOpenapi(ctx interface{}) *MockApplication_GetOpenapi_Call {
+func (_e *MockApplication_Expecter) GetOpenapi(ctx any) *MockApplication_GetOpenapi_Call {
 	return &MockApplication_GetOpenapi_Call{Call: _e.mock.On("GetOpenapi", ctx)}
 }
 
@@ -373,7 +373,7 @@ type MockApplication_GetReadyz_Call struct {
 
 // GetReadyz is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockApplication_Expecter) GetReadyz(ctx interface{}) *MockApplication_GetReadyz_Call {
+func (_e *MockApplication_Expecter) GetReadyz(ctx any) *MockApplication_GetReadyz_Call {
 	return &MockApplication_GetReadyz_Call{Call: _e.mock.On("GetReadyz", ctx)}
 }
 
@@ -425,7 +425,7 @@ type MockApplication_GetTodo_Call struct {
 // GetTodo is a helper method to define mock.On call
 //   - ctx echo.Context
 //   - todoId types.UUID
-func (_e *MockApplication_Expecter) GetTodo(ctx interface{}, todoId interface{}) *MockApplication_GetTodo_Call {
+func (_e *MockApplication_Expecter) GetTodo(ctx any, todoId any) *MockApplication_GetTodo_Call {
 	return &MockApplication_GetTodo_Call{Call: _e.mock.On("GetTodo", ctx, todoId)}
 }
 
@@ -482,7 +482,7 @@ type MockApplication_PatchTodo_Call struct {
 // PatchTodo is a helper method to define mock.On call
 //   - ctx echo.Context
 //   - todoId types.UUID
-func (_e *MockApplication_Expecter) PatchTodo(ctx interface{}, todoId interface{}) *MockApplication_PatchTodo_Call {
+func (_e *MockApplication_Expecter) PatchTodo(ctx any, todoId any) *MockApplication_PatchTodo_Call {
 	return &MockApplication_PatchTodo_Call{Call: _e.mock.On("PatchTodo", ctx, todoId)}
 }
 
@@ -539,7 +539,7 @@ type MockApplication_UpdateTodo_Call struct {
 // UpdateTodo is a helper method to define mock.On call
 //   - ctx echo.Context
 //   - todoId types.UUID
-func (_e *MockApplication_Expecter) UpdateTodo(ctx interface{}, todoId interface{}) *MockApplication_UpdateTodo_Call {
+func (_e *MockApplication_Expecter) UpdateTodo(ctx any, todoId any) *MockApplication_UpdateTodo_Call {
 	return &MockApplication_UpdateTodo_Call{Call: _e.mock.On("UpdateTodo", ctx, todoId)}
 }
 

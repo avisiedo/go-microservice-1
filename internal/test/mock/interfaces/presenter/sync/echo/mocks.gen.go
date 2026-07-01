@@ -63,7 +63,7 @@ type MockHealthcheck_GetLivez_Call struct {
 
 // GetLivez is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockHealthcheck_Expecter) GetLivez(ctx interface{}) *MockHealthcheck_GetLivez_Call {
+func (_e *MockHealthcheck_Expecter) GetLivez(ctx any) *MockHealthcheck_GetLivez_Call {
 	return &MockHealthcheck_GetLivez_Call{Call: _e.mock.On("GetLivez", ctx)}
 }
 
@@ -114,7 +114,7 @@ type MockHealthcheck_GetReadyz_Call struct {
 
 // GetReadyz is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockHealthcheck_Expecter) GetReadyz(ctx interface{}) *MockHealthcheck_GetReadyz_Call {
+func (_e *MockHealthcheck_Expecter) GetReadyz(ctx any) *MockHealthcheck_GetReadyz_Call {
 	return &MockHealthcheck_GetReadyz_Call{Call: _e.mock.On("GetReadyz", ctx)}
 }
 
@@ -192,7 +192,7 @@ type MockInstrumentation_GetMetrics_Call struct {
 
 // GetMetrics is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockInstrumentation_Expecter) GetMetrics(ctx interface{}) *MockInstrumentation_GetMetrics_Call {
+func (_e *MockInstrumentation_Expecter) GetMetrics(ctx any) *MockInstrumentation_GetMetrics_Call {
 	return &MockInstrumentation_GetMetrics_Call{Call: _e.mock.On("GetMetrics", ctx)}
 }
 
@@ -270,7 +270,7 @@ type MockOpenAPI_GetOpenapi_Call struct {
 
 // GetOpenapi is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockOpenAPI_Expecter) GetOpenapi(ctx interface{}) *MockOpenAPI_GetOpenapi_Call {
+func (_e *MockOpenAPI_Expecter) GetOpenapi(ctx any) *MockOpenAPI_GetOpenapi_Call {
 	return &MockOpenAPI_GetOpenapi_Call{Call: _e.mock.On("GetOpenapi", ctx)}
 }
 
@@ -375,7 +375,7 @@ type MockTodo_CreateTodo_Call struct {
 
 // CreateTodo is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockTodo_Expecter) CreateTodo(ctx interface{}) *MockTodo_CreateTodo_Call {
+func (_e *MockTodo_Expecter) CreateTodo(ctx any) *MockTodo_CreateTodo_Call {
 	return &MockTodo_CreateTodo_Call{Call: _e.mock.On("CreateTodo", ctx)}
 }
 
@@ -427,7 +427,7 @@ type MockTodo_DeleteTodo_Call struct {
 // DeleteTodo is a helper method to define mock.On call
 //   - ctx echo.Context
 //   - todoId types.UUID
-func (_e *MockTodo_Expecter) DeleteTodo(ctx interface{}, todoId interface{}) *MockTodo_DeleteTodo_Call {
+func (_e *MockTodo_Expecter) DeleteTodo(ctx any, todoId any) *MockTodo_DeleteTodo_Call {
 	return &MockTodo_DeleteTodo_Call{Call: _e.mock.On("DeleteTodo", ctx, todoId)}
 }
 
@@ -483,7 +483,7 @@ type MockTodo_GetAllTodos_Call struct {
 
 // GetAllTodos is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockTodo_Expecter) GetAllTodos(ctx interface{}) *MockTodo_GetAllTodos_Call {
+func (_e *MockTodo_Expecter) GetAllTodos(ctx any) *MockTodo_GetAllTodos_Call {
 	return &MockTodo_GetAllTodos_Call{Call: _e.mock.On("GetAllTodos", ctx)}
 }
 
@@ -535,7 +535,7 @@ type MockTodo_GetTodo_Call struct {
 // GetTodo is a helper method to define mock.On call
 //   - ctx echo.Context
 //   - todoId types.UUID
-func (_e *MockTodo_Expecter) GetTodo(ctx interface{}, todoId interface{}) *MockTodo_GetTodo_Call {
+func (_e *MockTodo_Expecter) GetTodo(ctx any, todoId any) *MockTodo_GetTodo_Call {
 	return &MockTodo_GetTodo_Call{Call: _e.mock.On("GetTodo", ctx, todoId)}
 }
 
@@ -592,7 +592,7 @@ type MockTodo_PatchTodo_Call struct {
 // PatchTodo is a helper method to define mock.On call
 //   - ctx echo.Context
 //   - todoId types.UUID
-func (_e *MockTodo_Expecter) PatchTodo(ctx interface{}, todoId interface{}) *MockTodo_PatchTodo_Call {
+func (_e *MockTodo_Expecter) PatchTodo(ctx any, todoId any) *MockTodo_PatchTodo_Call {
 	return &MockTodo_PatchTodo_Call{Call: _e.mock.On("PatchTodo", ctx, todoId)}
 }
 
@@ -649,7 +649,7 @@ type MockTodo_UpdateTodo_Call struct {
 // UpdateTodo is a helper method to define mock.On call
 //   - ctx echo.Context
 //   - todoId types.UUID
-func (_e *MockTodo_Expecter) UpdateTodo(ctx interface{}, todoId interface{}) *MockTodo_UpdateTodo_Call {
+func (_e *MockTodo_Expecter) UpdateTodo(ctx any, todoId any) *MockTodo_UpdateTodo_Call {
 	return &MockTodo_UpdateTodo_Call{Call: _e.mock.On("UpdateTodo", ctx, todoId)}
 }
 
@@ -743,7 +743,7 @@ type MockTodoInput_Create_Call struct {
 
 // Create is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockTodoInput_Expecter) Create(ctx interface{}) *MockTodoInput_Create_Call {
+func (_e *MockTodoInput_Expecter) Create(ctx any) *MockTodoInput_Create_Call {
 	return &MockTodoInput_Create_Call{Call: _e.mock.On("Create", ctx)}
 }
 
@@ -794,7 +794,7 @@ type MockTodoInput_GetAll_Call struct {
 
 // GetAll is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockTodoInput_Expecter) GetAll(ctx interface{}) *MockTodoInput_GetAll_Call {
+func (_e *MockTodoInput_Expecter) GetAll(ctx any) *MockTodoInput_GetAll_Call {
 	return &MockTodoInput_GetAll_Call{Call: _e.mock.On("GetAll", ctx)}
 }
 
@@ -884,7 +884,7 @@ type MockTodoOutput_Create_Call struct {
 // Create is a helper method to define mock.On call
 //   - ctx echo.Context
 //   - data *model.Todo
-func (_e *MockTodoOutput_Expecter) Create(ctx interface{}, data interface{}) *MockTodoOutput_Create_Call {
+func (_e *MockTodoOutput_Expecter) Create(ctx any, data any) *MockTodoOutput_Create_Call {
 	return &MockTodoOutput_Create_Call{Call: _e.mock.On("Create", ctx, data)}
 }
 
@@ -952,7 +952,7 @@ type MockTodoOutput_Get_Call struct {
 // Get is a helper method to define mock.On call
 //   - ctx echo.Context
 //   - data *model.Todo
-func (_e *MockTodoOutput_Expecter) Get(ctx interface{}, data interface{}) *MockTodoOutput_Get_Call {
+func (_e *MockTodoOutput_Expecter) Get(ctx any, data any) *MockTodoOutput_Get_Call {
 	return &MockTodoOutput_Get_Call{Call: _e.mock.On("Get", ctx, data)}
 }
 
@@ -1020,7 +1020,7 @@ type MockTodoOutput_GetAll_Call struct {
 // GetAll is a helper method to define mock.On call
 //   - ctx echo.Context
 //   - data []model.Todo
-func (_e *MockTodoOutput_Expecter) GetAll(ctx interface{}, data interface{}) *MockTodoOutput_GetAll_Call {
+func (_e *MockTodoOutput_Expecter) GetAll(ctx any, data any) *MockTodoOutput_GetAll_Call {
 	return &MockTodoOutput_GetAll_Call{Call: _e.mock.On("GetAll", ctx, data)}
 }
 

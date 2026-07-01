@@ -75,7 +75,7 @@ type MockTodoRepository_Create_Call struct {
 // Create is a helper method to define mock.On call
 //   - ctx context.Context
 //   - todo *model.Todo
-func (_e *MockTodoRepository_Expecter) Create(ctx interface{}, todo interface{}) *MockTodoRepository_Create_Call {
+func (_e *MockTodoRepository_Expecter) Create(ctx any, todo any) *MockTodoRepository_Create_Call {
 	return &MockTodoRepository_Create_Call{Call: _e.mock.On("Create", ctx, todo)}
 }
 
@@ -132,7 +132,7 @@ type MockTodoRepository_DeleteByUUID_Call struct {
 // DeleteByUUID is a helper method to define mock.On call
 //   - ctx context.Context
 //   - uuid1 uuid.UUID
-func (_e *MockTodoRepository_Expecter) DeleteByUUID(ctx interface{}, uuid1 interface{}) *MockTodoRepository_DeleteByUUID_Call {
+func (_e *MockTodoRepository_Expecter) DeleteByUUID(ctx any, uuid1 any) *MockTodoRepository_DeleteByUUID_Call {
 	return &MockTodoRepository_DeleteByUUID_Call{Call: _e.mock.On("DeleteByUUID", ctx, uuid1)}
 }
 
@@ -199,7 +199,7 @@ type MockTodoRepository_GetAll_Call struct {
 
 // GetAll is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockTodoRepository_Expecter) GetAll(ctx interface{}) *MockTodoRepository_GetAll_Call {
+func (_e *MockTodoRepository_Expecter) GetAll(ctx any) *MockTodoRepository_GetAll_Call {
 	return &MockTodoRepository_GetAll_Call{Call: _e.mock.On("GetAll", ctx)}
 }
 
@@ -262,7 +262,7 @@ type MockTodoRepository_GetByUUID_Call struct {
 // GetByUUID is a helper method to define mock.On call
 //   - ctx context.Context
 //   - uuid1 uuid.UUID
-func (_e *MockTodoRepository_Expecter) GetByUUID(ctx interface{}, uuid1 interface{}) *MockTodoRepository_GetByUUID_Call {
+func (_e *MockTodoRepository_Expecter) GetByUUID(ctx any, uuid1 any) *MockTodoRepository_GetByUUID_Call {
 	return &MockTodoRepository_GetByUUID_Call{Call: _e.mock.On("GetByUUID", ctx, uuid1)}
 }
 
@@ -330,7 +330,7 @@ type MockTodoRepository_Update_Call struct {
 // Update is a helper method to define mock.On call
 //   - ctx context.Context
 //   - todo *model.Todo
-func (_e *MockTodoRepository_Expecter) Update(ctx interface{}, todo interface{}) *MockTodoRepository_Update_Call {
+func (_e *MockTodoRepository_Expecter) Update(ctx any, todo any) *MockTodoRepository_Update_Call {
 	return &MockTodoRepository_Update_Call{Call: _e.mock.On("Update", ctx, todo)}
 }
 
