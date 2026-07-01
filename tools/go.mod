@@ -5,7 +5,7 @@ module github.com/avisiedo/go-microservice-1/tools
 // When updating go version, update the below too:
 //   .github/workflows/main.yml
 //   build/package/Dockerfile
-go 1.25.0
+go 1.25.5
 
 require (
 	github.com/achiku/planter v0.0.0-20230118102009-4847a8211e35
@@ -16,7 +16,7 @@ require (
 	github.com/mikefarah/yq/v4 v4.53.3
 	github.com/oapi-codegen/oapi-codegen/v2 v2.7.1
 	github.com/t-yuki/gocover-cobertura v0.0.0-20180217150009-aaee18c8195c
-	github.com/vektra/mockery/v3 v3.7.0
+	github.com/vektra/mockery/v3 v3.7.1
 )
 
 require (

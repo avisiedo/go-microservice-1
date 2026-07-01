@@ -217,7 +217,7 @@ type MockTodo_Create_Call struct {
 // Create is a helper method to define mock.On call
 //   - ctx context.Context
 //   - todo *model.Todo
-func (_e *MockTodo_Expecter) Create(ctx interface{}, todo interface{}) *MockTodo_Create_Call {
+func (_e *MockTodo_Expecter) Create(ctx any, todo any) *MockTodo_Create_Call {
 	return &MockTodo_Create_Call{Call: _e.mock.On("Create", ctx, todo)}
 }
 
@@ -284,7 +284,7 @@ type MockTodo_GetAll_Call struct {
 
 // GetAll is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockTodo_Expecter) GetAll(ctx interface{}) *MockTodo_GetAll_Call {
+func (_e *MockTodo_Expecter) GetAll(ctx any) *MockTodo_GetAll_Call {
 	return &MockTodo_GetAll_Call{Call: _e.mock.On("GetAll", ctx)}
 }
 
@@ -347,7 +347,7 @@ type MockTodo_GetByUUID_Call struct {
 // GetByUUID is a helper method to define mock.On call
 //   - ctx context.Context
 //   - uuid1 uuid.UUID
-func (_e *MockTodo_Expecter) GetByUUID(ctx interface{}, uuid1 interface{}) *MockTodo_GetByUUID_Call {
+func (_e *MockTodo_Expecter) GetByUUID(ctx any, uuid1 any) *MockTodo_GetByUUID_Call {
 	return &MockTodo_GetByUUID_Call{Call: _e.mock.On("GetByUUID", ctx, uuid1)}
 }
 
@@ -415,7 +415,7 @@ type MockTodo_Patch_Call struct {
 // Patch is a helper method to define mock.On call
 //   - ctx context.Context
 //   - todo *model.Todo
-func (_e *MockTodo_Expecter) Patch(ctx interface{}, todo interface{}) *MockTodo_Patch_Call {
+func (_e *MockTodo_Expecter) Patch(ctx any, todo any) *MockTodo_Patch_Call {
 	return &MockTodo_Patch_Call{Call: _e.mock.On("Patch", ctx, todo)}
 }
 
@@ -483,7 +483,7 @@ type MockTodo_Update_Call struct {
 // Update is a helper method to define mock.On call
 //   - ctx context.Context
 //   - todo *model.Todo
-func (_e *MockTodo_Expecter) Update(ctx interface{}, todo interface{}) *MockTodo_Update_Call {
+func (_e *MockTodo_Expecter) Update(ctx any, todo any) *MockTodo_Update_Call {
 	return &MockTodo_Update_Call{Call: _e.mock.On("Update", ctx, todo)}
 }
 

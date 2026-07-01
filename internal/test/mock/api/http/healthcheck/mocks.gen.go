@@ -60,7 +60,7 @@ type MockServerInterface_GetLivez_Call struct {
 
 // GetLivez is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockServerInterface_Expecter) GetLivez(ctx interface{}) *MockServerInterface_GetLivez_Call {
+func (_e *MockServerInterface_Expecter) GetLivez(ctx any) *MockServerInterface_GetLivez_Call {
 	return &MockServerInterface_GetLivez_Call{Call: _e.mock.On("GetLivez", ctx)}
 }
 
@@ -111,7 +111,7 @@ type MockServerInterface_GetReadyz_Call struct {
 
 // GetReadyz is a helper method to define mock.On call
 //   - ctx echo.Context
-func (_e *MockServerInterface_Expecter) GetReadyz(ctx interface{}) *MockServerInterface_GetReadyz_Call {
+func (_e *MockServerInterface_Expecter) GetReadyz(ctx any) *MockServerInterface_GetReadyz_Call {
 	return &MockServerInterface_GetReadyz_Call{Call: _e.mock.On("GetReadyz", ctx)}
 }
 
@@ -199,9 +199,9 @@ type MockEchoRouter_CONNECT_Call struct {
 //   - path string
 //   - h echo.HandlerFunc
 //   - m ...echo.MiddlewareFunc
-func (_e *MockEchoRouter_Expecter) CONNECT(path interface{}, h interface{}, m ...interface{}) *MockEchoRouter_CONNECT_Call {
+func (_e *MockEchoRouter_Expecter) CONNECT(path any, h any, m ...any) *MockEchoRouter_CONNECT_Call {
 	return &MockEchoRouter_CONNECT_Call{Call: _e.mock.On("CONNECT",
-		append([]interface{}{path, h}, m...)...)}
+		append([]any{path, h}, m...)...)}
 }
 
 func (_c *MockEchoRouter_CONNECT_Call) Run(run func(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc)) *MockEchoRouter_CONNECT_Call {
@@ -273,9 +273,9 @@ type MockEchoRouter_DELETE_Call struct {
 //   - path string
 //   - h echo.HandlerFunc
 //   - m ...echo.MiddlewareFunc
-func (_e *MockEchoRouter_Expecter) DELETE(path interface{}, h interface{}, m ...interface{}) *MockEchoRouter_DELETE_Call {
+func (_e *MockEchoRouter_Expecter) DELETE(path any, h any, m ...any) *MockEchoRouter_DELETE_Call {
 	return &MockEchoRouter_DELETE_Call{Call: _e.mock.On("DELETE",
-		append([]interface{}{path, h}, m...)...)}
+		append([]any{path, h}, m...)...)}
 }
 
 func (_c *MockEchoRouter_DELETE_Call) Run(run func(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc)) *MockEchoRouter_DELETE_Call {
@@ -347,9 +347,9 @@ type MockEchoRouter_GET_Call struct {
 //   - path string
 //   - h echo.HandlerFunc
 //   - m ...echo.MiddlewareFunc
-func (_e *MockEchoRouter_Expecter) GET(path interface{}, h interface{}, m ...interface{}) *MockEchoRouter_GET_Call {
+func (_e *MockEchoRouter_Expecter) GET(path any, h any, m ...any) *MockEchoRouter_GET_Call {
 	return &MockEchoRouter_GET_Call{Call: _e.mock.On("GET",
-		append([]interface{}{path, h}, m...)...)}
+		append([]any{path, h}, m...)...)}
 }
 
 func (_c *MockEchoRouter_GET_Call) Run(run func(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc)) *MockEchoRouter_GET_Call {
@@ -421,9 +421,9 @@ type MockEchoRouter_HEAD_Call struct {
 //   - path string
 //   - h echo.HandlerFunc
 //   - m ...echo.MiddlewareFunc
-func (_e *MockEchoRouter_Expecter) HEAD(path interface{}, h interface{}, m ...interface{}) *MockEchoRouter_HEAD_Call {
+func (_e *MockEchoRouter_Expecter) HEAD(path any, h any, m ...any) *MockEchoRouter_HEAD_Call {
 	return &MockEchoRouter_HEAD_Call{Call: _e.mock.On("HEAD",
-		append([]interface{}{path, h}, m...)...)}
+		append([]any{path, h}, m...)...)}
 }
 
 func (_c *MockEchoRouter_HEAD_Call) Run(run func(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc)) *MockEchoRouter_HEAD_Call {
@@ -495,9 +495,9 @@ type MockEchoRouter_OPTIONS_Call struct {
 //   - path string
 //   - h echo.HandlerFunc
 //   - m ...echo.MiddlewareFunc
-func (_e *MockEchoRouter_Expecter) OPTIONS(path interface{}, h interface{}, m ...interface{}) *MockEchoRouter_OPTIONS_Call {
+func (_e *MockEchoRouter_Expecter) OPTIONS(path any, h any, m ...any) *MockEchoRouter_OPTIONS_Call {
 	return &MockEchoRouter_OPTIONS_Call{Call: _e.mock.On("OPTIONS",
-		append([]interface{}{path, h}, m...)...)}
+		append([]any{path, h}, m...)...)}
 }
 
 func (_c *MockEchoRouter_OPTIONS_Call) Run(run func(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc)) *MockEchoRouter_OPTIONS_Call {
@@ -569,9 +569,9 @@ type MockEchoRouter_PATCH_Call struct {
 //   - path string
 //   - h echo.HandlerFunc
 //   - m ...echo.MiddlewareFunc
-func (_e *MockEchoRouter_Expecter) PATCH(path interface{}, h interface{}, m ...interface{}) *MockEchoRouter_PATCH_Call {
+func (_e *MockEchoRouter_Expecter) PATCH(path any, h any, m ...any) *MockEchoRouter_PATCH_Call {
 	return &MockEchoRouter_PATCH_Call{Call: _e.mock.On("PATCH",
-		append([]interface{}{path, h}, m...)...)}
+		append([]any{path, h}, m...)...)}
 }
 
 func (_c *MockEchoRouter_PATCH_Call) Run(run func(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc)) *MockEchoRouter_PATCH_Call {
@@ -643,9 +643,9 @@ type MockEchoRouter_POST_Call struct {
 //   - path string
 //   - h echo.HandlerFunc
 //   - m ...echo.MiddlewareFunc
-func (_e *MockEchoRouter_Expecter) POST(path interface{}, h interface{}, m ...interface{}) *MockEchoRouter_POST_Call {
+func (_e *MockEchoRouter_Expecter) POST(path any, h any, m ...any) *MockEchoRouter_POST_Call {
 	return &MockEchoRouter_POST_Call{Call: _e.mock.On("POST",
-		append([]interface{}{path, h}, m...)...)}
+		append([]any{path, h}, m...)...)}
 }
 
 func (_c *MockEchoRouter_POST_Call) Run(run func(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc)) *MockEchoRouter_POST_Call {
@@ -717,9 +717,9 @@ type MockEchoRouter_PUT_Call struct {
 //   - path string
 //   - h echo.HandlerFunc
 //   - m ...echo.MiddlewareFunc
-func (_e *MockEchoRouter_Expecter) PUT(path interface{}, h interface{}, m ...interface{}) *MockEchoRouter_PUT_Call {
+func (_e *MockEchoRouter_Expecter) PUT(path any, h any, m ...any) *MockEchoRouter_PUT_Call {
 	return &MockEchoRouter_PUT_Call{Call: _e.mock.On("PUT",
-		append([]interface{}{path, h}, m...)...)}
+		append([]any{path, h}, m...)...)}
 }
 
 func (_c *MockEchoRouter_PUT_Call) Run(run func(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc)) *MockEchoRouter_PUT_Call {
@@ -791,9 +791,9 @@ type MockEchoRouter_TRACE_Call struct {
 //   - path string
 //   - h echo.HandlerFunc
 //   - m ...echo.MiddlewareFunc
-func (_e *MockEchoRouter_Expecter) TRACE(path interface{}, h interface{}, m ...interface{}) *MockEchoRouter_TRACE_Call {
+func (_e *MockEchoRouter_Expecter) TRACE(path any, h any, m ...any) *MockEchoRouter_TRACE_Call {
 	return &MockEchoRouter_TRACE_Call{Call: _e.mock.On("TRACE",
-		append([]interface{}{path, h}, m...)...)}
+		append([]any{path, h}, m...)...)}
 }
 
 func (_c *MockEchoRouter_TRACE_Call) Run(run func(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc)) *MockEchoRouter_TRACE_Call {
