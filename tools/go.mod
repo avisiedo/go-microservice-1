@@ -12,7 +12,7 @@ require (
 	github.com/atombender/go-jsonschema v0.24.1
 	github.com/golangci/golangci-lint v1.64.8
 	github.com/gotesttools/gotestfmt/v2 v2.5.0
-	github.com/loov/goda v0.9.4
+	github.com/loov/goda v0.10.1
 	github.com/mikefarah/yq/v4 v4.53.6
 	github.com/oapi-codegen/oapi-codegen/v2 v2.8.0
 	github.com/t-yuki/gocover-cobertura v0.0.0-20180217150009-aaee18c8195c
@@ -246,7 +246,7 @@ require (
 	go.yaml.in/yaml/v4 v4.0.0-rc.6 // indirect
 	golang.org/x/exp v0.0.0-20260212183809-81e46e3db34a // indirect
 	golang.org/x/exp/typeparams v0.0.0-20250210185358-939b2ce775ac // indirect
-	golang.org/x/image v0.43.0 // indirect
+	golang.org/x/image v0.45.0 // indirect
 	golang.org/x/mod v0.40.0 // indirect
 	golang.org/x/net v0.58.0 // indirect
 	golang.org/x/sync v0.22.0 // indirect
